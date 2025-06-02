@@ -10,6 +10,6 @@ import Domain.Seat;
  *
  * @author hp
  */
-public abstract class ReservationFactory {
-    public abstract Reservation createReservation(Passenger passenger, int fare, Seat seat, String info);
+public abstract class ReservationFactory<T> {
+    public abstract Reservation createReservation(Passenger passenger, int fare, Seat seat, T info);
 }

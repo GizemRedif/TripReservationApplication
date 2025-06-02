@@ -4,19 +4,20 @@
  */
 package Factory;
 
-import Domain.BusReservation;
+import Domain.BusTrip;
+import Domain.Flight;
+import Domain.FlightReservation;
 import Domain.Passenger;
 import Domain.Reservation;
 import Domain.Seat;
-import Domain.BusTrip;
 
 /**
  *
  * @author hp
  */
-public class BusReservationFactory extends ReservationFactory <BusTrip> {
-    
-    public Reservation createReservation(Passenger passenger, int fare, Seat seat, BusTrip info){
-        return new BusReservation(passenger, fare, seat, info);
+public class FlightReservationFactory extends ReservationFactory <Flight>{
+ 
+    public Reservation createReservation(Passenger passenger, int fare, Seat seat, Flight info){
+        return new FlightReservation(passenger, fare, seat, info);
     }
 }
