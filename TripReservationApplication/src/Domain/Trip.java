@@ -9,6 +9,6 @@ public abstract class Trip {
     LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
     LocalDateTime arrivalDate; 
     Passenger passengers;
-    int fare;
+    double fare;
     Seat seats;
 }
