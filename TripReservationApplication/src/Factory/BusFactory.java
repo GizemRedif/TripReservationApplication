@@ -8,8 +8,8 @@ import Domain.Vehicle ;
  *
  * @author hp
  */
-public class BusFactory extends VehicleFactory {
+/*public class BusFactory extends VehicleFactory {
     public Vehicle createVehicle(){
         return new Bus();
     }
-}
+}*/
