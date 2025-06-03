@@ -5,9 +5,17 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class UserManager {
-    private static Map<String, User> usersWithEmail;
+    private static UserManager instance;
+    private Map<String, User> usersWithEmail;
     
-    public UserManager(){}
+    private UserManager() {}
+    
+    public static UserManager getInstance() {
+        if (instance == null) {
+            instance = new UserManager();
+        }
+        return instance;
+    }
     
     public void addUser(User user){
         usersWithEmail.put(user.getEmail(), user);        
