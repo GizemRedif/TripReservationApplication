@@ -1,10 +1,11 @@
 package Factory;
 
+import Domain.Passenger;
 import Domain.User;
-
+/*
 public class PassengerFactory implements UserFactory {
     public User CreateUser()
     {
-        return null;
+        return new Passenger();
     }
-}
+}*/
