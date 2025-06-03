@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Factory;
-
+import Domain.Vehicle ;
 /**
  *
  * @author hp
  */
 public abstract class  VehicleFactory {
-    
+    public abstract Vehicle createVehicle();
 }
