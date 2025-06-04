@@ -1,4 +1,3 @@
-
 package Domain;
 
 public abstract class Reservation {

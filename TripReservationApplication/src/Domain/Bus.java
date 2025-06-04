@@ -1,5 +1,10 @@
 package Domain;
 
 public class Bus extends Vehicle {
-    int plate;
+     String plate;
+
+    public Bus(int capacity, String plate) {
+        super(capacity);
+        this.plate=plate;
+    }
 }
