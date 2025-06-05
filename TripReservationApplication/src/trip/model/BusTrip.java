@@ -18,6 +18,12 @@ public class BusTrip extends Trip{
         this.bus=new Bus(other.bus);
     }
     
+    public BusTrip(BusTripBuilder builder) {
+        super(builder.departureStation, builder.arrivalStation, builder.departureDate,
+              builder.arrivalDate, builder.fare, builder.passengers, builder.seats);
+        this.bus = builder.bus;
+    }
+    
     public Bus getBus(){
         if(bus !=null){
             return new Bus(bus);
@@ -35,4 +41,29 @@ public class BusTrip extends Trip{
             this.bus=null;
         }
     }
+    
+    //---------------------Builder Class----------------------
+    
+    public static class BusTripBuilder extends Builder{
+        private Bus bus;
+        
+        public BusTripBuilder setBus(Bus bus){
+            this.bus=bus;
+            return this;
+        }
+        
+          @Override
+        public BusTrip build() {
+            return new BusTrip(this);
+        }
+    }
+
 }
+    
+
+    
+   
+        
+    
+    
+

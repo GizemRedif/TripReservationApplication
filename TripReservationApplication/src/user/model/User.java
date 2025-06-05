@@ -65,4 +65,40 @@ public abstract class User {
         this.gender = gender;
     }
     
+    //----------------Builder Class--------------
+    
+    public static abstract class Builder{
+        protected String name;
+        protected String surname;
+        protected String eMail;
+        protected String password;
+        protected String phoneNumber;
+        protected char gender;
+        
+        public Builder setName(String name){
+            this.name=name;
+            return this;
+        }
+        public Builder setSurname(String surname){
+            this.surname=surname;
+            return this;
+        }
+        public Builder seteMail(String eMail){
+            this.eMail=eMail;
+            return this;
+        }
+        public Builder setPassword (String password){
+            this.password= password;
+            return this;
+        }
+        public Builder setPhoneNumber(String phoneNumber){
+            this.phoneNumber=phoneNumber;
+            return this;
+        }
+        public Builder setGender(char gender){
+            this.gender=gender;
+            return this;
+        }
+        public abstract User build();
+    }
 }

@@ -17,6 +17,12 @@ public class FlightTrip extends Trip{
                 other.getFare(), new Passenger(other.getPassengers()), new Seat(other.getSeats()));
         this.plane=new Plane(other.plane);
     }
+      
+    public FlightTrip(FlightTripBuilder builder) {
+        super(builder.departureStation, builder.arrivalStation, builder.departureDate,
+              builder.arrivalDate, builder.fare, builder.passengers, builder.seats);
+        this.plane = builder.plane;
+    }
     
     public Plane getPlane(){
         if(plane !=null){
@@ -34,5 +40,22 @@ public class FlightTrip extends Trip{
         else{
             this.plane=null;
         }
+    }
+    
+    //--------------------------Builder Class----------------
+    
+    public static class FlightTripBuilder extends Builder{  
+        private Plane plane;
+        
+        public FlightTripBuilder setPlane(Plane plane){
+            this.plane=plane;
+            return this;
+        }
+
+        @Override
+        public FlightTrip build() {
+            return new FlightTrip(this);
+        }
+
     }
 }

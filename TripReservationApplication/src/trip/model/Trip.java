@@ -96,4 +96,44 @@ public abstract class Trip {
             this.seats=null;
         }
     }
+    
+    //--------------------------Builder Class------------------
+    
+    public static abstract class Builder{
+        protected String departureStation;
+        protected String arrivalStation;
+        protected LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
+        protected LocalDateTime arrivalDate;
+        protected double fare;
+        protected Passenger passengers;
+        protected Seat seats;
+        
+        public Builder setDepartureStation(String departureStation){
+            this.departureStation=departureStation;
+            return this;
+        }
+        public Builder setArrivalStation(String arrivalStation){
+            this.arrivalStation=arrivalStation;
+            return this;
+        }
+        public Builder setDepartureDate(LocalDateTime departureDate){
+            this.departureDate=departureDate;
+            return this;
+        }
+        public Builder setArrivalDate(LocalDateTime arrivalDate){
+            this.arrivalDate=arrivalDate;
+            return this;
+        }
+        public Builder setFare(double fare){
+            this.fare=fare;
+            return this;
+        }
+        public Builder setPassenengers(Passenger passengers){
+            this.passengers=passengers;
+            return this;
+        }
+        
+        public abstract Trip build();
+        
+    }
 }
