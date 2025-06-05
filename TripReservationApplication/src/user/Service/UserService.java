@@ -31,7 +31,7 @@ public class UserService {
             return true;
         }
         
-        public boolean DeletUser(User user){
+        public boolean deleteUser(User user){
             return userRepository.deleteUser(user);
         }
 }
