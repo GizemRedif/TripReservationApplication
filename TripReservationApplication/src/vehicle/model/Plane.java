@@ -7,4 +7,18 @@ public class Plane extends Vehicle{
         super(capacity);
         this.tailNumber=tailNumber;
     }
+    
+    public Plane(Plane other){
+       super(other.getCapacity());
+       this.tailNumber=other.tailNumber;
+    }
+
+    public int getTailNumber() {
+        return tailNumber;
+    }
+
+    public void setTailNumber(int tailNumber) {
+        this.tailNumber = tailNumber;
+    }
+    
 }
