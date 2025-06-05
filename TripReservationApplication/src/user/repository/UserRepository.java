@@ -1,15 +1,16 @@
 package user.repository;
 
 import user.model.User;
-import java.util.List;
-import java.util.ArrayList;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class UserRepository {
     private static UserRepository instance;
-    private List<User> userList;
+    private Map<String, User> usersWithEmail;
 
     private UserRepository() {
-        this.userList = new ArrayList<>();
+        this.usersWithEmail = new HashMap<>();
     }
 
     public static UserRepository getInstance() {
@@ -19,13 +20,23 @@ public class UserRepository {
         return instance;
     }
     
-    /*add a new user*/
-    public void addTrip(User user){
-        userList.add(user);
+    public User getUserByEmail(String email){
+        return usersWithEmail.get(email);
     }
     
-    public boolean cancelTrip(User user){
-        return userList.remove(user);
+    /*add a new user*/
+    public boolean addUser(User user){
+        if(usersWithEmail.containsKey(user.getEmail())){
+            return false;
+        }
+        
+        usersWithEmail.put(user.getEmail(), user); 
+        
+        return true;
+    }
+    
+    public boolean deleteUser(User user){
+        return usersWithEmail.remove(user.getEmail());
     }
     
 }
