@@ -1,5 +1,6 @@
 package trip.service;
 
+import java.time.LocalDateTime;
 import trip.model.Trip;
 import trip.repository.TripRepository;
 
@@ -13,7 +14,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
             throw new IllegalArgumentException("Invalid Departure Date");
         
         }
-        if ( trip.getDepartureDate().isBefore(LocalDate.now()) || trip.getArrivalDate().isBefore(LocalDate.now())){
+        if ( trip.getDepartureDate().isBefore(LocalDateTime.now()) || trip.getArrivalDate().isBefore(LocalDateTime.now())){
             throw new IllegalArgumentException("A trip can not be created for a past date");
         }
         
@@ -24,7 +25,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
             throw new IllegalArgumentException("Fare can't be negative or zero");
         }
         
-        if (trip.getArrivalStation().equals(trip.getDestinationStation())){
+        if (trip.getArrivalStation().equals(trip.getArrivalStation())){
             throw new IllegalArgumentException("destination and arrival stations can not be same");
         }
         

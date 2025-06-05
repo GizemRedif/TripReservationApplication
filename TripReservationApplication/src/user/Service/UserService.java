@@ -19,7 +19,7 @@ public class UserService {
                 throw new IllegalArgumentException("surname can only contain alphabetical character");
             }
             
-            if(!user.getEmail().endsWith("@gmail.com")){
+            if(!user.geteMail().endsWith("@gmail.com")){
                 throw new IllegalArgumentException("email must end with @gmail.com");
             }
             

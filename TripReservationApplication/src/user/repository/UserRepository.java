@@ -26,17 +26,23 @@ public class UserRepository {
     
     /*add a new user*/
     public boolean addUser(User user){
-        if(usersWithEmail.containsKey(user.getEmail())){
+        if(usersWithEmail.containsKey(user.geteMail())){
             return false;
         }
         
-        usersWithEmail.put(user.getEmail(), user); 
+        usersWithEmail.put(user.geteMail(), user); 
         
         return true;
     }
     
     public boolean deleteUser(User user){
-        return usersWithEmail.remove(user.getEmail());
+        String userMail = user.geteMail();
+        if(userMail == null){
+            return false;
+        }
+        usersWithEmail.remove(user.geteMail());
+        
+        return true;
     }
     
 }
