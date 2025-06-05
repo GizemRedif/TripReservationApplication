@@ -1,6 +1,7 @@
 package tripreservationapplication;
 
 //import gui.LoginRegisterPanel; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+import gui.AdminPanel;
 import gui.UserMainPanel;
 import java.awt.Color;
 
@@ -16,7 +17,12 @@ public class MainFrame extends JFrame {
 
         // LoginRegisterPanel ekleniyor !!!!!!!!!!!!!!!!!! Ana kod bu
 //        add(new LoginRegisterPanel());
+
+
+//deneme amaçlı yazılanlar
     add(new UserMainPanel());
         setVisible(true);
+
+//        add(new AdminPanel());
     }
 }

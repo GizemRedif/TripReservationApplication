@@ -2,6 +2,10 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import user.model.Passenger;
+
+import user.model.User; //User sınıfına erişebilmek için
+
 
 public class LoginRegisterPanel extends JPanel {
 
@@ -32,7 +36,15 @@ public class LoginRegisterPanel extends JPanel {
 
         add(containerPanel); // Ortalanmış haliyle
     }
+//
+//    private void switchToUserMainPanel(User user) {
+//    JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//    topFrame.setContentPane(new UserMainPanel(user));
+//    topFrame.revalidate();
+//    topFrame.repaint();
+//}
 
+    
     private JPanel createLoginPanel() {
         JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -46,6 +58,22 @@ public class LoginRegisterPanel extends JPanel {
 
         JButton loginButton = new JButton("Login");
         styleButton(loginButton);
+        
+//        KONTROL İÇİN YAZILMILTI
+//        loginButton.addActionListener(e -> {
+//        String email = emailField.getText().trim();
+//        String password = new String(passwordField.getPassword());
+//        // Burada email ve password doğrulama işlemini yap
+//        if (email.equals("admin@mail.com") && password.equals("admin123")) {
+//            // admini al
+//            switchToUserMainPanel(adminUser);
+//        } else if (email.equals("passenger@mail.com") && password.equals("pass123")) {
+//            //Passenger al
+//            switchToUserMainPanel(passengerUser);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Invalid credentials", "Login Failed", JOptionPane.ERROR_MESSAGE);
+//        }
+//    });
 
         panel.add(emailLabel);
         panel.add(emailField);
@@ -78,10 +106,26 @@ public class LoginRegisterPanel extends JPanel {
         JTextField phoneField = new JTextField();
 
         JLabel genderLabel = new JLabel("Gender:");
-        JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Select", "Male", "Female", "Other"});
+        JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Male", "Female", "Other"});
 
         JButton registerButton = new JButton("Register");
         styleButton(registerButton);
+        
+//        KULLANICI OLUŞTURMAK İÇİN YAZILMIŞTI
+//        registerButton.addActionListener(e -> {
+//            String firstName = firstNameField.getText().trim();
+//            String lastName = lastNameField.getText().trim();
+//            String email = emailField.getText().trim();
+//            String password = new String(passwordField.getPassword());
+//            String phoneNumber = phoneField.getText().trim();
+//            String selectedGender = (String) genderCombo.getSelectedItem();
+//            char gender = selectedGender.charAt(0);  // İlk harfi alır
+// 
+//            //paymentınfo değiştikten sonra düzelecek.
+//            Passenger user = new Passenger(firstName, lastName, email, password, phoneNumber, gender);
+//
+//            System.out.println("User created: "); // Varsa toString() kullanılır
+//        });
 
         panel.add(firstNameLabel);
         panel.add(firstNameField);

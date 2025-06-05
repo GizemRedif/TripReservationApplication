@@ -11,23 +11,27 @@ public class SearchTripPanel extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setPreferredSize(new Dimension(500, 300)); // TabbedPane büyütüldü
 
-        tabbedPane.addTab("Bus 🚌", createSearchForm("Bus"));
-        tabbedPane.addTab("Flight", createSearchForm("Flight"));
+        tabbedPane.addTab("Bus 🚌", createSearchForm("Bus",tabbedPane ));
+        tabbedPane.addTab("Flight", createSearchForm("Flight", tabbedPane));
 
         add(tabbedPane); // Ortalanmış şekilde eklendi
     }
-
-    private JPanel createSearchForm(String vehicle) {
+     
+    private JPanel createSearchForm(String vehicle, JTabbedPane tabbedPane) {
         JPanel outerPanel = new JPanel(new BorderLayout());
-        outerPanel.setBackground(Color.WHITE);
-
-        if("Bus".equals(vehicle)){
-            outerPanel.setBackground(new Color(239, 228, 210));
-        }
+        
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(400, 220)); // Küçük ve kompakt yapı
-        panel.setBackground(Color.WHITE);
 
+        if("Bus".equals(vehicle)){
+        panel.setBackground(new Color(239, 228, 210));
+        outerPanel.setBackground(new Color(239, 228, 210));
+        }
+        else {
+        panel.setBackground(Color.WHITE);
+        outerPanel.setBackground(Color.WHITE);
+        }
+        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10); // Bileşenin etrafındaki boşluk (üst, sol, alt, sağ)
         gbc.fill = GridBagConstraints.HORIZONTAL; // Yatay olarak genişlesin ama dikeyde sabit kalsı
