@@ -7,4 +7,17 @@ public class Bus extends Vehicle {
         super(capacity);
         this.plate=plate;
     }
+    
+    public Bus(Bus other){
+        super(other.getCapacity());
+        this.plate=other.plate;
+    }
+    
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
 }

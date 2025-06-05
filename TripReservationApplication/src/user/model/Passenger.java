@@ -13,6 +13,31 @@ public class Passenger extends User {
         this.paymentInfo=paymentInfo;
     }
     
+    public Passenger(Passenger other){
+        super(other.getName(), other.getSurname(), other.geteMail(), other.getPassword(), other.getPhoneNumber(), other.getGender());
+        this.reservations= new ArrayList<>(other.reservations);
+        this.paymentInfo=other.paymentInfo;
+    }
+    
+    public List<Reservation> getReservations(){
+        if(reservations == null){return null;}
+        List<Reservation> copy = new ArrayList<>();
+        for( Reservation item : reservations){
+            copy.add( item.copy());
+        }
+        return copy;
+    }
+    
+    public void setReservation(List<Reservation> reservations){
+        if(reservations == null){
+            this.reservations= null;
+            return;
+        }
+        this.reservations=new ArrayList<>();
+        for( Reservation item : reservations){
+            this.reservations.add(item.copy());
+        }
+    }
     public boolean equals(Object obj){
         if(this==obj) {return true;}
         if(obj==null || getClass() != obj.getClass()){return false;}
