@@ -9,7 +9,7 @@ import trip.model.FlightTrip;
 import reservation.model.FlightReservation;
 import user.model.Passenger;
 import reservation.model.Reservation;
-import trip.model.Seat;
+import vehicle.model.Seat;
 
 /**
  *

@@ -1,4 +1,4 @@
-package trip.model;
+package vehicle.model;
 
 public class Seat {
     int seatNumber;
@@ -23,6 +23,12 @@ public class Seat {
     }
     
     @Override
+    public Seat clone() {
+        Seat copy = new Seat(this.seatNumber , false);
+        return copy;
+    }
+    
+    @Override
     public int hashCode(){
         return Integer.hashCode(seatNumber);
     }
@@ -42,6 +48,7 @@ public class Seat {
     public void setIsBooked(boolean isBooked) {
         this.isBooked = isBooked;
     }
+    
     
 }
 
