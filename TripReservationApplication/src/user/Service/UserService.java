@@ -34,4 +34,58 @@ public class UserService {
         public boolean DeletUser(User user){
             return userRepository.deleteUser(user);
         }
+        
+        
+        public User login(String eMail, String password){
+            User user= userRepository.getUserByEmail(eMail);
+            if(user == null){
+                System.out.println("Email not found.");
+                return null;
+            }
+            
+            if(user.getPassword().equals(password)){
+                System.out.println("Login succesful for: " + eMail);
+                return user;
+            }
+            else{
+                System.out.println("Incorrect password.");
+                return null;
+            }
+        }
+        
+        public boolean updateUser(User updateUser){
+            if(updateUser== null || updateUser.geteMail()== null){
+                throw new IllegalArgumentException("Updated user or email cannot be null.");
+            }
+             
+            User existingUser =userRepository.getUserByEmail(updateUser.geteMail());
+            if(existingUser == null){
+                System.out.println("User with the specified email does not exist.");
+                return false;
+            }
+            
+            if(updateUser.getName() != null){
+                if(!updateUser.getName().chars().allMatch(Character::isLetter)){ //Kullanıcı adı sadece harflerden oluşmuyorsa--> true
+                    throw new IllegalArgumentException("Name can only contain alphabetical character.");
+                }
+                existingUser.setName(updateUser.getName());
+            }
+            if(updateUser.getSurname() != null){
+                if(!updateUser.getSurname().chars().allMatch(Character::isLetter)){
+                    throw new IllegalArgumentException("Surname can only contain alphabetical character.");
+                }
+                existingUser.setSurname(updateUser.getSurname());
+            }
+            if(updateUser.getPassword() != null){
+                existingUser.setPassword(updateUser.getPassword());
+            }
+            if(updateUser.getPhoneNumber() != null){
+                if(!updateUser.getPhoneNumber().chars().allMatch(Character::isDigit)
+                        || updateUser.getPhoneNumber().length() !=11){
+                    throw new IllegalArgumentException("Invalid phone number.");
+                }
+                existingUser.setPhoneNumber(updateUser.getPhoneNumber());
+            }
+            return true;
+        }
 }
