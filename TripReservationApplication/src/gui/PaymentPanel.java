@@ -3,6 +3,7 @@ package gui;
 
 import javax.swing.JPanel;
 
-public class PastTripsPanel extends JPanel{
+
+public class PaymentPanel extends JPanel{
     
 }
