@@ -11,27 +11,12 @@ public class UserService {
             
             if(user == null){return false;}
             
-            if(!user.getName().chars().allMatch(Character::isLetter)){
-                throw new IllegalArgumentException("name can only contain alphabetical character");
-            }
-            
-            if(!user.getSurname().chars().allMatch(Character::isLetter)){
-                throw new IllegalArgumentException("surname can only contain alphabetical character");
-            }
-            
-            if(!user.getEmail().endsWith("@gmail.com")){
-                throw new IllegalArgumentException("email must end with @gmail.com");
-            }
-            
-            if(user.getPhoneNumber().length() != 11 || user.getPhoneNumber().chars().allMatch(Character::isDigit)){
-                throw new IllegalArgumentException("invalid phone number");
-            }
-            
+            checkUserInfo(user);
             userRepository.addUser(user);
             return true;
         }
         
-        public boolean DeletUser(User user){
+        public boolean deleteUser(User user){
             return userRepository.deleteUser(user);
         }
         
@@ -64,28 +49,46 @@ public class UserService {
                 return false;
             }
             
-            if(updateUser.getName() != null){
-                if(!updateUser.getName().chars().allMatch(Character::isLetter)){ //Kullanıcı adı sadece harflerden oluşmuyorsa--> true
-                    throw new IllegalArgumentException("Name can only contain alphabetical character.");
-                }
+            if(updateUser.getName()!=null || updateUser.getSurname()!=null ||
+                    updateUser.getPhoneNumber()!=null || updateUser.getEmail()!=null){
+                checkUserInfo(updateUser);
+            }
+            
+            if(updateUser.getName()!= null){
                 existingUser.setName(updateUser.getName());
             }
-            if(updateUser.getSurname() != null){
-                if(!updateUser.getSurname().chars().allMatch(Character::isLetter)){
-                    throw new IllegalArgumentException("Surname can only contain alphabetical character.");
-                }
+            if(updateUser.getSurname()!=null){
                 existingUser.setSurname(updateUser.getSurname());
             }
-            if(updateUser.getPassword() != null){
+            if(updateUser.getPassword()!=null){
                 existingUser.setPassword(updateUser.getPassword());
             }
-            if(updateUser.getPhoneNumber() != null){
-                if(!updateUser.getPhoneNumber().chars().allMatch(Character::isDigit)
-                        || updateUser.getPhoneNumber().length() !=11){
-                    throw new IllegalArgumentException("Invalid phone number.");
-                }
+            if(updateUser.getPhoneNumber()!=null){
                 existingUser.setPhoneNumber(updateUser.getPhoneNumber());
             }
+            
             return true;
+        }
+        
+        private void checkUserInfo(User user){
+            if (user.getName() != null && !user.getName().chars().allMatch(Character::isLetter)) {
+                throw new IllegalArgumentException("Name can only contain alphabetical characters.");
+            }
+
+            if (user.getSurname() != null && !user.getSurname().chars().allMatch(Character::isLetter)) {
+                throw new IllegalArgumentException("Surname can only contain alphabetical characters.");
+            }
+
+            if (user.getEmail() != null && !user.getEmail().endsWith("@gmail.com")) {
+                throw new IllegalArgumentException("Email must end with @gmail.com");
+            }
+            
+            if (user.getPhoneNumber() != null) {
+                if (user.getPhoneNumber().length() != 11 || 
+                    !user.getPhoneNumber().chars().allMatch(Character::isDigit)) {
+                    throw new IllegalArgumentException("Invalid phone number.");
+                }
+            }
+
         }
 }
