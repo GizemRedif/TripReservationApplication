@@ -19,7 +19,7 @@ public class UserService {
                 throw new IllegalArgumentException("surname can only contain alphabetical character");
             }
             
-            if(!user.geteMail().endsWith("@gmail.com")){
+            if(!user.getEmail().endsWith("@gmail.com")){
                 throw new IllegalArgumentException("email must end with @gmail.com");
             }
             
@@ -54,11 +54,11 @@ public class UserService {
         }
         
         public boolean updateUser(User updateUser){
-            if(updateUser== null || updateUser.geteMail()== null){
+            if(updateUser== null || updateUser.getEmail()== null){
                 throw new IllegalArgumentException("Updated user or email cannot be null.");
             }
              
-            User existingUser =userRepository.getUserByEmail(updateUser.geteMail());
+            User existingUser =userRepository.getUserByEmail(updateUser.getEmail());
             if(existingUser == null){
                 System.out.println("User with the specified email does not exist.");
                 return false;

@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class UserRepository {
     private static UserRepository instance;
-    private Map<String, User> usersWithEmail;
+    private final Map<String, User> usersWithEmail;
 
     private UserRepository() {
         this.usersWithEmail = new HashMap<>();
@@ -26,21 +26,21 @@ public class UserRepository {
     
     /*add a new user*/
     public boolean addUser(User user){
-        if(usersWithEmail.containsKey(user.geteMail())){
+        if(usersWithEmail.containsKey(user.getEmail())){
             return false;
         }
         
-        usersWithEmail.put(user.geteMail(), user); 
+        usersWithEmail.put(user.getEmail(), user); 
         
         return true;
     }
     
     public boolean deleteUser(User user){
-        String userMail = user.geteMail();
+        String userMail = user.getEmail();
         if(userMail == null){
             return false;
         }
-        usersWithEmail.remove(user.geteMail());
+        usersWithEmail.remove(user.getEmail());
         
         return true;
     }
