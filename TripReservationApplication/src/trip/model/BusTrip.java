@@ -1,27 +1,33 @@
 package trip.model;
+
+import vehicle.model.Seat;
 import user.model.Passenger;
 import vehicle.model.Bus;
 import java.time.LocalDateTime;
+
 
 public class BusTrip extends Trip{
     Bus bus;
 
     public BusTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalDateTime arrivalDate,
                     double fare, Passenger passengers, Seat seats, Bus bus) {
-        super(departureStation, arrivalStation, departureDate, arrivalDate, fare, passengers, seats);
+        super(departureStation, arrivalStation, departureDate, arrivalDate, fare, passengers);
         this.bus=bus;
+        this.seats=bus.copySeatList();
     }
     
     public BusTrip(BusTrip other){
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getArrivalDate(),
-                other.getFare(), new Passenger(other.getPassengers()), new Seat(other.getSeats()));
+                other.getFare(), new Passenger(other.getPassengers()));
         this.bus=new Bus(other.bus);
+        this.seats=other.bus.copySeatList();
     }
     
     public BusTrip(BusTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
-              builder.arrivalDate, builder.fare, builder.passengers, builder.seats);
+              builder.arrivalDate, builder.fare, builder.passengers);
         this.bus = builder.bus;
+        this.seats=builder.bus.copySeatList();
     }
     
     public Bus getBus(){

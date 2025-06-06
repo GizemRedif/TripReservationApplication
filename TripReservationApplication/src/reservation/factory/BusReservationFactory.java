@@ -7,7 +7,7 @@ package reservation.factory;
 import reservation.model.BusReservation;
 import user.model.Passenger;
 import reservation.model.Reservation;
-import trip.model.Seat;
+import vehicle.model.Seat;
 import trip.model.BusTrip;
 
 /**

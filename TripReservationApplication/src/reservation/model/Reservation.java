@@ -1,6 +1,6 @@
 package reservation.model;
 
-import trip.model.Seat;
+import vehicle.model.Seat;
 import user.model.Passenger;
 
 public abstract class Reservation {

@@ -1,6 +1,11 @@
 package trip.model;
+
+import vehicle.model.Seat;
+
 import user.model.Passenger;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Trip {
     String departureStation;
@@ -9,16 +14,16 @@ public abstract class Trip {
     LocalDateTime arrivalDate;
     double fare;
     Passenger passengers;
-    Seat seats;
+    List<Seat> seats;
+     
     
-    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalDateTime arrivalDate, double fare, Passenger passengers, Seat seats){
+    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalDateTime arrivalDate, double fare, Passenger passengers){
         this.departureStation=departureStation;
         this.arrivalStation=arrivalStation;
         this.departureDate=departureDate;
         this.arrivalDate=arrivalDate;
         this.fare=fare;
         this.passengers= passengers;
-        this.seats= seats;
     }
 
     public String getDepartureStation() {
@@ -79,23 +84,7 @@ public abstract class Trip {
         }
     }
     
-    public Seat getSeats(){
-        if(seats !=null){
-            return new Seat(seats);
-        }
-        else{
-            return null;
-        }
-    }
-    
-    public void setSeats(Seat seats){
-        if(seats !=null){
-            this.seats= new Seat(seats);
-        }
-        else{
-            this.seats=null;
-        }
-    }
+   
     
     //--------------------------Builder Class------------------
     
