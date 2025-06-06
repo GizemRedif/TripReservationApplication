@@ -26,11 +26,11 @@ public class UserMainPanel extends JPanel {
         contentPanel = new JPanel(cardLayout);
 
         contentPanel.add(new SearchTripPanel(), "searching");
-        // contentPanel.add(new PastTripsPanel(), "past");
+        contentPanel.add(new PastTripsPanel(), "past");
         contentPanel.add(new AccountPanel(), "account");
         
-        
-//        ADMİN PANELİ DÜZENLEYEBİLMEK İÇİN EKLENDİ SONRA SİL ADMİN Mİ USER Mİ DİYE BAKARAK YAZ
+//        if adminse .... 
+//        ADMİN Mİ USER Mİ DİYE BAKARAK YAZ, SİMDİLİK ADMİN PANELİ DÜZENLEYEBİLMEK İÇİN EKLENDİ SONRA SİL ADMİN Mİ USER Mİ DİYE BAKARAK YAZ
         contentPanel.add(new AdminPanel(), "admin");
 
 

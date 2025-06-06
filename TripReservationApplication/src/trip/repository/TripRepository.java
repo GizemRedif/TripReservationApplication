@@ -20,6 +20,10 @@ public class TripRepository {
         return instance;
     }
     
+    public List<Trip> getAllTrips(){
+        return new ArrayList<>(tripList);
+    }
+    
     /*add a new trip*/
     public void addTrip(Trip trip){
         tripList.add(trip);

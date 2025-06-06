@@ -33,11 +33,11 @@ public abstract class User {
         this.surname = surname;
     }
 
-    public String geteMail() {
+    public String getEmail() {
         return eMail;
     }
 
-    public void seteMail(String eMail) {
+    public void setEmail(String eMail) {
         this.eMail = eMail;
     }
 
