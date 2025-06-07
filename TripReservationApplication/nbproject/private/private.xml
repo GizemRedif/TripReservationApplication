@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/merta/TripReservationApplication/TripReservationApplication/src/reservation/model/FlightReservation.java</file>
-            <file>file:/C:/Users/merta/TripReservationApplication/TripReservationApplication/src/trip/repository/TripRepository.java</file>
-            <file>file:/C:/Users/merta/TripReservationApplication/TripReservationApplication/src/reservation/repository/ReservationRepository.java</file>
-            <file>file:/C:/Users/merta/TripReservationApplication/TripReservationApplication/src/user/repository/UserRepository.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/tripreservationapplication/MainFrame.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/LoginRegisterPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/TripsPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/trip/model/Trip.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/trip/model/BusTrip.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/SearchTripPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/trip/service/TripService.java</file>
         </group>
     </open-files>
 </project-private>
