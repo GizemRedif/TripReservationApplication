@@ -37,9 +37,11 @@ public class Plane extends Vehicle{
     }
     
     public List<Seat> copySeatList(){
+        if(seatList == null){return null;}
+        
         List<Seat> copySeat = new ArrayList<>();
         for(Seat seat : seatList){
-            copySeat.add(seat);
+            copySeat.add(seat.clone());
         }
         return copySeat;
     }

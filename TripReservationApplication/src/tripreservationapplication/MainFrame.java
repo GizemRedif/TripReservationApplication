@@ -6,6 +6,7 @@ import gui.LoginRegisterPanel;
 import gui.UserPanelManager;    //SİL!!!!!
 import java.awt.Color;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.swing.*;
 import trip.model.BusTrip;
@@ -38,7 +39,7 @@ public class MainFrame extends JFrame {
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
                 .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
-                .setArrivalDate(LocalDateTime.of(2025, 6, 15, 22, 0))
+                .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00).build();
         
         TripService tripService = new TripService();

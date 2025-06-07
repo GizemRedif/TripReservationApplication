@@ -23,14 +23,18 @@ public class FlightTrip extends Trip{
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
                 other.getFare(), new ArrayList<Passenger>(other.getPassengers()));
         this.plane=new Plane(other.plane);
-        this.seats=other.plane.copySeatList();
+        if(plane != null){
+            this.seats=other.plane.copySeatList();
+        }
     }
       
     public FlightTrip(FlightTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
               builder.tripTime, builder.fare, builder.passengers);
         this.plane = builder.plane;
+        if(plane != null){
         this.seats=builder.plane.copySeatList();
+        }
     }
     
     public Plane getPlane(){
