@@ -5,7 +5,7 @@ import trip.model.FlightTrip;
 import user.model.Passenger;
 
 public class FlightReservation extends Reservation {
-    FlightTrip flight;
+    private FlightTrip flight;
     
     public FlightReservation(Passenger passenger, double fare, Seat seat,FlightTrip flight){
         super(passenger,fare,seat);
@@ -29,13 +29,7 @@ public class FlightReservation extends Reservation {
             this.flight=null;
         }
     }
-
    
-    @Override
-    public void reserve() {
-        System.out.println("Uçak rezervasyonu yapıldı: " + passenger + ", uçuş: " + flight);
-    }
-    
     @Override
     public Reservation copy() {
         return new FlightReservation(this.getPassenger(), this.getFare(), this.getSeat(), this.getFlightTrip());

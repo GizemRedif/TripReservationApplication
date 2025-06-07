@@ -3,27 +3,28 @@ package trip.model;
 import vehicle.model.Seat;
 
 import user.model.Passenger;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Trip {
-    String departureStation;
-    String arrivalStation;
-    LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
-    LocalDateTime arrivalDate;
-    double fare;
-    Passenger passengers;
-    List<Seat> seats;
+    private String departureStation;
+    private String arrivalStation;
+    private LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
+    private LocalTime tripTime;
+    private double fare;
+    private List<Passenger> passengers;
+    protected List<Seat> seats;
      
     
-    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalDateTime arrivalDate, double fare, Passenger passengers){
+    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalTime tripTime, double fare, List<Passenger> passengers){
         this.departureStation=departureStation;
         this.arrivalStation=arrivalStation;
         this.departureDate=departureDate;
-        this.arrivalDate=arrivalDate;
+        this.tripTime=tripTime;
         this.fare=fare;
-        this.passengers= passengers;
+        this.passengers=new ArrayList<Passenger>();
     }
 
     public String getDepartureStation() {
@@ -50,12 +51,12 @@ public abstract class Trip {
         this.departureDate = departureDate;
     }
 
-    public LocalDateTime getArrivalDate() {
-        return arrivalDate;
+    public LocalTime getTripTime() {
+        return tripTime;
     }
 
-    public void setArrivalDate(LocalDateTime arrivalDate) {
-        this.arrivalDate = arrivalDate;
+    public void setTripTime(LocalTime tripTime) {
+        this.tripTime = tripTime;
     }
 
     public double getFare() {
@@ -66,36 +67,52 @@ public abstract class Trip {
         this.fare = fare;
     }
     
-    public Passenger getPassengers(){
+    public List<Passenger> getPassengers(){
         if(passengers != null){
-            return new Passenger(passengers);
+            return new ArrayList<>(passengers);
         }
         else{
             return null;
         }
     }
     
-    public void setPassengers(Passenger passengers){
+    public void setPassengers(List<Passenger> passengers){
         if(passengers !=null){
-            this.passengers= new Passenger(passengers);
+            this.passengers= new ArrayList<>(passengers);
         }
         else{
             this.passengers=null;
         }
     }
     
-   
+    public List<Seat> getSeats (){
+        if(seats !=null){
+            return new ArrayList<>(seats);
+        }
+        else{
+            return null;
+        }
+    }
     
+    public void setSeats(List<Seat> seats){
+        if(seats != null){
+            this.seats= new ArrayList<>(seats);
+        }
+        else{
+            this.seats=null;
+        }
+    }
+    
+     
     //--------------------------Builder Class------------------
     
     public static abstract class Builder{
         protected String departureStation;
         protected String arrivalStation;
         protected LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
-        protected LocalDateTime arrivalDate;
+        protected LocalTime tripTime;
         protected double fare;
-        protected Passenger passengers;
-        protected Seat seats;
+        protected List<Passenger> passengers;
         
         public Builder setDepartureStation(String departureStation){
             this.departureStation=departureStation;
@@ -109,16 +126,12 @@ public abstract class Trip {
             this.departureDate=departureDate;
             return this;
         }
-        public Builder setArrivalDate(LocalDateTime arrivalDate){
-            this.arrivalDate=arrivalDate;
+        public Builder setTripTime(LocalTime tripTime){
+            this.tripTime=tripTime;
             return this;
         }
         public Builder setFare(double fare){
             this.fare=fare;
-            return this;
-        }
-        public Builder setPassenengers(Passenger passengers){
-            this.passengers=passengers;
             return this;
         }
         

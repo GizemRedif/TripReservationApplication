@@ -4,28 +4,31 @@ import vehicle.model.Seat;
 import user.model.Passenger;
 import vehicle.model.Plane;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FlightTrip extends Trip{
-    Plane plane;
+    private Plane plane;
     
-    public FlightTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalDateTime arrivalDate,
-                        double fare, Passenger passengers, Seat seats, Plane plane){
-        super(departureStation, arrivalStation, departureDate, arrivalDate, fare, passengers);
+    public FlightTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
+                        double fare, List<Passenger> passengers, Plane plane){
+        super(departureStation, arrivalStation, departureDate, tripTime, fare, passengers);
         this.plane=plane;
         this.seats=plane.copySeatList();
     }
     
     public FlightTrip(FlightTrip other){
-        super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getArrivalDate(),
-                other.getFare(), new Passenger(other.getPassengers()));
+        super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
+                other.getFare(), new ArrayList<Passenger>(other.getPassengers()));
         this.plane=new Plane(other.plane);
         this.seats=other.plane.copySeatList();
     }
       
     public FlightTrip(FlightTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
-              builder.arrivalDate, builder.fare, builder.passengers);
+              builder.tripTime, builder.fare, builder.passengers);
         this.plane = builder.plane;
         this.seats=builder.plane.copySeatList();
     }

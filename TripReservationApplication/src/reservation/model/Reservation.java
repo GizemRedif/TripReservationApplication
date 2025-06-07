@@ -4,9 +4,9 @@ import vehicle.model.Seat;
 import user.model.Passenger;
 
 public abstract class Reservation {
-    Passenger passenger;
-    double fare;
-    Seat seat;
+    private Passenger passenger;
+    private double fare;
+    private Seat seat;
     
     public Reservation(Passenger passenger, double fare, Seat seat) {
         this.passenger = passenger;
@@ -58,7 +58,6 @@ public abstract class Reservation {
             this.seat=null;
         }
     }
-    
-    public abstract void reserve(); // Factory'de bunu kullanabiliriz
+
     public abstract Reservation copy();
 }

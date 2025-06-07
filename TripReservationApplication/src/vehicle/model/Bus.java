@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Bus extends Vehicle {
-     String plate;
-     List<Seat> seatList = createDefaultSeats();
+    private String plate;
+    private List<Seat> seatList = createDefaultSeats();
     public Bus(int capacity, String plate) {
         super(capacity);
         this.plate=plate;

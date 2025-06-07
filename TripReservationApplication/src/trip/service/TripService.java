@@ -1,6 +1,7 @@
 package trip.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import trip.model.Trip;
 import trip.repository.TripRepository;
@@ -21,22 +22,22 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         return tripRepository.cancelTrip(trip);
     }
     
-    public boolean updateTrip(Trip updateTrip){
-        if (updateTrip.getDepartureDate() == null) {
+    public boolean updateTrip(Trip newTrip){
+        if (newTrip.getDepartureDate() == null) {
             throw new IllegalArgumentException("Invalid Departure Date");
         }
         List<Trip> allTrips = tripRepository.getAllTrips();
         for (Trip trip : allTrips) {
-            if (trip.equals(updateTrip)) { 
-                checkTripInfo(updateTrip);
+            if (trip.equals(newTrip)) { 
+                checkTripInfo(newTrip);
 
-                trip.setDepartureStation(updateTrip.getDepartureStation());
-                trip.setArrivalStation(updateTrip.getArrivalStation());
-                trip.setDepartureDate(updateTrip.getDepartureDate());
-                trip.setArrivalDate(updateTrip.getArrivalDate());
-                trip.setFare(updateTrip.getFare());
-                trip.setPassengers(updateTrip.getPassengers());
-                trip.setSeats(updateTrip.getSeats());
+                trip.setDepartureStation(newTrip.getDepartureStation());
+                trip.setArrivalStation(newTrip.getArrivalStation());
+                trip.setDepartureDate(newTrip.getDepartureDate());
+                trip.setTripTime(newTrip.getTripTime());
+                trip.setFare(newTrip.getFare());
+                trip.setPassengers(newTrip.getPassengers());
+                trip.setSeats(newTrip.getSeats());
 
                 return true;
             }
@@ -46,12 +47,8 @@ private final TripRepository tripRepository = TripRepository.getInstance();
     }
     private void checkTripInfo(Trip trip){
         
-        if ( trip.getDepartureDate().isBefore(LocalDateTime.now()) || trip.getArrivalDate().isBefore(LocalDateTime.now())){
+        if ( trip.getDepartureDate().isBefore(LocalDateTime.now()) || trip.getTripTime().isBefore(LocalTime.now())){
             throw new IllegalArgumentException("A trip can not be created for a past date");
-        }
-        
-        if (trip.getArrivalDate().isBefore(trip.getDepartureDate())){
-            throw new IllegalArgumentException("Arrival date can not be before the departure date");
         }
         
         if (trip.getFare() <= 0){

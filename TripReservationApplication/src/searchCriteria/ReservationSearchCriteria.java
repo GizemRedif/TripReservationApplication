@@ -5,12 +5,12 @@ import trip.model.Trip;
 import user.model.User;
 
 public class ReservationSearchCriteria {
-    User user;
-    String departureStation;
-    String arrivalStation;
-    Class<? extends Trip> tripType;
-    LocalDateTime departureTimeFrom;
-    LocalDateTime departureTimeTo;
+    private User user;
+    private String departureStation;
+    private String arrivalStation;
+    private Class<? extends Trip> tripType;
+    private LocalDateTime departureTimeFrom;
+    private LocalDateTime departureTimeTo;
     
     public User getUser() {
         return user;

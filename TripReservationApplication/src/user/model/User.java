@@ -1,12 +1,12 @@
 package user.model;
 
 public abstract class User {
-    String name;
-    String surname;
-    String eMail;
-    String password;
-    String phoneNumber;
-    char gender;
+    private String name;
+    private String surname;
+    private String eMail;
+    private String password;
+    private String phoneNumber;
+    private char gender;
     
     public User(String name, String surname, String eMail, String password, String phoneNumber, char gender){
     this.name = name;

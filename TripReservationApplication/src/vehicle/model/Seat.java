@@ -1,8 +1,8 @@
 package vehicle.model;
 
 public class Seat {
-    int seatNumber;
-    boolean isBooked;
+    private int seatNumber;
+    private boolean isBooked;
     
     public Seat (int seatNumber, boolean isBooked){
         this.seatNumber=seatNumber;

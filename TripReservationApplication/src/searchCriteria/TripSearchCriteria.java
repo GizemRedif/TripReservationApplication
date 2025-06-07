@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import trip.model.Trip;
 
 public class TripSearchCriteria {
-    Double minFare;
-    Double maxFare;
-    String departureStation;
-    String arrivalStation;
-    Class<? extends Trip> tripType;
-    LocalDateTime departureTimeFrom;
-    LocalDateTime departureTimeTo;
+    private Double minFare;
+    private Double maxFare;
+    private String departureStation;
+    private String arrivalStation;
+    private Class<? extends Trip> tripType;
+    private LocalDateTime departureTimeFrom;
+    private LocalDateTime departureTimeTo;
     
     public Double getMinFare() {
         return minFare;

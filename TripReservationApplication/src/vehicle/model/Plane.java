@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Plane extends Vehicle{
-    int tailNumber;
-    List<Seat> seatList = createDefaultSeats();
+    private int tailNumber;
+    private List<Seat> seatList = createDefaultSeats();
     
     public Plane(int capacity, int tailNumber){
         super(capacity);

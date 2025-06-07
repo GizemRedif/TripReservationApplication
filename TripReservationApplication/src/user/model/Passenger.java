@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Passenger extends User {
-    String paymentInfo; /*tipi için şimdilik string yazdım*/
+    private String paymentInfo; /*tipi için şimdilik string yazdım*/
 
     public Passenger(String name, String surname, String eMail, String password, String phoneNumber, char gender, String paymentInfo) {
         super(name, surname, eMail, password, phoneNumber, gender);
@@ -26,12 +26,12 @@ public class Passenger extends User {
         if(this==obj) {return true;}
         if(obj==null || getClass() != obj.getClass()){return false;}
         Passenger other= (Passenger) obj;
-        return this.eMail.equals(other.eMail);
+        return this.getEmail().equals(other.getEmail());
     }
     
     @Override
     public int hashCode(){
-        return eMail.hashCode();
+        return getEmail().hashCode();
     }
     
     //---------------------Builder Class---------------
