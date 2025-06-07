@@ -3,6 +3,7 @@ package trip.service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import searchCriteria.TripSearchCriteria;
 import trip.model.Trip;
 import trip.repository.TripRepository;
 
@@ -61,4 +62,27 @@ private final TripRepository tripRepository = TripRepository.getInstance();
 
     }
     
+    public List<Trip> filterTrips(TripSearchCriteria criteria){
+        if(criteria ==null){
+            throw new IllegalArgumentException("Search criteria must not be null.");
+        }
+        
+        if (criteria.getMinFare() != null && criteria.getMinFare() < 0){
+            throw new IllegalArgumentException("Minimum fare cannot be negative.");
+        }
+
+        if (criteria.getMaxFare() != null && criteria.getMaxFare() < 0){
+            throw new IllegalArgumentException("Maximum fare cannot be negative.");
+        }
+        
+        if(criteria.getMinFare() !=null && criteria.getMaxFare() !=null && criteria.getMinFare() > criteria.getMaxFare()){
+            throw new IllegalArgumentException("Minimum fare cannot be greater than maximum fare.");
+        }
+        
+        if(criteria.getDepartureStation() != null && criteria.getArrivalStation() !=null && criteria.getDepartureStation().equals(criteria.getArrivalStation())){
+            throw new IllegalArgumentException("Departure and arrival stations cannot be the same.");
+        }
+        
+    return tripRepository.search(criteria);
+    }
 }

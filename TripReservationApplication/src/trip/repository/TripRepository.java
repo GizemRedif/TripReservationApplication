@@ -45,15 +45,13 @@ public class TripRepository {
             .filter(t -> criteria.getArrivalStation() == null || 
                          t.getArrivalStation().equalsIgnoreCase(criteria.getArrivalStation()))
 
-            .filter(t -> criteria.getDepartureTimeFrom() == null || 
-                         !t.getDepartureDate().isBefore(criteria.getDepartureTimeFrom()))
-            .filter(t -> criteria.getDepartureTimeTo() == null || 
-                         !t.getDepartureDate().isAfter(criteria.getDepartureTimeTo()))
+            .filter(t -> criteria.getDepartureTime() == null || 
+                         t.getDepartureDate().isEqual(criteria.getDepartureTime()))
 
             .filter(t -> criteria.getMinFare() == null || t.getFare() >= criteria.getMinFare())
             .filter(t -> criteria.getMaxFare() == null || t.getFare() <= criteria.getMaxFare())
 
             .collect(Collectors.toList());
     }
-    
+
 }

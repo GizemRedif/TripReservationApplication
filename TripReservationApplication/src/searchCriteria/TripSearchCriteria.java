@@ -9,8 +9,7 @@ public class TripSearchCriteria {
     private String departureStation;
     private String arrivalStation;
     private Class<? extends Trip> tripType;
-    private LocalDateTime departureTimeFrom;
-    private LocalDateTime departureTimeTo;
+    private LocalDateTime departureTime;
     
     public Double getMinFare() {
         return minFare;
@@ -47,18 +46,12 @@ public class TripSearchCriteria {
         this.tripType=tripType;
     }
 
-    public LocalDateTime getDepartureTimeFrom() {
-        return departureTimeFrom;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
-    public void setDepartureTimeFrom(LocalDateTime departureTimeFrom) {
-        this.departureTimeFrom = departureTimeFrom;
+    public void setDepartureTime(LocalDateTime departureTimeFrom) {
+        this.departureTime = departureTimeFrom;
     }
 
-    public LocalDateTime getDepartureTimeTo() {
-        return departureTimeTo;
-    }
-    public void setDepartureTimeTo(LocalDateTime departureTimeTo) {
-        this.departureTimeTo = departureTimeTo;
-    }
  
 }
