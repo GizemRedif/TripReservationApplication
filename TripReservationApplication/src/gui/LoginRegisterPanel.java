@@ -2,14 +2,24 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import tripreservationapplication.MainFrame;
 import user.Service.UserService;
+import user.model.Admin;
 import user.model.Passenger;
-
 import user.model.User; //User sınıfına erişebilmek için
+
+
+
+
+//HATA YA DA EKSİK YOKSA TAMAMLANDI!!!!!
+
+
 
 
 public class LoginRegisterPanel extends JPanel {
 
+    UserService userService = new UserService(); //Bu sınıftaki createUser ve login metotlarını kullanabilmek icin olusturuldu
+    
     public LoginRegisterPanel() {
         setLayout(new GridBagLayout()); // Ortalamak için kullanıyoruz
         this.setBackground(new Color(37, 77, 112));  // arkaplan rengi
@@ -37,15 +47,7 @@ public class LoginRegisterPanel extends JPanel {
 
         add(containerPanel); // Ortalanmış haliyle
     }
-//
-    
-//    NE OLDUĞUNU MİMİYOM
-//    private void switchToUserMainPanel(User user) {
-//    JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//    topFrame.setContentPane(new UserMainPanel(user));
-//    topFrame.revalidate();
-//    topFrame.repaint();
-//}
+
 
     
     private JPanel createLoginPanel() {
@@ -62,21 +64,20 @@ public class LoginRegisterPanel extends JPanel {
         JButton loginButton = new JButton("Login");
         styleButton(loginButton);
         
-//        KONTROL İÇİN YAZILMILTI
-//        loginButton.addActionListener(e -> {
-//        String email = emailField.getText().trim();
-//        String password = new String(passwordField.getPassword());
-//        // Burada email ve password doğrulama işlemini yap
-//        if (email.equals("admin@mail.com") && password.equals("admin123")) {
-//            // admini al
-//            switchToUserMainPanel(adminUser);
-//        } else if (email.equals("passenger@mail.com") && password.equals("pass123")) {
-//            //Passenger al
-//            switchToUserMainPanel(passengerUser);
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Invalid credentials", "Login Failed", JOptionPane.ERROR_MESSAGE);
-//        }
-//    });
+        loginButton.addActionListener(e -> {
+
+            User user = userService.login(emailField.getText().trim(), new String(passwordField.getPassword()));
+            
+            if(user == null){
+                JOptionPane.showMessageDialog(null, "Email or password is incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            else {  //Giris yapan User'ın, Passanger mi Admin mi oldugu kontrolu yapılır ve ona gore panel acılır. 
+                
+                MainFrame.getInstance().showUserPanelManager(user);
+           
+            }
+        });
 
         panel.add(emailLabel);
         panel.add(emailField);
@@ -130,7 +131,6 @@ public class LoginRegisterPanel extends JPanel {
             
             
             //KULLANICI HATALI INPUT GİRDİ Mİ KONTROL EDİLİR, GİRMEDİYSE KULLANICI OLUŞTURULUR.
-            UserService userService = new UserService();
             try {
                 userService.createUser(newUser);
             } 

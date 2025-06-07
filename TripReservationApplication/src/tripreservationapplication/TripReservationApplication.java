@@ -9,7 +9,8 @@ public class TripReservationApplication {
    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new MainFrame();  // Ana GUI burada başlatılır
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
         });
     }
     

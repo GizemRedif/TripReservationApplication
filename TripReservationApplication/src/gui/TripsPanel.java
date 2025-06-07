@@ -1,76 +1,43 @@
 package gui;
 
+import trip.model.Trip;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import model.Trip;
+  
 
-
-
-
-
-
-
-//KONTROL OLMADI DİREKT GPTDEN YAPISTIRDIM
-
-
-
-
-
+//KONTROL OLMADIIIIIII
 
 
 public class TripsPanel extends JPanel {
 
-    public TripsPanel(List<Trip> tripList) {
+    public TripsPanel(List<Trip> trips) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(240, 240, 240));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        for (Trip trip : tripList) {
-            add(createTripCard(trip));
+        if (trips.isEmpty()) {
+            add(new JLabel("No trips found."));
+            return;
         }
-    }
 
-    private JPanel createTripCard(Trip trip) {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        panel.setBackground(Color.WHITE);
-        panel.setMaximumSize(new Dimension(600, 80));
+        for (Trip trip : trips) {
+            JPanel tripCard = new JPanel(new GridLayout(0, 1));
+            tripCard.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            tripCard.setBackground(new Color(250, 250, 250));
+            tripCard.setMaximumSize(new Dimension(500, 100));
+            
+            tripCard.add(new JLabel("From: " + trip.getDepartureStation()));
+            tripCard.add(new JLabel("To: " + trip.getArrivalStation()));
+            tripCard.add(new JLabel("Date: " + trip.getDepartureDate().toString()));
+            tripCard.add(new JLabel("Price: " + trip.getFare() + "₺"));
 
-        JLabel info = new JLabel(String.format("Saat: %s | Tarih: %s | Fiyat: %.2f₺",
-                trip.getDepartureTime(), trip.getDepartureDate(), trip.getFare()));
-        info.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            JButton selectSeatButton = new JButton("Select Seat");
+            tripCard.add(selectSeatButton);
 
-        JButton seatButton = new JButton("Koltuk Seç");
-        seatButton.addActionListener(e -> openSeatDialog(trip));
-
-        panel.add(info, BorderLayout.CENTER);
-        panel.add(seatButton, BorderLayout.EAST);
-
-        return panel;
-    }
-
-    private void openSeatDialog(Trip trip) {
-        JDialog seatDialog = new JDialog((Frame) null, "Koltuk Seçimi", true);
-        seatDialog.setSize(500, 400);
-        seatDialog.setLocationRelativeTo(null);
-        seatDialog.setLayout(new BorderLayout());
-
-        SeatSelectionPanel seatPanel = new SeatSelectionPanel(trip);
-        JButton payButton = new JButton("Ödemeye Geç");
-        payButton.setEnabled(false);
-
-        seatPanel.setPayButton(payButton);
-
-        payButton.addActionListener(e -> {
-            seatDialog.dispose();
-            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            topFrame.setContentPane(new PaymentPanel(trip, seatPanel.getSelectedSeat()));
-            topFrame.revalidate();
-            topFrame.repaint();
-        });
-
-        seatDialog.add(seatPanel, BorderLayout.CENTER);
-        seatDialog.add(payButton, BorderLayout.SOUTH);
-        seatDialog.setVisible(true);
+            // Later: add selectSeatButton action here
+            add(tripCard);
+            add(Box.createVerticalStrut(10));
+        }
     }
 }
