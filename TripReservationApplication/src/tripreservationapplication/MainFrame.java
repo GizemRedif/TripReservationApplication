@@ -1,28 +1,83 @@
 package tripreservationapplication;
 
-//import gui.LoginRegisterPanel; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+import gui.AccountPanel;   //SİLLL!!!!
 import gui.AdminPanel;
-import gui.UserMainPanel;
+import gui.LoginRegisterPanel;
+import gui.UserPanelManager;    //SİL!!!!!
 import java.awt.Color;
+import java.time.LocalDateTime;
 
 import javax.swing.*;
+import trip.model.BusTrip;
+import trip.model.Trip;
+import trip.service.TripService;
+import user.model.Passenger;  //SİL!!!!!
+import user.model.User;       //SİL!!!!!
+import user.repository.UserRepository;
 
 public class MainFrame extends JFrame {
-
+    
+    private static MainFrame instance;
+    
     public MainFrame() {
+        instance = this;  //Singleton
         setTitle("Trip Reservation System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900 , 600);
         setLocationRelativeTo(null);
 
-        // LoginRegisterPanel ekleniyor !!!!!!!!!!!!!!!!!! Ana kod bu
-//        add(new LoginRegisterPanel());
-
-
-//deneme amaçlı yazılanlar
-    add(new UserMainPanel());
-        setVisible(true);
-
-//        add(new AdminPanel());
+        
+        //DENEME AMACLI NESNELER BURADAN OLUSTURULUYOR. SONRA SİL
+        //Passenger panel deneme amaclı yapılmıstır. sonra sil
+        User user = new Passenger("aa","bb","dds@gmail.com","122","6765456782",'M',null);
+        UserRepository rep = UserRepository.getInstance();
+        rep.addUser(user);
+        
+        
+        Trip trip = new BusTrip.BusTripBuilder()
+                .setDepartureStation("Adana")
+                .setArrivalStation("Ankara")
+                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setArrivalDate(LocalDateTime.of(2025, 6, 15, 22, 0))
+                .setFare(2200.00).build();
+        
+        TripService tripService = new TripService();
+        tripService.createTrip(trip);
+        
+        
+        
+        
+        
+        
+        
+        
+       
+        
+        //Başlangıçta login paneli göster, menü bar yok
+//        setJMenuBar(null);
+//        setContentPane(new LoginRegisterPanel());
+//
+//        setVisible(true);
+//        
+        
+        
+        
+        
+        
+        add(new UserPanelManager(user));
+    }
+    
+    //Giriş başarılı olunca çağrılacak metod (LoginRegisterPanel'de Login metodu cagıracak). 
+    //Boylece giris yapan kullanıcıya gore paneller ve MenuBar duzenlenecek.
+    public void showUserPanelManager(User user) {
+        UserPanelManager userPanel = new UserPanelManager(user); 
+        setJMenuBar(userPanel.getMenuBar()); // Menü bar görünür olacak
+        setContentPane(userPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public static MainFrame getInstance() {
+        return instance;
     }
 }
