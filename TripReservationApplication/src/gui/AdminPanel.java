@@ -2,10 +2,11 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import user.model.Admin;
 
 public class AdminPanel extends JPanel {
 
-    public AdminPanel() {
+    public AdminPanel(Admin admin) {
         setLayout(new GridBagLayout()); // Ortalamak için
         this.setBackground(new Color(37, 77, 112));  // Arkaplan
 
