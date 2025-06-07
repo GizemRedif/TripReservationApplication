@@ -1,0 +1,64 @@
+package searchCriteria;
+
+import java.time.LocalDateTime;
+import trip.model.Trip;
+import user.model.User;
+
+public class ReservationSearchCriteria {
+    User user;
+    String departureStation;
+    String arrivalStation;
+    Class<? extends Trip> tripType;
+    LocalDateTime departureTimeFrom;
+    LocalDateTime departureTimeTo;
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getDepartureStation() {
+        return departureStation;
+    }
+
+    public void setDepartureStation(String departureStation) {
+        this.departureStation = departureStation;
+    }
+
+    public String getArrivalStation() {
+        return arrivalStation;
+    }
+
+    public void setArrivalStation(String arrivalStation) {
+        this.arrivalStation = arrivalStation;
+    }
+
+    public Class<? extends Trip> getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(Class<? extends Trip> tripType) {
+        this.tripType = tripType;
+    }
+
+    public LocalDateTime getDepartureTimeFrom() {
+        return departureTimeFrom;
+    }
+
+    public void setDepartureTimeFrom(LocalDateTime departureTimeFrom) {
+        this.departureTimeFrom = departureTimeFrom;
+    }
+
+    public LocalDateTime getDepartureTimeTo() {
+        return departureTimeTo;
+    }
+
+    public void setDepartureTimeTo(LocalDateTime departureTimeTo) {
+        this.departureTimeTo = departureTimeTo;
+    }
+
+}
+
