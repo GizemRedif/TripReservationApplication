@@ -1,7 +1,7 @@
 package trip.model;
 
 import seat.Seat;
-import user.model.Passenger;
+import reservation.model.Reservation;
 import vehicle.model.Plane;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,20 +13,21 @@ public class FlightTrip extends Trip{
     private Plane plane;
     
     public FlightTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
-                        double fare, List<Passenger> passengers, Plane plane){
-        super(departureStation, arrivalStation, departureDate, tripTime, fare, passengers);
+                        double fare, Plane plane){
+        super(departureStation, arrivalStation, departureDate, tripTime, fare);
         this.plane=plane.clone();
     }
     
     public FlightTrip(FlightTrip other){
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
-                other.getFare(), new ArrayList<>(other.getPassengers()));
+                other.getFare());
+        super.setReservaitons(other.getReservations());
         this.plane=other.plane.clone();
     }
       
     public FlightTrip(FlightTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
-              builder.tripTime, builder.fare, builder.passengers);
+              builder.tripTime, builder.fare);
         this.plane = builder.plane;
     }
     

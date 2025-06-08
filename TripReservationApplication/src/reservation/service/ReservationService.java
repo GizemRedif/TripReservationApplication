@@ -11,21 +11,24 @@ import user.model.User;
 public class ReservationService {
     private final ReservationRepository reservationRepository = ReservationRepository.getInstance();
     
-    public boolean createReservation(User user,Reservation reservation){
-        if(user == null ||reservation == null){return false;}
-        
-        checkReservationInfo(reservation);
+    public void createReservation(User user,Reservation reservation){
+        if(reservation.getFare()<0){
+            throw new IllegalArgumentException("Fare cannot be negative.");
+        }
         reservationRepository.addReservation(user, reservation);
-        return true;
+        //burada aynı zamanda ilgili Trip nesnesinin rezervasyon listesi içine de bu rezervasyonu eklemeliyiz
     }    
     
     public boolean deleteReservation(Reservation reservation){
-        return reservationRepository.deleteReservation(reservation);    
+        return reservationRepository.deleteReservation(reservation);
+        //burada da aynı şekilde tripten silmeliyiz
     }
     
     //Kullanıcının rezervasyonlarını getir.
     public List<Reservation> getReservationsByUser(User user) {
-        if (user == null) return Collections.emptyList();
+        if (user == null){
+            throw new IllegalArgumentException("Usaer cannot be null.");
+        }
 
         List<Reservation> list = reservationRepository.getReservationListByUser(user);
         return list != null ? list : Collections.emptyList();
@@ -37,16 +40,4 @@ public class ReservationService {
 
         return reservationRepository.search(criteria);
     }
-    
-    public void checkReservationInfo(Reservation reservation){
-        if(reservation.getFare()<0){
-            throw new IllegalArgumentException("Fare cannot be negative.");
-        }
-        if(reservation.getPassenger() == null){
-            throw new IllegalArgumentException("Passenger cannot be null.");
-        }
-        if(reservation.getSeat() == null){
-            throw new IllegalArgumentException("Seat cannot be null.");
-        }
-    }   
 }

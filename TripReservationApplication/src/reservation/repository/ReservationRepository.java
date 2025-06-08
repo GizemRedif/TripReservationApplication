@@ -38,14 +38,12 @@ public class ReservationRepository {
     }
     
     /*add new reservation*/
-    public boolean addReservation(User user , Reservation reservation){
+    public void addReservation(User user , Reservation reservation){
         if(!reservationsWithUser.containsKey(user)){
-            return false;
+            throw new IllegalArgumentException("there is no such user");
         }
         
         reservationsWithUser.get(user).add(reservation);
-        
-        return true;
     }
     
     public boolean deleteReservation(Reservation reservation){

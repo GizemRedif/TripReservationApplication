@@ -2,7 +2,7 @@ package trip.model;
 
 import seat.Seat;
 
-import user.model.Passenger;
+import reservation.model.Reservation;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,17 +14,17 @@ public abstract class Trip {
     private LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
     private LocalTime tripTime;
     private double fare;
-    private List<Passenger> passengers;
+    private List<Reservation> reservations;
 
      
     
-    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalTime tripTime, double fare, List<Passenger> passengers){
+    public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalTime tripTime, double fare){
         this.departureStation=departureStation;
         this.arrivalStation=arrivalStation;
         this.departureDate=departureDate;
         this.tripTime=tripTime;
         this.fare=fare;
-        this.passengers=new ArrayList<>();
+        this.reservations=new ArrayList<>();
     }
 
     public String getDepartureStation() {
@@ -67,21 +67,21 @@ public abstract class Trip {
         this.fare = fare;
     }
     
-    public List<Passenger> getPassengers(){
-        if(passengers != null){
-            return new ArrayList<>(passengers);
+    public List<Reservation> getReservations(){
+        if(reservations != null){
+            return new ArrayList<>(reservations);
         }
         else{
             return null;
         }
     }
     
-    public void setPassengers(List<Passenger> passengers){
-        if(passengers !=null){
-            this.passengers= new ArrayList<>(passengers);
+    public void setReservaitons(List<Reservation> reservations){
+        if(reservations !=null){
+            this.reservations= new ArrayList<>(reservations);
         }
         else{
-            this.passengers=null;
+            this.reservations=null;
         }
     }
     
@@ -94,8 +94,7 @@ public abstract class Trip {
         protected LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
         protected LocalTime tripTime;
         protected double fare;
-        protected List<Passenger> passengers;
-        
+                
         public Builder setDepartureStation(String departureStation){
             this.departureStation=departureStation;
             return this;

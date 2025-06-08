@@ -13,22 +13,23 @@ public class BusTrip extends Trip{
     private Bus bus;
 
     public BusTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
-                        double fare, List<Passenger> passengers, Bus bus) {
-        super(departureStation, arrivalStation, departureDate, tripTime, fare, passengers);
+                        double fare,Bus bus) {
+        super(departureStation, arrivalStation, departureDate, tripTime, fare);
         this.bus=bus.clone();
         
     }
     
     public BusTrip(BusTrip other){
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
-                other.getFare(), new ArrayList<>(other.getPassengers()));
+                other.getFare());
+        super.setReservaitons(other.getReservations());
         this.bus=other.getBus().clone();
         
     }
     
     public BusTrip(BusTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
-              builder.tripTime, builder.fare, builder.passengers);
+              builder.tripTime, builder.fare);
         this.bus = builder.bus;
        
     }
