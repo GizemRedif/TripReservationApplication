@@ -38,33 +38,30 @@ public class UserService {
             }
         }
         
-        public boolean updateUser(User updateUser){
-            if(updateUser== null || updateUser.getEmail()== null){
+        public boolean updateUser(User newUser){
+            if(newUser== null || newUser.getEmail()== null){
                 throw new IllegalArgumentException("Updated user or email cannot be null.");
             }
              
-            User existingUser =userRepository.getUserByEmail(updateUser.getEmail());
+            User existingUser =userRepository.getUserByEmail(newUser.getEmail());
             if(existingUser == null){
                 System.out.println("User with the specified email does not exist.");
                 return false;
             }
             
-            if(updateUser.getName()!=null || updateUser.getSurname()!=null ||
-                    updateUser.getPhoneNumber()!=null || updateUser.getEmail()!=null){
-                checkUserInfo(updateUser);
-            }
+            checkUserInfo(newUser);
             
-            if(updateUser.getName()!= null){
-                existingUser.setName(updateUser.getName());
+            if(newUser.getName()!= null){
+                existingUser.setName(newUser.getName());
             }
-            if(updateUser.getSurname()!=null){
-                existingUser.setSurname(updateUser.getSurname());
+            if(newUser.getSurname()!=null){
+                existingUser.setSurname(newUser.getSurname());
             }
-            if(updateUser.getPassword()!=null){
-                existingUser.setPassword(updateUser.getPassword());
+            if(newUser.getPassword()!=null){
+                existingUser.setPassword(newUser.getPassword());
             }
-            if(updateUser.getPhoneNumber()!=null){
-                existingUser.setPhoneNumber(updateUser.getPhoneNumber());
+            if(newUser.getPhoneNumber()!=null){
+                existingUser.setPhoneNumber(newUser.getPhoneNumber());
             }
             
             return true;

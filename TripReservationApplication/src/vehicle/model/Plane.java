@@ -4,6 +4,7 @@ import vehicle.model.Seat;
 
 import java.util.List;
 import java.util.ArrayList;
+import seat.PlaneSeat;
 
 public class Plane extends Vehicle{
     private int tailNumber;
@@ -21,10 +22,22 @@ public class Plane extends Vehicle{
     
     private static List<Seat> createDefaultSeats() {
         List<Seat> list = new ArrayList<>();
-        // 45 koltuklu 2+1 oturma düzeni
-        for (int i = 1; i <= 150; i++) {
-            list.add(new Seat(i,false,false,false));
+        // 150  seat first 5 lines are bussiness the rest echonomy
+        
+        char[] columns = {'A', 'B', 'C', 'D', 'E', 'F'};
+        
+        for (int i = 1; i <= 25; i++) {
+            for (char col : columns) {
+                String seatNumber = i + "" + col; // örnek: 1
+                boolean isWindowSide = (col == 'A' || col == 'F');
+                boolean isBusinessClass = i <= 5;
+
+                PlaneSeat seat = new PlaneSeat(seatNumber, isWindowSide, isBusinessClass);
+
+                
+            }
         }
+        
         return list;
     }
     

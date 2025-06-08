@@ -1,77 +1,52 @@
 package vehicle.model;
 
-public class Seat {
-    private int seatNumber;
+public abstract class Seat implements Cloneable {
+    private String seatNumber;
     private boolean isBooked;
-    private boolean isWindowSide;
-    private boolean isSingle;
     
-    public Seat (int seatNumber, boolean isBooked, boolean isWindowSide, boolean isSingle){
+    
+    
+    public Seat (String seatNumber){
         this.seatNumber=seatNumber;
-        this.isBooked= isBooked;
-        this.isWindowSide = isWindowSide;
-        this.isSingle = isSingle;
+        this.isBooked= false;
         
     }
     
     public Seat(Seat other){
         this.seatNumber= other.seatNumber;
         this.isBooked= other.isBooked;
-        this.isWindowSide = other.isWindowSide;
-        this.isSingle = other.isSingle;
     }
     
-    @Override
-    public boolean equals(Object obj){
-        if(this==obj){return true;}
-        if(obj==null || getClass() != obj.getClass()) {return false;}
-        Seat other= (Seat) obj;
-        return this.seatNumber== other.seatNumber && this.isBooked == other.isBooked && this.isWindowSide == other.isWindowSide && this.isSingle == other.isSingle;
-    }
+//    @Override
+//    public boolean equals(Object obj){
+//        if(this==obj){return true;}
+//        if(obj==null || getClass() != obj.getClass()) {return false;}
+//        Seat other= (Seat) obj;
+//        return this.seatNumber== other.seatNumber && this.isBooked == other.isBooked;
+//    }
     
     @Override
-    public Seat clone() {
-        Seat copy = new Seat(this.seatNumber , this.isBooked , this.isWindowSide , this.isSingle);
-        return copy;
-    }
+    public abstract Seat clone();
     
-    @Override
-    public int hashCode(){
-        return Integer.hashCode(seatNumber);
-    }
+//    @Override
+//    public int hashCode(){
+//        return Integer.hashCode(seatNumber);
+//    }
 
-    public int getSeatNumber() {
+    public String getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
     }
 
-    public boolean getisBooked() {
+    public boolean getIsBooked() {
         return isBooked;
     }
 
     public void setIsBooked(boolean isBooked) {
         this.isBooked = isBooked;
     }
-
-    public boolean isIsWindowSide() {
-        return isWindowSide;
-    }
-
-    public void setIsWindowSide(boolean isWindowSide) {
-        this.isWindowSide = isWindowSide;
-    }
-
-    public boolean isIsSingle() {
-        return isSingle;
-    }
-
-    public void setIsSingle(boolean isSingle) {
-        this.isSingle = isSingle;
-    }
-    
-    
 }
 
