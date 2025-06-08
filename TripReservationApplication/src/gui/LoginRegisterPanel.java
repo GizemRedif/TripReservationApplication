@@ -20,6 +20,9 @@ public class LoginRegisterPanel extends JPanel {
 
     UserService userService = new UserService(); //Bu sınıftaki createUser ve login metotlarını kullanabilmek icin olusturuldu
     
+    private JTabbedPane tabbedPane; // Ekledik
+
+    
     public LoginRegisterPanel() {
         setLayout(new GridBagLayout()); // Ortalamak için kullanıyoruz
         this.setBackground(new Color(37, 77, 112));  // arkaplan rengi
@@ -37,7 +40,7 @@ public class LoginRegisterPanel extends JPanel {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
         // 🔹 Sekmeler altta olacak şekilde oluşturuluyor
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
+        tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
         tabbedPane.addTab("Login", createLoginPanel());
         tabbedPane.addTab("Register", createRegisterPanel());
 
@@ -133,6 +136,11 @@ public class LoginRegisterPanel extends JPanel {
             //KULLANICI HATALI INPUT GİRDİ Mİ KONTROL EDİLİR, GİRMEDİYSE KULLANICI OLUŞTURULUR.
             try {
                 userService.createUser(newUser);
+                
+                System.out.println("User created: ");
+                JOptionPane.showMessageDialog(null, "User created successfully. Please log in.!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+
+                tabbedPane.setSelectedIndex(0); //Giris basarılı olunca Login ekranına donulsun
             } 
             catch (IllegalArgumentException a) {
                 JOptionPane.showMessageDialog(null, a.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -141,7 +149,7 @@ public class LoginRegisterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "An unexpected error occurred:\n" + a.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             
-            System.out.println("User created: ");
+            
         });
 
         panel.add(firstNameLabel);

@@ -5,14 +5,18 @@ import trip.model.Trip;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import user.model.User;
   
 
 //KONTROL OLMADIIIIIII
 
 
 public class TripsPanel extends JPanel {
+     private User user; //DISARIDAKİ METOTLARDA KULLANMAZSAN SİL
 
-    public TripsPanel(List<Trip> trips) {
+    public TripsPanel(List<Trip> trips, User user) {
+                this.user = user;   //DISARIDAKİ METOTLARDA KULLANMAZSAN SİL
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 

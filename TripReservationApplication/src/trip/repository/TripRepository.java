@@ -48,8 +48,8 @@ public class TripRepository {
             .filter(t -> criteria.getDepartureTime() == null || 
                          t.getDepartureDate().isEqual(criteria.getDepartureTime()))
 
-            .filter(t -> criteria.getMinFare() == null || t.getFare() >= criteria.getMinFare())
-            .filter(t -> criteria.getMaxFare() == null || t.getFare() <= criteria.getMaxFare())
+            .filter(t -> t.getFare() >= criteria.getMinFare())
+            .filter(t -> t.getFare() <= criteria.getMaxFare())
 
             .collect(Collectors.toList());
     }

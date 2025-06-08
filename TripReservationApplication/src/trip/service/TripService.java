@@ -48,6 +48,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
     }
     private void checkTripInfo(Trip trip){
         
+        //silinebilir
         if ( trip.getDepartureDate().isBefore(LocalDateTime.now()) || trip.getTripTime().isBefore(LocalTime.now())){
             throw new IllegalArgumentException("A trip can not be created for a past date");
         }
@@ -67,15 +68,15 @@ private final TripRepository tripRepository = TripRepository.getInstance();
             throw new IllegalArgumentException("Search criteria must not be null.");
         }
         
-        if (criteria.getMinFare() != null && criteria.getMinFare() < 0){
+        if (criteria.getMinFare() < 0){
             throw new IllegalArgumentException("Minimum fare cannot be negative.");
         }
 
-        if (criteria.getMaxFare() != null && criteria.getMaxFare() < 0){
+        if (criteria.getMaxFare() < 0){
             throw new IllegalArgumentException("Maximum fare cannot be negative.");
         }
         
-        if(criteria.getMinFare() !=null && criteria.getMaxFare() !=null && criteria.getMinFare() > criteria.getMaxFare()){
+        if(criteria.getMinFare() > criteria.getMaxFare()){
             throw new IllegalArgumentException("Minimum fare cannot be greater than maximum fare.");
         }
         

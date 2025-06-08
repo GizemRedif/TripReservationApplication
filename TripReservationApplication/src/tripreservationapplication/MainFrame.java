@@ -12,9 +12,11 @@ import javax.swing.*;
 import trip.model.BusTrip;
 import trip.model.Trip;
 import trip.service.TripService;
+import user.model.Admin;
 import user.model.Passenger;  //SİL!!!!!
 import user.model.User;       //SİL!!!!!
 import user.repository.UserRepository;
+import vehicle.model.Bus;
 
 public class MainFrame extends JFrame {
     
@@ -34,24 +36,24 @@ public class MainFrame extends JFrame {
         UserRepository rep = UserRepository.getInstance();
         rep.addUser(user);
         
+        User admin = new Admin("s","b","admin@gmail.com","122","07654325676",'F');
+        rep.addUser(admin);
+        
+        Bus bus = new Bus(12,"dd");
         
         Trip trip = new BusTrip.BusTripBuilder()
+                .setBus(bus)
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
                 .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
-                .setFare(2200.00).build();
+                .setFare(2200.00)
+                .build();
         
         TripService tripService = new TripService();
         tripService.createTrip(trip);
         
-        
-        
-        
-        
-        
-        
-        
+ 
        
         
         //Başlangıçta login paneli göster, menü bar yok
@@ -59,13 +61,9 @@ public class MainFrame extends JFrame {
 //        setContentPane(new LoginRegisterPanel());
 //
 //        setVisible(true);
-//        
         
         
-        
-        
-        
-        add(new UserPanelManager(user));
+       add(new UserPanelManager(user));
     }
     
     //Giriş başarılı olunca çağrılacak metod (LoginRegisterPanel'de Login metodu cagıracak). 
