@@ -1,36 +1,41 @@
 package gui;
 
 import trip.model.Trip;
+import user.model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import user.model.User;
-  
-
-//KONTROL OLMADIIIIIII
-
+import tripreservationapplication.MainFrame;
 
 public class TripsPanel extends JPanel {
-     private User user; //DISARIDAKİ METOTLARDA KULLANMAZSAN SİL
 
     public TripsPanel(List<Trip> trips, User user) {
-                this.user = user;   //DISARIDAKİ METOTLARDA KULLANMAZSAN SİL
+        setLayout(new BorderLayout());
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // 🔹 Üst panel: Geri butonu
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topBar.setBackground(new Color(220, 220, 220));
+        JButton backButton = new JButton("← Back");
 
-        if (trips.isEmpty()) {
-            add(new JLabel("No trips found."));
-            return;
-        }
+        backButton.addActionListener(e -> {
+    MainFrame.getInstance().showSearchTripPanel(user);
+});
+
+
+        topBar.add(backButton);
+        add(topBar, BorderLayout.NORTH);
+
+        // 🔹 İçerik: Trip kartları
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
 
         for (Trip trip : trips) {
             JPanel tripCard = new JPanel(new GridLayout(0, 1));
             tripCard.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             tripCard.setBackground(new Color(250, 250, 250));
             tripCard.setMaximumSize(new Dimension(500, 100));
-            
+
             tripCard.add(new JLabel("From: " + trip.getDepartureStation()));
             tripCard.add(new JLabel("To: " + trip.getArrivalStation()));
             tripCard.add(new JLabel("Date: " + trip.getDepartureDate().toString()));
@@ -39,9 +44,15 @@ public class TripsPanel extends JPanel {
             JButton selectSeatButton = new JButton("Select Seat");
             tripCard.add(selectSeatButton);
 
-            // Later: add selectSeatButton action here
-            add(tripCard);
-            add(Box.createVerticalStrut(10));
+            innerPanel.add(tripCard);
+            innerPanel.add(Box.createVerticalStrut(10));
         }
+
+        JScrollPane scrollPane = new JScrollPane(innerPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+        add(scrollPane, BorderLayout.CENTER);
     }
 }
