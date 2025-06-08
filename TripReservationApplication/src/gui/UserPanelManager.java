@@ -2,63 +2,58 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+//import java.awt.event.*;
 import user.model.Admin;
 import user.model.Passenger;
-
 import user.model.User;
 
-
-
-
-
-//HATA YA DA EKSİK YOKSA TAMAMLANDI
-
-
-
-
-
-
-
 public class UserPanelManager extends JPanel {
-    private CardLayout cardLayout;
+    private CardLayout cardLayout; 
     private JPanel contentPanel;
-    private User currentUser; // sınıf değişkeni
-    private JMenuBar menuBar; //MenuBar login ekranında gorunmeyecek, diger her ekranda gorunecek. bunu MainFrame icerisinde ayarlamak icin kullanılacak 
-
+    private User currentUser;
+    private JMenuBar menuBar;
 
     public UserPanelManager(User user) {
         setLayout(new BorderLayout());
         currentUser = user;
-        
-        // 🔹 Özelleştirilmiş Menü Bar ekleniyor
+
+        // Menü bar
         menuBar = createCustomMenuBar();
         add(menuBar, BorderLayout.NORTH);
 
-        // 🔹 Content panel (CardLayout)
+        // CardLayout panel
+        //cardLayout: JPanel içinde birden fazla paneli aynı alanda göstermek için kullanılır ama aynı anda sadece bir tanesi görünür.
+        //contentPanel: Paneller burada yer alacak, cardLayout yonetecek
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
-        
-        //User'in turune gore menuBar olusturuluyor ve hangi panele erisebilecekleri belirleniyor.
-        if(user instanceof Admin){ 
-            contentPanel.add(new AdminPanel((Admin) user), "admin");
-            contentPanel.add(new SearchTripPanel((Admin) user), "searching");
-            contentPanel.add(new AccountPanel((Admin) user), "account");
-        }        
-        else{
-            contentPanel.add(new SearchTripPanel((Passenger) user), "searching");
-            contentPanel.add(new PastTripsPanel((Passenger) user), "pastTrips");
-            contentPanel.add(new AccountPanel((Passenger) user), "account");
+
+        // Kullanıcı türüne göre içerikler
+        switch (user) {
+            case Admin admin -> {
+                contentPanel.add(new AdminPanel(admin), "admin");
+                contentPanel.add(new SearchTripPanel(admin), "searching");
+                contentPanel.add(new AccountPanel(admin), "account");
+            }
+            case Passenger passenger -> {
+                contentPanel.add(new SearchTripPanel(passenger), "searching");
+                contentPanel.add(new PastTripsPanel(passenger), "pastTrips");
+                contentPanel.add(new AccountPanel(passenger), "account");
+            }
+            default -> {
+            }
         }
 
         add(contentPanel, BorderLayout.CENTER);
-        cardLayout.show(contentPanel, user instanceof Admin ? "admin" : "searching"); // User turune gore gosterilecek ilk paneller belirleniyor
 
+        // İlk gösterilecek panel
+        cardLayout.show(contentPanel, user instanceof Admin ? "admin" : "searching");
     }
+//-------------------------------------------End of constructor method-----------------------------
 
+    
     private JMenuBar createCustomMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setPreferredSize(new Dimension(400, 40)); // Menü bar yüksekliği büyütüldü
+        menuBar.setPreferredSize(new Dimension(400, 40));
         menuBar.setBackground(new Color(19, 29, 79));
 
         JMenu menu = new JMenu("Menu");
@@ -71,51 +66,55 @@ public class UserPanelManager extends JPanel {
         JMenuItem accountItem = null;
         JMenuItem pastTripsItem = null;
 
-        
-        //User turune gore menubar icerikleri belirleniyor.
-        if(currentUser instanceof Admin){ 
-            adminPanelItem = new JMenuItem("Admin Panel"); 
+        if (currentUser instanceof Admin) {
+            adminPanelItem = new JMenuItem("Admin Panel");
+        } 
+        else if (currentUser instanceof Passenger) {
             searchTripItem = new JMenuItem("Search Trips");
-            accountItem = new JMenuItem("My Account");
-        }        
-        else if (currentUser instanceof Passenger){
-            searchTripItem = new JMenuItem("Search Trips");
-            pastTripsItem = new JMenuItem("MyPast Trips");
+            pastTripsItem = new JMenuItem("My Past Trips");
             accountItem = new JMenuItem("My Account");
         }
-       
-        JMenuItem[] items = {searchTripItem, pastTripsItem, accountItem, adminPanelItem};
-        //Null olmayan iremlerin stili tanımlanır
+
+        JMenuItem[] items = { searchTripItem, pastTripsItem, accountItem, adminPanelItem };
+
         for (JMenuItem item : items) {
             if (item != null) {
                 item.setBackground(new Color(19, 29, 79));
                 item.setForeground(Color.WHITE);
                 item.setFont(new Font("Arial", Font.PLAIN, 14));
-            }
-        }
-        //Null olmayan itemler menu'ye eklenir
-        for (JMenuItem item : items) {
-            if (item != null) {
                 menu.add(item);
             }
         }
 
-        menuBar.add(menu); // BU SATIR OLMAZSA GÖRÜNMEZ
+        menuBar.add(menu);
 
-        //Menü olayları (Itemlere tıklanınca hangi panellerin acılacagı)
-        searchTripItem.addActionListener(e -> cardLayout.show(contentPanel, "searching"));
-        accountItem.addActionListener(e -> cardLayout.show(contentPanel, "account"));         
+        // ActionListener'lar
+        if (searchTripItem != null)
+            searchTripItem.addActionListener(e -> showPanelByKey("searching"));
+        if (accountItem != null)
+            accountItem.addActionListener(e -> showPanelByKey("account"));
         if (pastTripsItem != null)
-            pastTripsItem.addActionListener(e -> cardLayout.show(contentPanel, "pastTrips"));
+            pastTripsItem.addActionListener(e -> showPanelByKey("pastTrips"));
         if (adminPanelItem != null)
-            adminPanelItem.addActionListener(e -> cardLayout.show(contentPanel, "admin"));
-
+            adminPanelItem.addActionListener(e -> showPanelByKey("admin"));
 
         return menuBar;
     }
 
-    public JMenuBar getMenuBar() { //MainFrame icinde cagırılacak
-        return menuBar;
+    //Dışarıdan panel geçişi için ekledik
+    public void showPanelByKey(String key) {
+        cardLayout.show(contentPanel, key);
     }
 
+    public JMenuBar getMenuBar() {
+        return menuBar;
+    }
+    
+    public void setMenuBarVisible(boolean visible) {
+        menuBar.setVisible(visible);
+    }
+    
+    public void addPanel(String key, JPanel panel) {
+        contentPanel.add(panel, key);
+    }
 }

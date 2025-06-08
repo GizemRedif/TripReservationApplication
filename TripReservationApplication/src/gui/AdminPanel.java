@@ -1,87 +1,90 @@
 package gui;
 
+import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
-import user.model.Admin;
+import tripreservationapplication.MainFrame;
 
 public class AdminPanel extends JPanel {
 
     public AdminPanel(Admin admin) {
-        setLayout(new GridBagLayout()); // Ortalamak için
-        this.setBackground(new Color(37, 77, 112));  // Arkaplan
+        setLayout(new GridLayout(1, 2));  // Sol ve sağ eşit genişlikte
+        setBackground(new Color(239, 228, 210)); // Panel arkaplanı
 
-        JPanel containerPanel = new JPanel();
-        containerPanel.setLayout(new BorderLayout(0, 20));
-        containerPanel.setPreferredSize(new Dimension(420, 460));
-        containerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1, true));
-        containerPanel.setBackground(Color.WHITE);
+        // 🔹 Sol Panel – "Welcome" yazısı
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(new Color(239, 228, 210));
+        leftPanel.setLayout(new GridBagLayout());
+        JLabel welcomeLabel = new JLabel("Welcome Admin " + admin.getName() + " " + admin.getSurname() +"!");
+        welcomeLabel.setForeground(Color.BLACK);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        leftPanel.add(welcomeLabel);
 
-        // 🔹 Sekmeler
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
-        tabbedPane.addTab("Edit/Delete Trip", createTripEditDeletePanel());
-        tabbedPane.addTab("Tripp Add", createTripAddPanel());
-        tabbedPane.addTab("Admin Add", createAdminAddPanel());
-        tabbedPane.addTab("User Delete", createUserDeletePanel());
+        // 🔹 Sağ Panel – Butonlar
+        JPanel rightPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+        rightPanel.setBackground(new Color(239, 228, 210));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        containerPanel.add(tabbedPane, BorderLayout.CENTER);
-        add(containerPanel);
+        // Butonlar
+        JButton editTripBtn = createStyledButton("Edit Trip/Reservation");
+        JButton addTripBtn = createStyledButton("Trip Add");
+        JButton addUserBtn = createStyledButton("User Add");
+        JButton editUserBtn = createStyledButton("Edit User");
+        JButton accountBtn = createStyledButton("My Account");
+
+        // ActionListener'lar
+        editTripBtn.addActionListener(e -> {
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("editTrip", new SearchTripPanel(admin));
+            upm.showPanelByKey("editTrip");
+        });
+
+        addTripBtn.addActionListener(e -> {
+//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+//            upm.addPanel("addTrip", new TripAddPanel(admin));
+//            upm.showPanelByKey("addTrip");
+        });
+
+        addUserBtn.addActionListener(e -> {
+//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+//            upm.addPanel("addUser", new UserAddPanel(admin));
+//            upm.showPanelByKey("addUser");
+        });
+
+        editUserBtn.addActionListener(e -> {
+//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+//            upm.addPanel("editUser", new EditUserPanel(admin));
+//            upm.showPanelByKey("editUser");
+        });
+
+        accountBtn.addActionListener(e -> {
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("account", new AccountPanel(admin));
+            upm.showPanelByKey("account");
+        });
+
+        // Butonları sağ panele ekle
+        rightPanel.add(editTripBtn);
+        rightPanel.add(addTripBtn);
+        rightPanel.add(addUserBtn);
+        rightPanel.add(editUserBtn);
+        rightPanel.add(accountBtn);
+
+        // Panelleri ekle
+        add(leftPanel);
+        add(rightPanel);
     }
+//-------------------------------------------End of constructor method-----------------------------
 
     
-    private JPanel createTripEditDeletePanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        JLabel label = new JLabel("Seyahat düzenleme/silme alanı", SwingConstants.CENTER);
-        panel.add(label, BorderLayout.CENTER);
-        return panel;
-    }
-
-    private JPanel createTripAddPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        JLabel label = new JLabel("Seyahat ekleme alanı", SwingConstants.CENTER);
-        panel.add(label, BorderLayout.CENTER);
-        return panel;
-    }
     
-    private JPanel createAdminAddPanel() {
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        panel.add(new JLabel("Ad:"));
-        panel.add(new JTextField());
-        panel.add(new JLabel("Soyad:"));
-        panel.add(new JTextField());
-        panel.add(new JLabel("Email:"));
-        panel.add(new JTextField());
-
-        JButton addButton = new JButton("Admin Ekle");
-        styleButton(addButton);
-        panel.add(new JLabel()); // boşluk
-        panel.add(addButton);
-
-        return panel;
-    }
-
-    private JPanel createUserDeletePanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        JLabel label = new JLabel("Kullanıcı silme alanı", SwingConstants.CENTER);
-        panel.add(label, BorderLayout.CENTER);
-        return panel;
-    }
-
-    private void styleButton(JButton button) {
-        button.setFocusPainted(false);
+    // 🔧 Ortak buton tasarımı
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        button.setFocusPainted(false);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        return button;
     }
 }

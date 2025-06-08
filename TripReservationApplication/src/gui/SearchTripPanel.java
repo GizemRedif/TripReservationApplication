@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import searchCriteria.TripSearchCriteria;
 import trip.model.Trip;
 import java.util.List;
-import trip.repository.TripRepository;
 import trip.service.TripService;
+import tripreservationapplication.MainFrame;
 import user.model.Admin;
 import user.model.User;
 
@@ -18,43 +18,42 @@ public class SearchTripPanel extends JPanel {
     
     TripService tripService = new TripService(); //Tripleri filtrelemek icin kullanılacak. Kriterler search butona tıklanınca olusturulacak.
     
-    String[] cities = {
-    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+    String[] cities = {"Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
     "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
     "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
-    "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
-};
+    "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"};
 
     
-
     public SearchTripPanel(User user) {
-        
         setLayout(new GridBagLayout()); // Panel ortalanıyor
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setPreferredSize(new Dimension(500, 300)); // TabbedPane büyütüldü
+        tabbedPane.setPreferredSize(new Dimension(500, 300)); 
 
-        tabbedPane.addTab("Bus 🚌", createSearchForm("Bus",tabbedPane, user ));
-        tabbedPane.addTab("Flight ✈️", createSearchForm("Flight", tabbedPane, user));
+        tabbedPane.addTab("Bus 🚌", createSearchForm("Bus", user));
+        tabbedPane.addTab("Flight ✈️", createSearchForm("Flight", user));
 
-        add(tabbedPane); // Ortalanmış şekilde eklendi
+        add(tabbedPane); 
     }
+    //-------------------------------------------End of constructor method-----------------------------
+
      
-    private JPanel createSearchForm(String vehicle, JTabbedPane tabbedPane, User user) {
+    private JPanel createSearchForm(String vehicle, User user) {
         
-        JPanel outerPanel = new JPanel(new BorderLayout());
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setPreferredSize(new Dimension(400, 220)); // Küçük ve kompakt yapı
+        JPanel outerPanel = new JPanel(new BorderLayout()); //BorderLayout: kuzey/güney/doğu/batı/merkez
+        JPanel panel = new JPanel(new GridBagLayout()); //GridBagLayout:  neredeyse piksel seviyesinde kontrol
+        panel.setPreferredSize(new Dimension(400, 220));
 
         if("Bus".equals(vehicle)){  //Bus ve Flight arka planı farklı olması icin 
-        panel.setBackground(new Color(239, 228, 210));
-        outerPanel.setBackground(new Color(239, 228, 210));
+            panel.setBackground(new Color(239, 228, 210));
+            outerPanel.setBackground(new Color(239, 228, 210));
         }
         else {
-        panel.setBackground(Color.WHITE);
-        outerPanel.setBackground(Color.WHITE);
+            panel.setBackground(Color.WHITE);
+            outerPanel.setBackground(Color.WHITE);
         }
         
+        //GridBagConstraints: GridBagLayout ile birlikte kullanılır ve her bileşenin konumunu ve davranışını belirler.
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10); // Bileşenin etrafındaki boşluk (üst, sol, alt, sağ)
         gbc.fill = GridBagConstraints.HORIZONTAL; // Yatay olarak genişlesin ama dikeyde sabit kalsın
@@ -72,24 +71,18 @@ public class SearchTripPanel extends JPanel {
         JComboBox<String> yearCombo = new JComboBox<>();
         JComboBox<String> monthCombo = new JComboBox<>();
         JComboBox<String> dayCombo = new JComboBox<>();
-        
         setupDateComboBoxes(yearCombo, monthCombo, dayCombo, user);
 
-
-        // Tarih altında yazan tarih format etiketi yazısı
+        // Tarih formatı yazısı
         JLabel dateFormatLabel = new JLabel("Format: YYYY-MM-DD");
         dateFormatLabel.setFont(new Font("Segoe UI", Font.ITALIC, 11));
         dateFormatLabel.setForeground(Color.GRAY);
         
-        
-        
-        
-        
-        
-        // Arama butonu
+        // Arama butonu---------------------------------------------------------------------------------
         JButton searchButton = new JButton("Search");
         styleButton(searchButton);        
         searchButton.addActionListener(e -> {
+            
             TripSearchCriteria tripCriteria = new TripSearchCriteria();
 
             //Kullanıcının liste ile sectigi tarih LocalDateTime turune donusturuluyor
@@ -129,57 +122,39 @@ public class SearchTripPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "No trips were found that match your criteria. Please try another search.", "No results", JOptionPane.INFORMATION_MESSAGE);
             } 
             else{
-
-                //uygun tripleri gosteren TripsPanel'e gecis yapılır.
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);  //SearchTripPanel uzerindeki JFrame bulunur. Bu, arayüzde içeriği değiştirmek için gerekli.
-                frame.setContentPane(new TripsPanel(tripsToList, user));  //TripsPanel, JFrame’in ana içeriği (content pane) olarak ayarlanıyor.
-                frame.revalidate();  //Arayuzu yeniden çizmek / güncellemek için kullanılır.
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+                upm.addPanel("trips", new TripsPanel(tripsToList, user));  // paneli CardLayout’a ekle
+                upm.showPanelByKey("trips");                            // geçiş yap
+                upm.setMenuBarVisible(false); //Menü gizlendi
 
             }
         });
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+//----------------------------------------------------------------------------------------------------------------------  
         
         int row = 0;
         Insets defaultInsets = new Insets(10, 10, 5, 10);
         Insets buttonInsets = new Insets(15, 10, 10, 10);
 
         //Altta olusturulan addToPanel metoduyla elemanlar panele ekleniyor.
-        // from
         addToPanel(panel, gbc, fromLabel, 0, row, 1, defaultInsets);
         addToPanel(panel, gbc, fromCombo, 1, row, 1, defaultInsets);
 
-        // to
         row++;
         addToPanel(panel, gbc, toLabel, 0, row, 1, defaultInsets);
         addToPanel(panel, gbc, toCombo, 1, row, 1, defaultInsets);
 
-        // date
         row++;
         addToPanel(panel, gbc, dateLabel, 0, row, 1, defaultInsets);
         addToPanel(panel, gbc, yearCombo, 1, row, 1, defaultInsets);
         addToPanel(panel, gbc, monthCombo, 2, row, 1, defaultInsets);
         addToPanel(panel, gbc, dayCombo, 3, row, 1, defaultInsets);
 
-        // format info
         row++;
         addToPanel(panel, gbc, dateFormatLabel, 1, row, 3, defaultInsets);
 
-        // button
         row++;
         addToPanel(panel, gbc, searchButton, 0, row, 3, buttonInsets);
 
-        // dış panel
         outerPanel.add(panel, BorderLayout.CENTER);
         return outerPanel;
     }
@@ -259,6 +234,5 @@ public class SearchTripPanel extends JPanel {
                 dayCombo.addItem(String.format("%02d", d));
             }
         });
-}
-
+    }
 }

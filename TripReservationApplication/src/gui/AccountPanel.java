@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import searchCriteria.NewUserInfo;
+//import searchCriteria.NewUserInfo;
 import user.Service.UserService;
 import user.model.User;
 
@@ -46,7 +46,7 @@ public class AccountPanel extends JPanel {
         infoPanel.setBackground(new Color(239, 228, 210));
 
         
-        //Name Panel
+        //Name Panel---------------------------------------------------------------------------------------
         JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         namePanel.setBackground(Color.WHITE);
         nameLabel = new JLabel("Hello " + firstName + " " + lastName + "!");
@@ -56,7 +56,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(20));
         
         
-        //Email Panel
+        //Email Panel---------------------------------------------------------------------------------------
         JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         emailPanel.setBackground(Color.WHITE);
         emailLabel = new JLabel("Email: " + email);
@@ -65,7 +65,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(10));
         
         
-        //Password panel
+        //Password panel---------------------------------------------------------------------------------------
         JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         passwordPanel.setBackground(Color.WHITE);
         passwordLabel = new JLabel("Password: *********                                                           ");
@@ -74,7 +74,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(10));
         
         
-        //Phone Number Panel
+        //Phone Number Panel---------------------------------------------------------------------------------------
         JPanel phoneNumberPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         phoneNumberPanel.setBackground(Color.WHITE);
         phoneNumberLabel = new JLabel("Phone Number: " + phoneNumber + "                                                           ");
@@ -83,7 +83,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(10));
         
         
-        //Gender Panel
+        //Gender Panel---------------------------------------------------------------------------------------
         JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         genderPanel.setBackground(Color.WHITE);
         genderLabel = new JLabel("Gender: ");
@@ -92,7 +92,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(20));
 
         
-        //About US Panel
+        //About US Panel---------------------------------------------------------------------------------------
         JButton aboutButton = new JButton("About Us");
         styleButton(aboutButton);
         aboutButton.addActionListener(e -> {
@@ -102,7 +102,7 @@ public class AccountPanel extends JPanel {
         infoPanel.add(Box.createVerticalStrut(20));
 
         
-        //Change Information Panel
+        //Change Information Panel---------------------------------------------------------------------------------------
         JButton changeInfButton = new JButton("Change Information");
         styleButton(changeInfButton);
         infoPanel.add(changeInfButton);
