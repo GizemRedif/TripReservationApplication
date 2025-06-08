@@ -4,6 +4,8 @@ import reservation.model.BusReservation;
 import reservation.model.FlightReservation;
 import user.model.Passenger;
 import reservation.model.Reservation;
+import seat.BusSeat;
+import seat.PlaneSeat;
 import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import trip.model.Trip;
@@ -16,8 +18,8 @@ public class ReservationFactory {
         }
         
         else if(trip instanceof BusTrip){
-            return new BusReservation(passenger , fare , seat , (BusTrip)trip);
+            return new BusReservation(passenger , fare , (BusSeat)seat , (BusTrip)trip);
         }
-            return new FlightReservation(passenger , fare , seat , (FlightTrip)trip);
+            return new FlightReservation(passenger , fare , (PlaneSeat)seat , (FlightTrip)trip);
     }
 }

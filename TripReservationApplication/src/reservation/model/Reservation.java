@@ -1,17 +1,15 @@
 package reservation.model;
 
-import vehicle.model.Seat;
 import user.model.Passenger;
+import vehicle.model.Seat;
 
 public abstract class Reservation {
     private Passenger passenger;
     private double fare;
-    private Seat seat;
     
-    public Reservation(Passenger passenger, double fare, Seat seat) {
+    public Reservation(Passenger passenger, double fare) {
         this.passenger = passenger;
         this.fare = fare;
-        this.seat = seat;
     }
     
     public Passenger getPassenger(){
@@ -40,24 +38,11 @@ public abstract class Reservation {
         this.fare = fare;
     }
     
+    public abstract void setSeat(Seat seat);
+    public abstract Seat getSeat();
     
-    public Seat getSeat(){
-        if(seat !=null){
-            return new Seat(seat);
-        }
-        else{
-            return null;
-        }
-    }
     
-    public void setSeat(Seat seats){
-        if(seats !=null){
-            this.seat= new Seat(seats);
-        }
-        else{
-            this.seat=null;
-        }
-    }
+    
 
-    public abstract Reservation copy();
+//    public abstract Reservation copy();
 }
