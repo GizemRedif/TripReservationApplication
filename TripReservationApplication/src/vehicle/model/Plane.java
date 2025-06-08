@@ -22,7 +22,7 @@ public class Plane extends Vehicle{
     private static List<Seat> createDefaultSeats() {
         List<Seat> list = new ArrayList<>();
         // 45 koltuklu 2+1 oturma düzeni
-        for (int i = 1; i <= 200; i++) {
+        for (int i = 1; i <= 150; i++) {
             list.add(new Seat(i,false));
         }
         return list;
