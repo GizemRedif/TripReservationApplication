@@ -22,7 +22,7 @@ public class Bus extends Vehicle {
         List<Seat> list = new ArrayList<>();
         // 45 koltuklu 2+1 oturma düzeni
         for (int i = 1; i <= 45; i++) {
-            list.add(new Seat(i,false));
+            list.add(new Seat(i,false,false,false));
         }
         return list;
     }
@@ -35,13 +35,18 @@ public class Bus extends Vehicle {
         this.plate = plate;
     }
     
-    public List<Seat> copySeatList(){
-        if(seatList == null){return null;}
-        
-        List<Seat> copySeat = new ArrayList<>();
-        for(Seat seat : seatList){
-            copySeat.add(seat.clone());
-        }
-        return copySeat;
+//    public List<Seat> copySeatList(){
+//        if(seatList == null){return null;}
+//        
+//        List<Seat> copySeat = new ArrayList<>();
+//        for(Seat seat : seatList){
+//            copySeat.add(seat.clone());
+//        }
+//        return copySeat;
+//    }
+    
+    @Override
+    public Bus clone(){
+        return new Bus(capacity , plate);
     }
 }

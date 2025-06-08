@@ -23,7 +23,7 @@ public class Plane extends Vehicle{
         List<Seat> list = new ArrayList<>();
         // 45 koltuklu 2+1 oturma düzeni
         for (int i = 1; i <= 150; i++) {
-            list.add(new Seat(i,false));
+            list.add(new Seat(i,false,false,false));
         }
         return list;
     }
@@ -44,6 +44,11 @@ public class Plane extends Vehicle{
             copySeat.add(seat.clone());
         }
         return copySeat;
+    }
+    
+    @Override
+    public Plane clone(){
+        return new Plane(capacity , tailNumber);
     }
     
 }

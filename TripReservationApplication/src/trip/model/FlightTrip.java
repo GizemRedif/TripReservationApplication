@@ -15,26 +15,19 @@ public class FlightTrip extends Trip{
     public FlightTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
                         double fare, List<Passenger> passengers, Plane plane){
         super(departureStation, arrivalStation, departureDate, tripTime, fare, passengers);
-        this.plane=plane;
-        this.seats=plane.copySeatList();
+        this.plane=plane.clone();
     }
     
     public FlightTrip(FlightTrip other){
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
-                other.getFare(), new ArrayList<Passenger>(other.getPassengers()));
-        this.plane=new Plane(other.plane);
-        if(plane != null){
-            this.seats=other.plane.copySeatList();
-        }
+                other.getFare(), new ArrayList<>(other.getPassengers()));
+        this.plane=other.plane.clone();
     }
       
     public FlightTrip(FlightTripBuilder builder) {
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
               builder.tripTime, builder.fare, builder.passengers);
         this.plane = builder.plane;
-        if(plane != null){
-        this.seats=builder.plane.copySeatList();
-        }
     }
     
     public Plane getPlane(){
@@ -61,7 +54,7 @@ public class FlightTrip extends Trip{
         private Plane plane;
         
         public FlightTripBuilder setPlane(Plane plane){
-            this.plane=plane;
+            this.plane=plane.clone();
             return this;
         }
 

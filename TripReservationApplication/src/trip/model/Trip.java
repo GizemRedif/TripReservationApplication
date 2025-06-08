@@ -15,7 +15,7 @@ public abstract class Trip {
     private LocalTime tripTime;
     private double fare;
     private List<Passenger> passengers;
-    protected List<Seat> seats;
+
      
     
     public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalTime tripTime, double fare, List<Passenger> passengers){
@@ -24,7 +24,7 @@ public abstract class Trip {
         this.departureDate=departureDate;
         this.tripTime=tripTime;
         this.fare=fare;
-        this.passengers=new ArrayList<Passenger>();
+        this.passengers=new ArrayList<>();
     }
 
     public String getDepartureStation() {
@@ -82,24 +82,6 @@ public abstract class Trip {
         }
         else{
             this.passengers=null;
-        }
-    }
-    
-    public List<Seat> getSeats (){
-        if(seats !=null){
-            return new ArrayList<>(seats);
-        }
-        else{
-            return null;
-        }
-    }
-    
-    public void setSeats(List<Seat> seats){
-        if(seats != null){
-            this.seats= new ArrayList<>(seats);
-        }
-        else{
-            this.seats=null;
         }
     }
     

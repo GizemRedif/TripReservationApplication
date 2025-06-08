@@ -15,17 +15,14 @@ public class BusTrip extends Trip{
     public BusTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
                         double fare, List<Passenger> passengers, Bus bus) {
         super(departureStation, arrivalStation, departureDate, tripTime, fare, passengers);
-        this.bus=bus;
-        this.seats=bus.copySeatList();
+        this.bus=bus.clone();
+        
     }
     
     public BusTrip(BusTrip other){
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
-                other.getFare(), new ArrayList<Passenger>(other.getPassengers()));
-        this.bus=new Bus(other.bus);
-        if (bus !=null){
-            this.seats=other.bus.copySeatList();
-        }
+                other.getFare(), new ArrayList<>(other.getPassengers()));
+        this.bus=other.getBus().clone();
         
     }
     
@@ -33,9 +30,7 @@ public class BusTrip extends Trip{
         super(builder.departureStation, builder.arrivalStation, builder.departureDate,
               builder.tripTime, builder.fare, builder.passengers);
         this.bus = builder.bus;
-        if (bus !=null){
-        this.seats=builder.bus.copySeatList();
-        }
+       
     }
     
     public Bus getBus(){
@@ -62,7 +57,7 @@ public class BusTrip extends Trip{
         private Bus bus;
         
         public BusTripBuilder setBus(Bus bus){
-            this.bus=bus;
+            this.bus=bus.clone();
             return this;
         }
         

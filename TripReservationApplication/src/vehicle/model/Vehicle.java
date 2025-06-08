@@ -1,7 +1,7 @@
 package vehicle.model;
 
-public abstract class Vehicle {
-    private int capacity;
+public abstract class Vehicle implements Cloneable{
+    protected int capacity;
     
     public Vehicle(int capacity){
         this.capacity=capacity;
@@ -13,6 +13,14 @@ public abstract class Vehicle {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+    
+    public Vehicle clone(){
+        try {
+            return (Vehicle) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
     
 }

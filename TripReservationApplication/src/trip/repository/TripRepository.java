@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import searchCriteria.TripSearchCriteria;
 
 public class TripRepository {
-    private static TripRepository instance;
-    private List<Trip> tripList;
+    private static TripRepository instance;     //Singelton pattern
+    private final List<Trip> tripList;          //List of all trips
 
     private TripRepository() {
         this.tripList = new ArrayList<>();
@@ -26,8 +26,11 @@ public class TripRepository {
         return new ArrayList<>(tripList);
     }
     
-    /*add a new trip*/
+    //add a new trip
     public void addTrip(Trip trip){
+        if(tripList.contains(trip)){
+            throw new IllegalArgumentException("this trip already exists");
+        }
         tripList.add(trip);
     }
     

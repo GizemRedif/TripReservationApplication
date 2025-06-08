@@ -38,7 +38,6 @@ private final TripRepository tripRepository = TripRepository.getInstance();
                 trip.setTripTime(newTrip.getTripTime());
                 trip.setFare(newTrip.getFare());
                 trip.setPassengers(newTrip.getPassengers());
-                trip.setSeats(newTrip.getSeats());
 
                 return true;
             }
@@ -47,11 +46,6 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         return false;
     }
     private void checkTripInfo(Trip trip){
-        
-        //silinebilir
-        if ( trip.getDepartureDate().isBefore(LocalDateTime.now()) || trip.getTripTime().isBefore(LocalTime.now())){
-            throw new IllegalArgumentException("A trip can not be created for a past date");
-        }
         
         if (trip.getFare() <= 0){
             throw new IllegalArgumentException("Fare can't be negative or zero");
