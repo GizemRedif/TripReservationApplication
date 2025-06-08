@@ -25,8 +25,8 @@ public class AdminService {
         return tripService.cancelTrip(trip);
     }
     
-    public boolean updateTrip(Trip newTrip){
-        return tripService.updateTrip(newTrip);
+    public boolean updateTrip(Trip trip, Trip newTrip){
+        return tripService.updateTrip(trip, newTrip);
     }
 
 }

@@ -1,7 +1,7 @@
 package reservation.model;
 
 import seat.BusSeat;
-import vehicle.model.Seat;
+import seat.Seat;
 import trip.model.BusTrip;
 import trip.model.Trip;
 import user.model.Passenger;

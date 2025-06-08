@@ -5,7 +5,7 @@ import trip.model.Trip;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import searchCriteria.TripSearchCriteria;
+import dto.TripSearchCriteria;
 
 public class TripRepository {
     private static TripRepository instance;     //Singelton pattern

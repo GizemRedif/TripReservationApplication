@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import searchCriteria.NewUserInfo;
+import dto.UserDTO;
 import user.Service.UserService;
 import user.model.User;
 

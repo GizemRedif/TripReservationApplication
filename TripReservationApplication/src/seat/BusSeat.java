@@ -1,7 +1,5 @@
 package seat;
 
-import vehicle.model.Seat;
-
 
 
 public class BusSeat extends Seat {

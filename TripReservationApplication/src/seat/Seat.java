@@ -1,4 +1,4 @@
-package vehicle.model;
+package seat;
 
 public abstract class Seat implements Cloneable {
     private String seatNumber;

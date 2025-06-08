@@ -1,4 +1,4 @@
-package searchCriteria;
+package dto;
 
 import java.time.LocalDateTime;
 import trip.model.Trip;

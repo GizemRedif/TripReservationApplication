@@ -9,7 +9,7 @@ import seat.PlaneSeat;
 import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import trip.model.Trip;
-import vehicle.model.Seat;
+import seat.Seat;
 
 public class ReservationFactory {
     public  Reservation createReservation(Passenger passenger, int fare, Seat seat, Trip trip){

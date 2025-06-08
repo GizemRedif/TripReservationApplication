@@ -1,8 +1,9 @@
-package searchCriteria;
+package dto;
 
-public class NewUserInfo {
+public class UserDTO {
     private String name;
     private String surname;
+    private String eMail;
     private String password;
     private String phoneNumber;
     private char gender;
@@ -15,6 +16,15 @@ public class NewUserInfo {
         this.name = name;
     }
 
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void setEmail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    
     public String getSurname() {
         return surname;
     }
