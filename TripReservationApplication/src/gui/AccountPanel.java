@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import searchCriteria.NewUserInfo;
 import user.Service.UserService;
 import user.model.User;
 
@@ -158,7 +159,7 @@ public class AccountPanel extends JPanel {
             
             //Kaydet butonuna tıklayınca kontroller yapılır ve sorun yoksa bilgiler guncellenir
             saveButton.addActionListener(ev -> {
-
+                
                 // Eğer kullanıcı alanları değiştirmişse ve boş değilse, onları set et
                 if (!nameField.getText().trim().equals(user.getName())) {
                     user.setName(nameField.getText().trim());

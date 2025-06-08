@@ -11,6 +11,7 @@ import trip.model.Trip;
 import java.util.List;
 import trip.repository.TripRepository;
 import trip.service.TripService;
+import user.model.Admin;
 import user.model.User;
 
 public class SearchTripPanel extends JPanel {
@@ -71,14 +72,19 @@ public class SearchTripPanel extends JPanel {
         JComboBox<String> yearCombo = new JComboBox<>();
         JComboBox<String> monthCombo = new JComboBox<>();
         JComboBox<String> dayCombo = new JComboBox<>();
-
-        setupDateComboBoxes(yearCombo, monthCombo, dayCombo);
+        
+        setupDateComboBoxes(yearCombo, monthCombo, dayCombo, user);
 
 
         // Tarih altında yazan tarih format etiketi yazısı
         JLabel dateFormatLabel = new JLabel("Format: YYYY-MM-DD");
         dateFormatLabel.setFont(new Font("Segoe UI", Font.ITALIC, 11));
         dateFormatLabel.setForeground(Color.GRAY);
+        
+        
+        
+        
+        
         
         // Arama butonu
         JButton searchButton = new JButton("Search");
@@ -101,7 +107,7 @@ public class SearchTripPanel extends JPanel {
             else if (vehicle.equals("Flight")) {
                 tripCriteria.setTripType(trip.model.FlightTrip.class);
             }            
-            tripCriteria.setDepartureTime(departureTime);
+            tripCriteria.setDepartureDate(departureTime);
             
             
             //Uygun tripler listeye alınır ve listelenirken hata kontrolu yapılır.
@@ -123,14 +129,27 @@ public class SearchTripPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "No trips were found that match your criteria. Please try another search.", "No results", JOptionPane.INFORMATION_MESSAGE);
             } 
             else{
-            //uygun tripleri gosteren TripsPanel'e gecis yapılır.
-            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);  //SearchTripPanel uzerindeki JFrame bulunur. Bu, arayüzde içeriği değiştirmek için gerekli.
-            frame.setContentPane(new TripsPanel(tripsToList, user));  //TripsPanel, JFrame’in ana içeriği (content pane) olarak ayarlanıyor.
-            frame.revalidate();  //Arayuzu yeniden çizmek / güncellemek için kullanılır.
+
+                //uygun tripleri gosteren TripsPanel'e gecis yapılır.
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);  //SearchTripPanel uzerindeki JFrame bulunur. Bu, arayüzde içeriği değiştirmek için gerekli.
+                frame.setContentPane(new TripsPanel(tripsToList, user));  //TripsPanel, JFrame’in ana içeriği (content pane) olarak ayarlanıyor.
+                frame.revalidate();  //Arayuzu yeniden çizmek / güncellemek için kullanılır.
+
             }
         });
 
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         int row = 0;
         Insets defaultInsets = new Insets(10, 10, 5, 10);
         Insets buttonInsets = new Insets(15, 10, 10, 10);
@@ -182,59 +201,64 @@ public class SearchTripPanel extends JPanel {
     }
 
     //Date olarak bugunden onceki tarihlerin listelenmesi engellenir ayrıca her yıla ve aya ozel var olan gunler listelenir.
-    private void setupDateComboBoxes(JComboBox<String> yearCombo, JComboBox<String> monthCombo, JComboBox<String> dayCombo) {
-    LocalDate today = LocalDate.now();
-    int currentYear = today.getYear();
-    int currentMonth = today.getMonthValue();
-    int currentDay = today.getDayOfMonth();
+    private void setupDateComboBoxes(JComboBox<String> yearCombo, JComboBox<String> monthCombo, JComboBox<String> dayCombo, User user) {
+        
+        LocalDate today = LocalDate.now();
+        int currentYear = today.getYear();
+        int currentMonth = today.getMonthValue();
+        int currentDay = today.getDayOfMonth();
+        int maxDay = YearMonth.of(currentYear, currentMonth).lengthOfMonth();
 
-    // YIL: sadece bugünden itibaren
-    for (int y = currentYear; y <= 2030; y++) {
-        yearCombo.addItem(String.valueOf(y));
-    }
+        //Admin ve Passengera gore secilebilecek tarihler ayarlanır. 
+        //Admin eski tripleri de goruntuleyebilecekken ;apssenger sadece bugun ve sonrasını goruntuleyebilir.
 
-    // AY: sadece bu yıldan itibaren
-    for (int m = currentMonth; m <= 12; m++) {
-        monthCombo.addItem(String.format("%02d", m));
-    }
+        int startYear = (user instanceof Admin) ? 2023 : currentYear;
+        for (int y = startYear; y <= 2030; y++) {
+            yearCombo.addItem(String.valueOf(y));
+        }
 
-    // GÜN: bugünden itibaren
-    int maxDay = YearMonth.of(currentYear, currentMonth).lengthOfMonth();
-    for (int d = currentDay; d <= maxDay; d++) {
-        dayCombo.addItem(String.format("%02d", d));
-    }
-
-    // YIL dinleyicisi
-    yearCombo.addActionListener(e -> {
-        int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
-        monthCombo.removeAllItems();
-        int startMonth = (selectedYear == currentYear) ? currentMonth : 1;
-
+        int startMonth = (user instanceof Admin) ? 1 : currentMonth;
         for (int m = startMonth; m <= 12; m++) {
             monthCombo.addItem(String.format("%02d", m));
         }
 
-        if (monthCombo.getItemCount() > 0) {
-            monthCombo.setSelectedIndex(0);
-            monthCombo.dispatchEvent(new java.awt.event.ActionEvent(monthCombo, 0, ""));
-        }
-    });
-
-    // AY dinleyicisi
-    monthCombo.addActionListener(e -> {
-        if (monthCombo.getItemCount() == 0) return;
-
-        int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
-        int selectedMonth = Integer.parseInt((String) monthCombo.getSelectedItem());
-
-        dayCombo.removeAllItems();
-        int startDay = (selectedYear == currentYear && selectedMonth == currentMonth) ? currentDay : 1;
-        int max = YearMonth.of(selectedYear, selectedMonth).lengthOfMonth();
-
-        for (int d = startDay; d <= max; d++) {
+        int startDay = (user instanceof Admin) ? 1 : currentDay;
+        for (int d = startDay; d <= maxDay; d++) {
             dayCombo.addItem(String.format("%02d", d));
         }
-    });
+
+
+        // YIL dinleyicisi
+        yearCombo.addActionListener(e -> {
+            int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
+            monthCombo.removeAllItems();
+            int startMon = (user instanceof Admin || selectedYear != currentYear) ? 1 : currentMonth;
+
+            for (int m = startMon; m <= 12; m++) {
+                monthCombo.addItem(String.format("%02d", m));
+            }
+
+            if (monthCombo.getItemCount() > 0) {
+                monthCombo.setSelectedIndex(0);
+                monthCombo.dispatchEvent(new java.awt.event.ActionEvent(monthCombo, 0, ""));
+            }
+        });
+
+        // AY dinleyicisi
+        monthCombo.addActionListener(e -> {
+            if (monthCombo.getItemCount() == 0) return;
+
+            int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
+            int selectedMonth = Integer.parseInt((String) monthCombo.getSelectedItem());
+
+            dayCombo.removeAllItems();
+            int startDy = (selectedYear == currentYear && selectedMonth == currentMonth) ? currentDay : 1;
+            int max = YearMonth.of(selectedYear, selectedMonth).lengthOfMonth();
+
+            for (int d = startDy; d <= max; d++) {
+                dayCombo.addItem(String.format("%02d", d));
+            }
+        });
 }
 
 }
