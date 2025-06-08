@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import reservation.model.Reservation;
 import user.model.User;
-import searchCriteria.ReservationSearchCriteria;
+import dto.ReservationSearchCriteria;
 
 import java.util.Map;
 import java.util.HashMap;

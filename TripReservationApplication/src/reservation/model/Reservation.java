@@ -2,7 +2,7 @@ package reservation.model;
 
 import trip.model.Trip;
 import user.model.Passenger;
-import vehicle.model.Seat;
+import seat.Seat;
 
 public abstract class Reservation {
     private Passenger passenger;

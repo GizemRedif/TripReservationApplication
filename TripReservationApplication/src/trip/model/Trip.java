@@ -1,6 +1,6 @@
 package trip.model;
 
-import vehicle.model.Seat;
+import seat.Seat;
 
 import user.model.Passenger;
 import java.time.LocalTime;

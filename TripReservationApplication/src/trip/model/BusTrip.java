@@ -1,7 +1,7 @@
 package trip.model;
 
 import java.time.LocalDateTime;
-import vehicle.model.Seat;
+import seat.Seat;
 import user.model.Passenger;
 import vehicle.model.Bus;
 import java.time.LocalTime;

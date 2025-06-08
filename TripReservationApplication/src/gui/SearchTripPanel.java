@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import searchCriteria.TripSearchCriteria;
+import dto.TripSearchCriteria;
 import trip.model.Trip;
 import java.util.List;
 import trip.service.TripService;

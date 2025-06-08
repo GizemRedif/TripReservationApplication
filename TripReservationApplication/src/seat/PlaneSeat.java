@@ -1,7 +1,5 @@
 package seat;
 
-import vehicle.model.Seat;
-
 public class PlaneSeat extends Seat {
     private boolean isWindowSide;
     private boolean isBussinessClass;

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import reservation.model.Reservation;
 import reservation.repository.ReservationRepository;
-import searchCriteria.ReservationSearchCriteria;
+import dto.ReservationSearchCriteria;
 import user.model.User;
 
 public class ReservationService {

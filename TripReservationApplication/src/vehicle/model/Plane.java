@@ -1,6 +1,6 @@
 package vehicle.model;
 
-import vehicle.model.Seat;
+import seat.Seat;
 
 import java.util.List;
 import java.util.ArrayList;

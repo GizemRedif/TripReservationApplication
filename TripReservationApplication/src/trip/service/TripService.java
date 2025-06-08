@@ -3,7 +3,7 @@ package trip.service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import searchCriteria.TripSearchCriteria;
+import dto.TripSearchCriteria;
 import trip.model.Trip;
 import trip.repository.TripRepository;
 
@@ -23,13 +23,10 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         return tripRepository.cancelTrip(trip);
     }
     
-    public boolean updateTrip(Trip newTrip){
-        if (newTrip.getDepartureDate() == null) {
-            throw new IllegalArgumentException("Invalid Departure Date");
-        }
+    public boolean updateTrip(Trip trip ,Trip newTrip){
         List<Trip> allTrips = tripRepository.getAllTrips();
-        for (Trip trip : allTrips) {
-            if (trip.equals(newTrip)) { 
+        for (Trip t : allTrips) {
+            if (t.equals(trip)) { 
                 checkTripInfo(newTrip);
 
                 trip.setDepartureStation(newTrip.getDepartureStation());
