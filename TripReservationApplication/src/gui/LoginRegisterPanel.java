@@ -4,28 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
 import user.Service.UserService;
-import user.model.Admin;
+//import user.model.Admin;
 import user.model.Passenger;
-import user.model.User; //User sınıfına erişebilmek için
-
-
-
-
-//HATA YA DA EKSİK YOKSA TAMAMLANDI!!!!!
-
-
+import user.model.User; 
 
 
 public class LoginRegisterPanel extends JPanel {
 
     UserService userService = new UserService(); //Bu sınıftaki createUser ve login metotlarını kullanabilmek icin olusturuldu
-    
-    private JTabbedPane tabbedPane; // Ekledik
+    private final JTabbedPane tabbedPane; // Ekledik
 
-    
     public LoginRegisterPanel() {
-        setLayout(new GridBagLayout()); // Ortalamak için kullanıyoruz
-        this.setBackground(new Color(37, 77, 112));  // arkaplan rengi
+        setLayout(new GridBagLayout()); 
+        this.setBackground(new Color(37, 77, 112)); 
         
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout(0, 20)); // Başlık ile sekme arası boşluk
@@ -36,7 +27,7 @@ public class LoginRegisterPanel extends JPanel {
         // 🔹 Başlık paneli
         JLabel titleLabel = new JLabel("Uygulama Adı", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(33, 37, 41));  //Başlık yazı rengi
+        titleLabel.setForeground(new Color(33, 37, 41));  
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
         // 🔹 Sekmeler altta olacak şekilde oluşturuluyor
@@ -48,10 +39,10 @@ public class LoginRegisterPanel extends JPanel {
         containerPanel.add(titleLabel, BorderLayout.NORTH);
         containerPanel.add(tabbedPane, BorderLayout.CENTER);
 
-        add(containerPanel); // Ortalanmış haliyle
+        add(containerPanel);
     }
-
-
+//-------------------------------------------End of constructor method-----------------------------
+    
     
     private JPanel createLoginPanel() {
         JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
@@ -68,17 +59,13 @@ public class LoginRegisterPanel extends JPanel {
         styleButton(loginButton);
         
         loginButton.addActionListener(e -> {
-
-            User user = userService.login(emailField.getText().trim(), new String(passwordField.getPassword()));
-            
+            User user = userService.login(emailField.getText().trim(), new String(passwordField.getPassword()));           
             if(user == null){
                 JOptionPane.showMessageDialog(null, "Email or password is incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
-            else {  //Giris yapan User'ın, Passanger mi Admin mi oldugu kontrolu yapılır ve ona gore panel acılır. 
-                
+            else {  
+                //Giris yapan User'ın, Passanger mi Admin mi oldugu kontrolu yapılır ve ona gore panel acılır. 
                 MainFrame.getInstance().showUserPanelManager(user);
-           
             }
         });
 
@@ -120,7 +107,6 @@ public class LoginRegisterPanel extends JPanel {
         
 //        KULLANICI OLUŞTURMAK İÇİN BUTONA TIKLANIR
         registerButton.addActionListener(e -> {
-            
             String selectedGender = (String) genderCombo.getSelectedItem(); //Builderda setGender char istiyor. Gender burada önce stringe çevrilir, aşağıda ilk harfi alınır.
             
             //User'da Builder sınıfı kullanılarak yeni kullanıcı oluşturuluyor. 
@@ -136,10 +122,8 @@ public class LoginRegisterPanel extends JPanel {
             //KULLANICI HATALI INPUT GİRDİ Mİ KONTROL EDİLİR, GİRMEDİYSE KULLANICI OLUŞTURULUR.
             try {
                 userService.createUser(newUser);
-                
                 System.out.println("User created: ");
                 JOptionPane.showMessageDialog(null, "User created successfully. Please log in.!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-
                 tabbedPane.setSelectedIndex(0); //Giris basarılı olunca Login ekranına donulsun
             } 
             catch (IllegalArgumentException a) {
@@ -148,8 +132,6 @@ public class LoginRegisterPanel extends JPanel {
             catch (Exception a) {
                 JOptionPane.showMessageDialog(null, "An unexpected error occurred:\n" + a.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
-            
         });
 
         panel.add(firstNameLabel);
@@ -172,9 +154,8 @@ public class LoginRegisterPanel extends JPanel {
 
     private void styleButton(JButton button) {
     button.setFocusPainted(false);
-    button.setBackground(new Color(19, 29, 79)); // Yeni RGB rengi
+    button.setBackground(new Color(19, 29, 79));
     button.setForeground(Color.WHITE);
     button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
-
 }
