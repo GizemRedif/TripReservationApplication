@@ -1,5 +1,6 @@
 package reservation.model;
 
+import trip.model.Trip;
 import user.model.Passenger;
 import vehicle.model.Seat;
 
@@ -40,6 +41,9 @@ public abstract class Reservation {
     
     public abstract void setSeat(Seat seat);
     public abstract Seat getSeat();
+    
+    public abstract void setTrip(Trip trip);
+    public abstract Trip getTrip();
     
     
     

@@ -23,10 +23,7 @@ public class Bus extends Vehicle {
         List<Seat> list = new ArrayList<>();
         // 45 koltuklu 2+1 oturma düzeni
         for (int i = 1; i <= 45; i++) {
-            if(i%3 == 0){
-                list.add(new BusSeat(String.valueOf(i),true));
-            }
-            list.add(new BusSeat(String.valueOf(i),false));
+            list.add(new BusSeat(i+"",i%3 == 0));
         }
         return list;
     }

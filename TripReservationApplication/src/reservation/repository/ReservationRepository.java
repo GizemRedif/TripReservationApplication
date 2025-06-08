@@ -55,75 +55,28 @@ public class ReservationRepository {
     public List<Reservation> search(ReservationSearchCriteria criteria) {
         List<Reservation> reservations= reservationsWithUser.get(criteria.getUser());
         
-            if (reservations == null) {
-        return Collections.emptyList();
-    }
+        if (reservations == null) {
+            return Collections.emptyList();
+        }
 
-    return reservations.stream()
+        return reservations.stream()
             
          //Trip tipi kontrolü
-        .filter(reservation -> {
-            if (criteria.getTripType() == null) return true;
-
-            if (reservation instanceof BusReservation) {
-                BusTrip trip = ((BusReservation) reservation).getBusTrip();
-                return trip != null && criteria.getTripType().isInstance(trip);
-            } else if (reservation instanceof FlightReservation) {
-                FlightTrip trip = ((FlightReservation) reservation).getFlightTrip();
-                return trip != null && criteria.getTripType().isInstance(trip);
-            }
-
-            return false;
-        })
-            
-         //Kalkış istasyonu filtreleme
-        .filter(reservation -> {
-            if (criteria.getDepartureStation() == null) return true;
-
-            String departure = null;
-
-            if (reservation instanceof BusReservation) {
-                departure = ((BusReservation) reservation).getBusTrip().getDepartureStation();
-            } else if (reservation instanceof FlightReservation) {
-                departure = ((FlightReservation) reservation).getFlightTrip().getDepartureStation();
-            }
-
-            return departure != null &&
-                   departure.equalsIgnoreCase(criteria.getDepartureStation());
-        })
+        .filter(reservation -> criteria.getTripType() == null || criteria.getTripType().isInstance(reservation.getTrip()))      
+         
+        //Kalkış istasyonu filtreleme
+        .filter(reservation -> criteria.getDepartureStation() == null || reservation.getTrip().getDepartureStation().equalsIgnoreCase(criteria.getDepartureStation()))
 
         //Varış istasyonu filtreleme
-        .filter(reservation -> {
-            if (criteria.getArrivalStation() == null) return true;
+        .filter(reservation -> criteria.getArrivalStation() == null || reservation.getTrip().getArrivalStation().equalsIgnoreCase(criteria.getArrivalStation()))
 
-            String arrival = null;
-
-            if (reservation instanceof BusReservation) {
-                arrival = ((BusReservation) reservation).getBusTrip().getArrivalStation();
-            } else if (reservation instanceof FlightReservation) {
-                arrival = ((FlightReservation) reservation).getFlightTrip().getArrivalStation();
-            }
-
-            return arrival != null &&
-                   arrival.equalsIgnoreCase(criteria.getArrivalStation());
-        })
-            
         //Geçmiş, gelecek, hepsi filtrelemesi
          .filter(reservation -> {
             int filter = criteria.getTimeFilter();
 
             if (filter == ReservationSearchCriteria.ALL_RESERVATIONS) return true;
 
-            LocalDate departureDate = null;
-
-            if (reservation instanceof BusReservation) {
-                departureDate = ((BusReservation) reservation).getBusTrip().getDepartureDate().toLocalDate();
-            } else if (reservation instanceof FlightReservation) {
-                departureDate = ((FlightReservation) reservation).getFlightTrip().getDepartureDate().toLocalDate();
-            }
-
-            if (departureDate == null) return false;
-
+            LocalDate departureDate = reservation.getTrip().getDepartureDate().toLocalDate();
             LocalDate today = LocalDate.now();
 
             if (filter == ReservationSearchCriteria.PAST_RESERVATIONS) {

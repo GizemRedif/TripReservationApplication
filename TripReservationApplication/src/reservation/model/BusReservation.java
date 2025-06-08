@@ -3,6 +3,7 @@ package reservation.model;
 import seat.BusSeat;
 import vehicle.model.Seat;
 import trip.model.BusTrip;
+import trip.model.Trip;
 import user.model.Passenger;
 
 public class BusReservation extends Reservation {
@@ -29,8 +30,8 @@ public class BusReservation extends Reservation {
         }
     }
     
-    
-    public BusTrip getBusTrip(){
+    @Override
+    public BusTrip getTrip(){
         if(busTrip !=null){
             return new BusTrip(busTrip);
         }
@@ -39,12 +40,16 @@ public class BusReservation extends Reservation {
         }
     }
     
-    public void setBusTrip(BusTrip busTrip){
-        if(busTrip !=null){
+    @Override
+    public void setTrip(Trip trip){
+        if(trip == null){
+            throw new IllegalArgumentException("busTrip can not be null");
+        }
+        if(trip instanceof BusTrip busTrip ){
             this.busTrip= new BusTrip(busTrip);
         }
         else{
-            this.busTrip=null;
+            throw new IllegalArgumentException("Trip typte must be BusTrip");
         }
     }
 

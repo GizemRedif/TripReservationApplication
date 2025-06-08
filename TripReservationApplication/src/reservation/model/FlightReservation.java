@@ -3,6 +3,7 @@ package reservation.model;
 import seat.PlaneSeat;
 import vehicle.model.Seat;
 import trip.model.FlightTrip;
+import trip.model.Trip;
 import user.model.Passenger;
 
 public class FlightReservation extends Reservation {
@@ -29,7 +30,7 @@ public class FlightReservation extends Reservation {
         }
     }
     
-    public FlightTrip getFlightTrip() {
+    public Trip getTrip() {
         if(flight !=null){
             return new FlightTrip(flight);
         }
@@ -38,12 +39,15 @@ public class FlightReservation extends Reservation {
         }
     }
     
-    public void setFlightTrip(FlightTrip flight){
-        if(flight !=null){
-            this.flight= new FlightTrip(flight);
+    public void setTrip(Trip trip){
+        if(trip == null){
+            throw new IllegalArgumentException("flight can not be null");
+        }
+        if(trip instanceof FlightTrip flightTrip){
+            this.flight = flightTrip;
         }
         else{
-            this.flight=null;
+            throw new IllegalArgumentException("Trip typte must be FlightTrip");
         }
     }
    

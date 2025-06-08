@@ -32,7 +32,7 @@ public class Plane extends Vehicle{
                 boolean isWindowSide = (col == 'A' || col == 'F');
                 boolean isBusinessClass = i <= 5;
 
-                PlaneSeat seat = new PlaneSeat(seatNumber, isWindowSide, isBusinessClass);
+                list.add(new PlaneSeat(seatNumber, isWindowSide, isBusinessClass));
 
                 
             }
@@ -49,15 +49,15 @@ public class Plane extends Vehicle{
         this.tailNumber = tailNumber;
     }
     
-    public List<Seat> copySeatList(){
-        if(seatList == null){return null;}
-        
-        List<Seat> copySeat = new ArrayList<>();
-        for(Seat seat : seatList){
-            copySeat.add(seat.clone());
-        }
-        return copySeat;
-    }
+//    public List<Seat> copySeatList(){
+//        if(seatList == null){return null;}
+//        
+//        List<Seat> copySeat = new ArrayList<>();
+//        for(Seat seat : seatList){
+//            copySeat.add(seat.clone());
+//        }
+//        return copySeat;
+//    }
     
     @Override
     public Plane clone(){
