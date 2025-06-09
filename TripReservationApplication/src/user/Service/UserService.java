@@ -1,5 +1,6 @@
 package user.Service;
 
+import dto.UserDTO;
 import user.model.User;
 import user.repository.UserRepository;
 
@@ -7,10 +8,10 @@ public class UserService {
     
         private final UserRepository userRepository = UserRepository.getInstance();
         
-        public boolean createUser(User user){
+        public boolean createUser(UserDTO userDTO){
             
-            if(user == null){return false;}
-            
+            if(userDTO == null){return false;}
+            User user = new User(userDTO.getName(),userDTO.getSurname(),userDTO.geteMail(),userDTO.getPassword(),userDTO.getPassword(),userDTO.getPhoneNumber(),userDTO.getGender());
             checkUserInfo(user);
             userRepository.addUser(user);
             return true;
