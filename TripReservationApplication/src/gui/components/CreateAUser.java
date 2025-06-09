@@ -2,7 +2,6 @@ package gui.components;
 
 import dto.UserDTO;
 import user.model.Passenger;
-import user.model.User;
 
 import javax.swing.*;
 import java.awt.*;

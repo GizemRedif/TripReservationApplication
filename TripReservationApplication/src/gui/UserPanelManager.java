@@ -2,11 +2,9 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import user.model.Admin;
 import user.model.Passenger;
 import user.model.User;
-import gui.subpanels.EditUserPanel;
 
 
 public class UserPanelManager extends JPanel {

@@ -1,14 +1,10 @@
 package trip.model;
 
-import seat.Seat;
-import reservation.model.Reservation;
-import vehicle.model.Plane;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import vehicle.model.Vehicle;
 
+import vehicle.model.Vehicle;
+import vehicle.model.Plane;
 
 public class FlightTrip extends Trip{
     private Plane plane;

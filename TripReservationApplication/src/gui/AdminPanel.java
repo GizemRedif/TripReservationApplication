@@ -1,7 +1,6 @@
 package gui;
 
 import gui.subpanels.UserAddForAdminPanel;
-import gui.subpanels.EditUserPanel;
 import gui.subpanels.SelectUserForEditPanel_Admin;
 import user.model.Admin;
 import javax.swing.*;

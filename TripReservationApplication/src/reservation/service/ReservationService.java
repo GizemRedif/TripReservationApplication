@@ -1,15 +1,15 @@
 
 package reservation.service;
 
-import dto.ReservationDTO;
 import java.util.Collections;
 import java.util.List;
+
+import dto.ReservationDTO;
 import reservation.model.Reservation;
 import reservation.repository.ReservationRepository;
 import dto.ReservationSearchCriteria;
 import reservation.factory.ReservationFactory;
 import reservation.model.BusReservation;
-import trip.model.Trip;
 import user.model.Passenger;
 import user.model.User;
 

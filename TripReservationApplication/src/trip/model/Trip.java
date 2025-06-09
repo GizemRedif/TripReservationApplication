@@ -1,7 +1,5 @@
 package trip.model;
 
-import seat.Seat;
-
 import reservation.model.Reservation;
 import java.time.LocalTime;
 import java.time.LocalDateTime;

@@ -89,10 +89,14 @@ public class TripReservationApplication {
         onur.setGender('M');
         onur.setUserType(Passenger.class);
 
-        
-                
-        
-        userService.createUser()
+        userService.createUser(mert);
+        userService.createUser(irem);        
+        userService.createUser(gizem);
+        userService.createUser(efe);
+        userService.createUser(dikdas);
+        userService.createUser(onur);
+        userService.createUser(fatih);
+        userService.createUser(mustafa);
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);

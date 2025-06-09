@@ -1,12 +1,8 @@
 package trip.model;
 
 import java.time.LocalDateTime;
-import seat.Seat;
-import user.model.Passenger;
 import vehicle.model.Bus;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import vehicle.model.Vehicle;
 
 

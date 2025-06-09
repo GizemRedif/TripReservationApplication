@@ -1,18 +1,12 @@
 package gui.subpanels;
 
-import gui.UserPanelManager;
 import gui.components.BackButton;
 import gui.components.TripCartsAndListings;
-import gui.subpanels.SeatSelectionOrTripEditPanel;
 import trip.model.Trip;
 import user.model.User;
 import javax.swing.*;
 import java.awt.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import tripreservationapplication.MainFrame;
-import user.model.Admin;
-import user.model.Passenger;
 
 public class TripsPanel extends JPanel {
 

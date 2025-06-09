@@ -1,8 +1,6 @@
 package dto;
 
 import reservation.model.Reservation;
-import seat.BusSeat;
-import seat.PlaneSeat;
 import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import user.model.Passenger;

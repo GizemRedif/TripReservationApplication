@@ -3,11 +3,7 @@ package gui.subpanels;
 import gui.components.CreateAUser;
 import javax.swing.*;
 import java.awt.*;
-import tripreservationapplication.MainFrame;
 import user.Service.UserService;
-import user.model.Passenger;
-import user.model.User; 
-
 
 public class UserAddForAdminPanel extends JPanel {
 

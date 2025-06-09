@@ -1,7 +1,4 @@
 package user.model;
-import reservation.model.Reservation;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Passenger extends User {
     private String paymentInfo; /*tipi için şimdilik string yazdım*/

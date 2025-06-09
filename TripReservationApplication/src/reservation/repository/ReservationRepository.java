@@ -1,7 +1,6 @@
 package reservation.repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import reservation.model.Reservation;
 import user.model.User;
 import dto.ReservationSearchCriteria;
@@ -12,10 +11,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
-import reservation.model.BusReservation;
-import reservation.model.FlightReservation;
-import trip.model.BusTrip;
-import trip.model.FlightTrip;
 
 public class ReservationRepository {
 

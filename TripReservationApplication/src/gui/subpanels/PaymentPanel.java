@@ -3,8 +3,6 @@ package gui.subpanels;
 import gui.UserPanelManager;
 import trip.model.Trip;
 import seat.Seat;
-import user.model.Passenger;
-import user.model.User;
 import tripreservationapplication.MainFrame;
 
 import javax.swing.*;

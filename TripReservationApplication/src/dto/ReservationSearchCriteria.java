@@ -1,6 +1,5 @@
 package dto;
 
-import java.time.LocalDateTime;
 import trip.model.Trip;
 import user.model.User;
 

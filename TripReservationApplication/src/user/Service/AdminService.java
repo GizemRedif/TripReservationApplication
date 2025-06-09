@@ -5,7 +5,6 @@ import dto.UserDTO;
 import trip.model.Trip;
 import user.model.User;
 import trip.service.TripService;
-import user.Service.UserService;
 
 public class AdminService {
     private final UserService userService = new UserService();
