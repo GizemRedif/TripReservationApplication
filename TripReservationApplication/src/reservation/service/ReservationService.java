@@ -29,12 +29,12 @@ public class ReservationService {
             reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getFlight());
         }
         reservationRepository.addReservation(reservation);
-        //burada aynı zamanda ilgili Trip nesnesinin rezervasyon listesi içine de bu rezervasyonu eklemeliyiz
+        reservation.getTrip().addReservation(reservation);
     }    
     
-    public boolean deleteReservation(Reservation reservation){
-        return reservationRepository.deleteReservation(reservation);
-        //burada da aynı şekilde tripten silmeliyiz
+    public void deleteReservation(Reservation reservation){
+        reservationRepository.deleteReservation(reservation);
+        reservation.getTrip().deleteReservation(reservation);
     }
     
     //Kullanıcının rezervasyonlarını getir.

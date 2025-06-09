@@ -50,6 +50,8 @@ public class ReservationRepository {
     }
     
     public boolean deleteReservation(Reservation reservation){
+        reservationsWithUser.get(reservation.getPassenger()).remove(reservation);
+        
         return true;
     }
     
