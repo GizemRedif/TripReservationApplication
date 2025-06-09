@@ -1,6 +1,7 @@
 package gui.subpanels;
         
 import dto.TripDTO;
+import gui.LoginRegisterPanel;
 import gui.UserPanelManager;
 import gui.components.BackButton;
 import javax.swing.*;
@@ -109,11 +110,24 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         // 🔧 Passenger'e özel butonlar
         if (user instanceof Passenger){
             JButton payButton = new JButton("Odemeye Gec");
+            styleButton(payButton);
+
             payButton.addActionListener(e -> {
+                if (selectedSeats.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Lütfen bir koltuk seçiniz.",
+                        "Koltuk Seçilmedi",
+                        JOptionPane.WARNING_MESSAGE
+                    );
+                    return;
+                }
+
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.addPanel("paymentPanel", new PaymentPanel(selectedSeats, trip, (Passenger) user));
                 upm.showPanelByKey("paymentPanel");
             });
+
             buttonPanel.add(payButton);
         }
         
@@ -121,14 +135,26 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         if (user instanceof Admin) {
             JButton viewReservationBtn = new JButton("Rezervasyon Bilgilerini Görüntüle");
             viewReservationBtn.addActionListener(e -> showReservationsPopup(trip));
+            styleButton(viewReservationBtn);
             
             JButton editTripBtn = new JButton("Trip Düzenle");
             editTripBtn.addActionListener(e -> showTripEditPopup(trip));
-
+            styleButton(editTripBtn);
+            
             JButton deleteTripBtn = new JButton("Trip Sil");
             deleteTripBtn.addActionListener(e -> {
-                // silme işlemi burada yapılabilir
+                
+                tripService.cancelTrip(trip);
+               int result = JOptionPane.showOptionDialog(null,"Trip deleted successfully.","Trip Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
+
+                if (result == 0) {
+                    UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+                upm.setMenuBarVisible(true); 
+                upm.showPanelByKey("searching"); // SearchTripPanel’e dön
+
+                }
             });
+            styleButton(deleteTripBtn);
             
             buttonPanel.add(viewReservationBtn);
             buttonPanel.add(editTripBtn);
@@ -300,5 +326,13 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         return seatButton;
     }
 
+   
+   private void styleButton(JButton button) {
+        button.setFocusPainted(true);
+        button.setBackground(new Color(19, 29, 79));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        button.setMaximumSize(new Dimension(200, 30));
+    }
 
 }
