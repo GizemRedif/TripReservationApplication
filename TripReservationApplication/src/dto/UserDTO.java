@@ -19,7 +19,7 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String geteMail() {
+    public String getEmail() {
         return eMail;
     }
 

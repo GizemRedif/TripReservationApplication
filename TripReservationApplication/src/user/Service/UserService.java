@@ -1,6 +1,8 @@
 package user.Service;
 
 import dto.UserDTO;
+import user.model.Admin;
+import user.model.Passenger;
 import user.model.User;
 import user.repository.UserRepository;
 
@@ -11,8 +13,31 @@ public class UserService {
         public boolean createUser(UserDTO userDTO){
             
             if(userDTO == null){return false;}
-            User user = new User(userDTO.getName(),userDTO.getSurname(),userDTO.geteMail(),userDTO.getPassword(),userDTO.getPassword(),userDTO.getPhoneNumber(),userDTO.getGender());
-            checkUserInfo(user);
+            Class<? extends User> userType = userDTO.getUserType();
+            checkUserInfo(userDTO);
+            User user;
+            if (userType == Admin.class){
+                user = new Admin.AdminBuilder()
+                        .setName(userDTO.getName())
+                        .setSurname(userDTO.getSurname())
+                        .seteMail(userDTO.getEmail())
+                        .setPassword(userDTO.getPassword())
+                        .setPhoneNumber(userDTO.getPhoneNumber())
+                        .setGender(userDTO.getGender())
+                        .build();
+                        
+            }
+            else{
+                user = new Passenger.PassengerBuilder()
+                    .setName(userDTO.getName())
+                    .setSurname(userDTO.getSurname())
+                    .seteMail(userDTO.getEmail())
+                    .setPassword(userDTO.getPassword())
+                    .setPhoneNumber(userDTO.getPhoneNumber())
+                    .setGender(userDTO.getGender())
+                    .build();
+            }
+            
             userRepository.addUser(user);
             return true;
         }
@@ -50,7 +75,7 @@ public class UserService {
                 return false;
             }
             
-            checkUserInfo(newUser);
+            checkUserInfo(toUserDTO(newUser));
             
             if(newUser.getName()!= null){
                 existingUser.setName(newUser.getName());
@@ -68,25 +93,37 @@ public class UserService {
             return true;
         }
         
-        private void checkUserInfo(User user){
-            if (user.getName() != null && !user.getName().chars().allMatch(Character::isLetter)) {
+        private void checkUserInfo(UserDTO userDTO){
+            if (userDTO.getName() != null && !userDTO.getName().chars().allMatch(Character::isLetter)) {
                 throw new IllegalArgumentException("Name can only contain alphabetical characters.");
             }
 
-            if (user.getSurname() != null && !user.getSurname().chars().allMatch(Character::isLetter)) {
+            if (userDTO.getSurname() != null && !userDTO.getSurname().chars().allMatch(Character::isLetter)) {
                 throw new IllegalArgumentException("Surname can only contain alphabetical characters.");
             }
 
-            if (user.getEmail() != null && !user.getEmail().endsWith("@gmail.com")) {
+            if (userDTO.getEmail() != null && !userDTO.getEmail().endsWith("@gmail.com")) {
                 throw new IllegalArgumentException("Email must end with @gmail.com");
             }
             
-            if (user.getPhoneNumber() != null) {
-                if (user.getPhoneNumber().length() != 11 || 
-                    !user.getPhoneNumber().chars().allMatch(Character::isDigit)) {
+            if (userDTO.getPhoneNumber() != null) {
+                if (userDTO.getPhoneNumber().length() != 11 || 
+                    !userDTO.getPhoneNumber().chars().allMatch(Character::isDigit)) {
                     throw new IllegalArgumentException("Invalid phone number.");
                 }
             }
-
         }
+        public static UserDTO toUserDTO(User user) {
+           if (user == null) return null;
+
+           UserDTO dto = new UserDTO();
+           dto.setName(user.getName());
+           dto.setSurname(user.getSurname());
+           dto.setEmail(user.getEmail());
+           dto.setPassword(user.getPassword());
+           dto.setPhoneNumber(user.getPhoneNumber());
+           dto.setGender(user.getGender());
+           dto.setUserType(user.getClass()); // burası önemli!
+           return dto;
+       }
 }
