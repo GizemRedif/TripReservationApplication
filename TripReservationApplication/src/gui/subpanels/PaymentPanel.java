@@ -1,5 +1,6 @@
 package gui.subpanels;
 
+import dto.ReservationDTO;
 import gui.UserPanelManager;
 import trip.model.Trip;
 import seat.Seat;
@@ -8,11 +9,14 @@ import tripreservationapplication.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import reservation.service.ReservationService;
 import user.model.Passenger;
 
 public class PaymentPanel extends JPanel {
 
     public PaymentPanel(List<Seat> selectedSeats, Trip trip, Passenger passenger) {
+        ReservationService reservationService = new ReservationService();
+        
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
@@ -56,6 +60,19 @@ public class PaymentPanel extends JPanel {
             );
 
             if (result == 0) { // "Tamam" butonuna basıldıysa
+                for (Seat seat : selectedSeats) {
+                    ReservationDTO reservationDTO = new ReservationDTO();
+                    reservationDTO.setPassenger(passenger);
+                    reservationDTO.setFare(trip.getFare());
+                    reservationDTO.setSeat(seat);
+                    reservationDTO.setTrip(trip);
+                    reservationDTO.setReservationType(
+                        trip instanceof trip.model.BusTrip ?
+                            reservation.model.BusReservation.class :
+                            reservation.model.FlightReservation.class
+                    );
+                    reservationService.createReservation(passenger,reservationDTO);
+                }
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.setMenuBarVisible(true); 
                 upm.showPanelByKey("searching"); // SearchTripPanel’e dön

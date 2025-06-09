@@ -5,6 +5,7 @@ import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import user.model.Passenger;
 import seat.Seat;
+import trip.model.Trip;
 
 public class ReservationDTO {
 
@@ -61,6 +62,10 @@ public class ReservationDTO {
 
     public void setSeat(Seat seat) {
         this.seat = seat;
+    }
+
+    public void setTrip(Trip trip) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
