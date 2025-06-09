@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public abstract class Trip {
     private String departureStation;
     private String arrivalStation;
-    private LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
+    private LocalDateTime departureDate; 
     private LocalTime tripTime;
     private double fare;
     private List<Passenger> passengers;
