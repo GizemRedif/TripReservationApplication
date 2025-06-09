@@ -1,5 +1,7 @@
 package dto;
 
+import user.model.User;
+
 public class UserDTO {
     private String name;
     private String surname;
@@ -7,6 +9,7 @@ public class UserDTO {
     private String password;
     private String phoneNumber;
     private char gender;
+    private Class<? extends User> userType;
 
     public String getName() {
         return name;
@@ -16,7 +19,7 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String geteMail() {
+    public String getEmail() {
         return eMail;
     }
 
@@ -57,5 +60,11 @@ public class UserDTO {
         this.gender = gender;
     }
     
+    public Class<? extends User> getUserType(){
+        return userType;
+    }
     
+    public void setUserType(Class<? extends User> userType){
+        this.userType = userType;
+    }
 }
