@@ -1,5 +1,9 @@
 package vehicle.model;
 
+import java.util.List;
+import seat.Seat;
+
+
 public abstract class Vehicle implements Cloneable{
     protected int capacity;
     
@@ -23,4 +27,6 @@ public abstract class Vehicle implements Cloneable{
         }
     }
     
+    public abstract List<Seat> getSeatList();
 }
+

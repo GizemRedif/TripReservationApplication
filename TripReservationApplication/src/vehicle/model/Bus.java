@@ -8,7 +8,7 @@ import seat.BusSeat;
 
 public class Bus extends Vehicle {
     private String plate;
-    private List<Seat> seatList = createDefaultSeats();
+    private final List<Seat> seatList = createDefaultSeats();
     public Bus(int capacity, String plate) {
         super(capacity);
         this.plate=plate;
@@ -49,5 +49,10 @@ public class Bus extends Vehicle {
     @Override
     public Bus clone(){
         return new Bus(capacity , plate);
+    }
+    
+    @Override
+    public List<Seat> getSeatList(){
+        return seatList;
     }
 }

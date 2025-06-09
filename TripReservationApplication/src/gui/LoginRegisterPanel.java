@@ -1,10 +1,10 @@
 package gui;
 
+import gui.components.CreateAUser;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
 import user.Service.UserService;
-//import user.model.Admin;
 import user.model.Passenger;
 import user.model.User; 
 
@@ -80,76 +80,10 @@ public class LoginRegisterPanel extends JPanel {
     }
 
     private JPanel createRegisterPanel() {
-        JPanel panel = new JPanel(new GridLayout(7, 2, 10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(Color.WHITE);
-
-        JLabel firstNameLabel = new JLabel("First Name:");
-        JTextField firstNameField = new JTextField();
-
-        JLabel lastNameLabel = new JLabel("Last Name:");
-        JTextField lastNameField = new JTextField();
-
-        JLabel emailLabel = new JLabel("Email:");
-        JTextField emailField = new JTextField();
-
-        JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField();
-
-        JLabel phoneLabel = new JLabel("Phone Number:");
-        JTextField phoneField = new JTextField();
-
-        JLabel genderLabel = new JLabel("Gender:");
-        JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Male", "Female", "Other"});
-
-        JButton registerButton = new JButton("Register");
-        styleButton(registerButton);
+        UserService userService = new UserService(); // kendi UserService implementasyonuna göre ayarla
         
-//        KULLANICI OLUŞTURMAK İÇİN BUTONA TIKLANIR
-        registerButton.addActionListener(e -> {
-            String selectedGender = (String) genderCombo.getSelectedItem(); //Builderda setGender char istiyor. Gender burada önce stringe çevrilir, aşağıda ilk harfi alınır.
-            
-            //User'da Builder sınıfı kullanılarak yeni kullanıcı oluşturuluyor. 
-            User newUser = new Passenger.PassengerBuilder() 
-                    .setName(firstNameField.getText().trim())
-                    .setSurname(lastNameField.getText().trim())
-                    .seteMail(emailField.getText().trim())
-                    .setPassword(new String(passwordField.getPassword()))
-                    .setPhoneNumber(phoneField.getText().trim())
-                    .setGender(selectedGender.charAt(0)).build();
-            
-            
-            //KULLANICI HATALI INPUT GİRDİ Mİ KONTROL EDİLİR, GİRMEDİYSE KULLANICI OLUŞTURULUR.
-            try {
-                userService.createUser(newUser);
-                System.out.println("User created: ");
-                JOptionPane.showMessageDialog(null, "User created successfully. Please log in.!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-                tabbedPane.setSelectedIndex(0); //Giris basarılı olunca Login ekranına donulsun
-            } 
-            catch (IllegalArgumentException a) {
-                JOptionPane.showMessageDialog(null, a.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } 
-            catch (Exception a) {
-                JOptionPane.showMessageDialog(null, "An unexpected error occurred:\n" + a.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        panel.add(firstNameLabel);
-        panel.add(firstNameField);
-        panel.add(lastNameLabel);
-        panel.add(lastNameField);
-        panel.add(emailLabel);
-        panel.add(emailField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(phoneLabel);
-        panel.add(phoneField);
-        panel.add(genderLabel);
-        panel.add(genderCombo);
-        panel.add(new JLabel()); // boşluk
-        panel.add(registerButton);
-
-        return panel;
+        //USERTYPE EKLEDİM CONSTRUCTORA, USERTYPEA GORE NEW USER OLUSTURSUN. 
+        return new CreateAUser(userService, tabbedPane,true);
     }
 
     private void styleButton(JButton button) {

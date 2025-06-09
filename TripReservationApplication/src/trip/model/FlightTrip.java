@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import vehicle.model.Vehicle;
 
 
 public class FlightTrip extends Trip{
@@ -22,7 +23,7 @@ public class FlightTrip extends Trip{
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
                 other.getFare());
         super.setReservaitons(other.getReservations());
-        this.plane=other.plane.clone();
+        this.plane=(Plane)other.getVehicle().clone();
     }
       
     public FlightTrip(FlightTripBuilder builder) {
@@ -31,9 +32,9 @@ public class FlightTrip extends Trip{
         this.plane = builder.plane;
     }
     
-    public Plane getPlane(){
+    public Vehicle getVehicle(){
         if(plane !=null){
-            return new Plane(plane);
+            return plane;
         }
         else{
             return null;

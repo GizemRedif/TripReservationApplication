@@ -2,10 +2,12 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-//import java.awt.event.*;
+import java.awt.event.*;
 import user.model.Admin;
 import user.model.Passenger;
 import user.model.User;
+import gui.subpanels.EditUserPanel;
+
 
 public class UserPanelManager extends JPanel {
     private CardLayout cardLayout; 
@@ -36,7 +38,7 @@ public class UserPanelManager extends JPanel {
             }
             case Passenger passenger -> {
                 contentPanel.add(new SearchTripPanel(passenger), "searching");
-                contentPanel.add(new PastTripsPanel(passenger), "pastTrips");
+                contentPanel.add(new MyTripsPanel(passenger), "myTrips");
                 contentPanel.add(new AccountPanel(passenger), "account");
             }
             default -> {
@@ -71,7 +73,7 @@ public class UserPanelManager extends JPanel {
         } 
         else if (currentUser instanceof Passenger) {
             searchTripItem = new JMenuItem("Search Trips");
-            pastTripsItem = new JMenuItem("My Past Trips");
+            pastTripsItem = new JMenuItem("My Trips");
             accountItem = new JMenuItem("My Account");
         }
 
@@ -94,7 +96,7 @@ public class UserPanelManager extends JPanel {
         if (accountItem != null)
             accountItem.addActionListener(e -> showPanelByKey("account"));
         if (pastTripsItem != null)
-            pastTripsItem.addActionListener(e -> showPanelByKey("pastTrips"));
+            pastTripsItem.addActionListener(e -> showPanelByKey("myTrips"));
         if (adminPanelItem != null)
             adminPanelItem.addActionListener(e -> showPanelByKey("admin"));
 

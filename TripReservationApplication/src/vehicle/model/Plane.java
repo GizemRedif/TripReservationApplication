@@ -8,7 +8,7 @@ import seat.PlaneSeat;
 
 public class Plane extends Vehicle{
     private int tailNumber;
-    private List<Seat> seatList = createDefaultSeats();
+    private final List<Seat> seatList = createDefaultSeats();
     
     public Plane(int capacity, int tailNumber){
         super(capacity);
@@ -64,4 +64,8 @@ public class Plane extends Vehicle{
         return new Plane(capacity , tailNumber);
     }
     
+    @Override
+    public List<Seat> getSeatList(){
+        return seatList;
+    }
 }
