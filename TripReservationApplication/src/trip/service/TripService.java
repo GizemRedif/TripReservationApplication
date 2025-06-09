@@ -21,6 +21,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         Trip trip;
         if (tripDTO.getTripType()== BusTrip.class) {
            trip= new BusTrip.BusTripBuilder()
+                   .setBus((Bus)tripDTO.getVehicle())
                    .setArrivalStation(tripDTO.getArrivalStation())
                    .setDepartureStation(tripDTO.getDepartureStation())
                    .setDepartureDate(tripDTO.getDepartureDate())
@@ -31,6 +32,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         }
         else {
             trip= new FlightTrip.FlightTripBuilder()
+                   .setPlane((Plane)tripDTO.getVehicle())
                    .setArrivalStation(tripDTO.getArrivalStation())
                    .setDepartureStation(tripDTO.getDepartureStation())
                    .setDepartureDate(tripDTO.getDepartureDate())
@@ -68,12 +70,12 @@ private final TripRepository tripRepository = TripRepository.getInstance();
     }
     private void checkTripInfo(TripDTO tripDTO){ 
         if(tripDTO.getTripType()==BusTrip.class){ //burdaki kontroller gereksiz olabilir.
-            if(tripDTO.getVehicleType() != Bus.class){
+            if(tripDTO.getVehicle() instanceof Plane){
                 throw new IllegalArgumentException("Trip type is Bus, but vehicle type is not Bus.class.");
             }
         }
         else{
-            if(tripDTO.getVehicleType() != Plane.class){
+            if(tripDTO.getVehicle() instanceof Bus){
                 throw new IllegalArgumentException("Trip type is Plane, but vehicle type is not Plane.class.");
             }
         }

@@ -1,5 +1,6 @@
 package tripreservationapplication;
 
+import dto.TripDTO;
 import gui.LoginRegisterPanel;
 import gui.UserPanelManager;   
 import java.time.LocalDateTime;
@@ -107,8 +108,18 @@ public class MainFrame extends JFrame {
 //                .setFare(2200.00)
 //                .build();     
 //        tripService.createTrip(trip);
-
-         
+        
+        TripService tripService = new TripService();
+         Bus bus = new Bus(40,"dd");
+        TripDTO dto = new TripDTO();
+        dto.setVehicle(bus);
+        dto.setDepartureStation("Adana");
+        dto.setArrivalStation("Ankara");
+        dto.setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0));   //15 Haziran 2025, saat 10:00
+        dto.setTripTime(LocalTime.of(22, 0));
+        dto.setFare(2200.00);
+        dto.setTripType(BusTrip.class);
+        tripService.createTrip(dto);
         
         //RESERVATİON EKLEME DENEME AMACLI
 //        ReservationService reservationService = new ReservationService();

@@ -13,7 +13,7 @@ public class TripDTO {
     private LocalTime tripTime;
     private double fare;
     private Class<? extends Trip> tripType;
-    private Class<? extends Vehicle> vehicleType;
+    Vehicle vehicle;
 
     public String getDepartureStation() {
         return departureStation;
@@ -63,12 +63,12 @@ public class TripDTO {
         this.tripType = tripType;
     }
 
-    public Class<? extends Vehicle> getVehicleType() {
-        return vehicleType;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleType(Class<? extends Vehicle> vehicleType) {
-        this.vehicleType = vehicleType;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     

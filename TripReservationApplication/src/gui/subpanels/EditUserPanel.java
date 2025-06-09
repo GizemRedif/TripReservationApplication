@@ -7,9 +7,10 @@ import java.awt.*;
 import user.Service.UserService;
 
 public class EditUserPanel extends JPanel {
-
+UserService userService;
     //Runnable: içinde yapılacak bir şey tanımlanır, sonra bu iş çağrıldığında çalıştırılır.
-    public EditUserPanel(User user, UserService userService, Runnable onUpdateSuccess) {
+    public EditUserPanel(User user, Runnable onUpdateSuccess) {
+        userService = new UserService();
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
 

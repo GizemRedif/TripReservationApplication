@@ -112,7 +112,7 @@ public class AccountPanel extends JPanel {
         changeInfButton.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
 
-            upm.addPanel("editUser", new EditUserPanel(user, userService, () -> {
+            upm.addPanel("editUser", new EditUserPanel(user, () -> {
                 //Runnable: 
                 // Bu panelin label'larını güncelle
                 this.updateLabels(user);

@@ -2,6 +2,7 @@ package gui;
 
 import gui.subpanels.UserAddForAdminPanel;
 import gui.subpanels.EditUserPanel;
+import gui.subpanels.SelectUserForEditPanel_Admin;
 import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
@@ -55,11 +56,12 @@ public class AdminPanel extends JPanel {
         });
 
         editUserBtn.addActionListener(e -> {
-//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-//            upm.addPanel("editUser", new EditUserPanel());
-//            upm.showPanelByKey("editUser");
-        });
-
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("editUser", new SelectUserForEditPanel_Admin());
+            upm.showPanelByKey("editUser");
+//        });
+});
+        
         accountBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
             upm.addPanel("account", new AccountPanel(admin));
