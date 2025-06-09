@@ -38,9 +38,12 @@ public class ReservationRepository {
     }
     
     /*add new reservation*/
-    public void addReservation(User user , Reservation reservation){
+    public void addReservation(Reservation reservation){
+        User user = (User)reservation.getPassenger();
         if(!reservationsWithUser.containsKey(user)){
-            throw new IllegalArgumentException("there is no such user");
+            List<Reservation> usersReservationList = new ArrayList<>();
+            usersReservationList.add(reservation);
+            reservationsWithUser.put(user, usersReservationList);
         }
         
         reservationsWithUser.get(user).add(reservation);
