@@ -7,6 +7,7 @@ import user.model.User;
 import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
+import user.model.Admin;
 
 //User olusturulan yerlerde cagırılır. (Passenger ve Admin)
 //LoginRegisterPanel -> Register alanı
@@ -59,11 +60,18 @@ public class CreateAUser extends JPanel {
             newUser.setPassword(new String(passwordField.getPassword()));
             newUser.setPhoneNumber(phoneField.getText().trim());
             newUser.setGender(selectedGender.charAt(0));
+            if(userType.equalsIgnoreCase("admin")){
+                newUser.setUserType(Admin.class);
+            }
+            else{
+                newUser.setUserType(Passenger.class);
+            }
+            
                 
             try {
                 userService.createUser(newUser);
 
-                JOptionPane.showMessageDialog(this, "User created successfully. Please log in!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "User created successfully.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
                if(isTappedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
                       
             } catch (IllegalArgumentException ex) {

@@ -57,8 +57,8 @@ public class AdminPanel extends JPanel {
 
         editUserBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            upm.addPanel("editUser", new SelectUserForEditPanel_Admin());
-            upm.showPanelByKey("editUser");
+            upm.addPanel("selectUserForEditPanel", new SelectUserForEditPanel_Admin());
+            upm.showPanelByKey("selectUserForEditPanel");
 //        });
 });
         
