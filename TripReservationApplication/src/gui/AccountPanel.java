@@ -145,11 +145,18 @@ public class AccountPanel extends JPanel {
         deleteAccountButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         deleteAccountButton.setMaximumSize(new Dimension(200, 30));
 
-        deleteAccountButton.addActionListener(e -> {
-     
-            //HESABI SİL
-            
-        });
+    deleteAccountButton.addActionListener(e -> {
+        userService.deleteUser(user);
+
+        int result = JOptionPane.showOptionDialog(null,"User deleted successfully.","Account Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Tamam"}, "Tamam");
+
+        if (result == 0) {
+            MainFrame mainFrame = MainFrame.getInstance();
+            mainFrame.setContentPane(new LoginRegisterPanel());
+            mainFrame.revalidate();
+            mainFrame.repaint();
+        }
+    });
 
         infoPanel.add(Box.createVerticalStrut(10));
         infoPanel.add(deleteAccountButton);
