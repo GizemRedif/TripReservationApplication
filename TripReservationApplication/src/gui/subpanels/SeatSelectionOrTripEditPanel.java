@@ -1,32 +1,44 @@
 package gui.subpanels;
         
-import dto.TripDTO;
+import gui.UserPanelManager;
+import gui.components.BackButton;
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import reservation.model.Reservation;
 import seat.Seat;
 import trip.model.Trip;
-import trip.service.TripService;
+import tripreservationapplication.MainFrame;
 import user.model.User;
 import user.model.Admin;
+import user.model.Passenger;
 
 public class SeatSelectionOrTripEditPanel extends JPanel {
 
     private Trip trip;
     private List<Seat> seatList;
     private User user;
-    private TripService tripService ;
-    
+    private List<Seat> selectedSeats = new ArrayList<>();
+
     public SeatSelectionOrTripEditPanel(Trip trip, User user) {
         this.trip = trip;
         this.user = user;
         this.seatList = trip.getVehicle().getSeatList();
-        this.tripService = new TripService() ;
-        
+
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
+
+//         add(new BackButton("selectOrEdit"), BorderLayout.NORTH);
+
+        // 🔹 İkonlar yükleniyor
+        ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeat.jpg"));
+        ImageIcon bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeat.jpg"));
+      
+
 
         // 🔹 Koltuk Panelini Oluştur
         JPanel wrapperPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
@@ -46,60 +58,95 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
                 } else {
                     if (seatIndex < seatList.size()) {
                         Seat seat = seatList.get(seatIndex++);
-                        JButton seatButton = new JButton(String.valueOf(seat.getSeatNumber()));
-                        seatButton.setPreferredSize(new Dimension(40, 40));
-                        seatButton.setBackground(Color.LIGHT_GRAY);
+                        JButton seatButton = new JButton();
 
-                        // 🔒 Admin ise koltuk butonları pasif
-                        if (user instanceof Admin) {
-                            seatButton.setEnabled(false);
+                        // 🔹 İlk ikon
+                        if (seat.getIsBooked()) {
+                            seatButton.setIcon(bookedIcon);
+                        } else {
+                            seatButton.setIcon(emptyIcon);
                         }
 
-                        seatPanel.add(seatButton);
-                    } else {
-                        JPanel empty = new JPanel();
-                        empty.setOpaque(false);
-                        seatPanel.add(empty);
-                    }
+                        seatButton.setPreferredSize(new Dimension(40, 40));
+                        seatButton.setContentAreaFilled(false);
+                        seatButton.setBorderPainted(false);
+                        seatButton.setFocusPainted(false);
+
+                        // 🔓 Passenger ise tıklanabilir ve toggle yapılabilir
+                        if (!(user instanceof Admin)) {
+                            seatButton.addActionListener(e -> {
+                                boolean newStatus = !seat.getIsBooked();          
+                                seat.setIsBooked(newStatus);
+                                seatButton.setIcon(newStatus ? bookedIcon : emptyIcon); // ikon güncelle
+
+                                // listeye ekle/çıkar
+                                if (newStatus) {
+                                    selectedSeats.add(seat);
+                                } else {
+                                    selectedSeats.remove(seat);
+                                }
+                            });
+                        }
+                        else {
+                            seatButton.setEnabled(false); // Admin ise devre dışı
+                        }
+
+                    seatPanel.add(seatButton);
+}
+
                 }
             }
         }
 
         wrapperPanel.add(seatPanel);
-        add(wrapperPanel, BorderLayout.NORTH);
+        // 🔄 BackButton ve koltuk panelini birlikte tutacak üst panel
+        JPanel topWrapper = new JPanel(new BorderLayout());
+        topWrapper.setOpaque(false);
 
-        // 🔻 Alt Buton Paneli (sadece Admin ise görünür)
+        topWrapper.add(new BackButton("trips"), BorderLayout.NORTH);
+        topWrapper.add(wrapperPanel, BorderLayout.CENTER);
+
+        // 🔄 Artık sadece bu tek panel NORTH'a ekleniyor
+        add(topWrapper, BorderLayout.NORTH);
+
+
+        // 🔻 Alt Buton Paneli
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        buttonPanel.setOpaque(false);
+
+        // 🔧 Passenger'e özel butonlar
+        if (user instanceof Passenger){
+            JButton payButton = new JButton("Odemeye Gec");
+            payButton.addActionListener(e -> {
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+                upm.addPanel("paymentPanel", new PaymentPanel(selectedSeats, trip));
+                upm.showPanelByKey("paymentPanel");
+            });
+            buttonPanel.add(payButton);
+        }
+        
+        // 🔧 Admin'e özel butonlar
         if (user instanceof Admin) {
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-            buttonPanel.setOpaque(false);
-
             JButton viewReservationBtn = new JButton("Rezervasyon Bilgilerini Görüntüle");
-            viewReservationBtn.addActionListener(e -> {});
+            viewReservationBtn.addActionListener(e -> showReservationsPopup(trip));
             
             JButton editTripBtn = new JButton("Trip Düzenle");
             editTripBtn.addActionListener(e -> showTripEditPopup(trip));
-            
+
             JButton deleteTripBtn = new JButton("Trip Sil");
-            deleteTripBtn.addActionListener(e -> {});
-            
+            deleteTripBtn.addActionListener(e -> {
+                // silme işlemi burada yapılabilir
+            });
             
             buttonPanel.add(viewReservationBtn);
             buttonPanel.add(editTripBtn);
             buttonPanel.add(deleteTripBtn);
-
-            add(buttonPanel, BorderLayout.SOUTH);
         }
-        else{
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-            buttonPanel.setOpaque(false);
 
-            JButton viewReservationBtn = new JButton("Rezervasyon Bilgilerini Görüntüle");
-            viewReservationBtn.addActionListener(e -> {});
-        }
+        add(buttonPanel, BorderLayout.SOUTH);
     }
     
     private void showTripEditPopup(Trip trip) {
-        
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Trip Düzenle", true);
         dialog.setSize(500, 550);
         dialog.setLocationRelativeTo(this);
@@ -170,11 +217,9 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
                 int tripHour = Integer.parseInt(tripHourField.getText());
                 int tripMinute = Integer.parseInt(tripMinuteField.getText());
 
-                TripDTO tripDTO = new TripDTO();
-                tripDTO.setDepartureDate(newDeparture);
-                tripDTO.setFare(Double.parseDouble(fareField.getText()));
-                tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
-                tripService.updateTrip(trip, tripDTO);
+                trip.setDepartureDate(newDeparture);
+                trip.setFare(Double.parseDouble(fareField.getText()));
+                trip.setTripTime(LocalTime.of(tripHour, tripMinute));
 
                 dialog.dispose();
             } catch (Exception ex) {
@@ -187,5 +232,49 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         dialog.setVisible(true);
     }
 
+
+    private void showReservationsPopup(Trip trip) {
+        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Rezervasyonlar", true);
+        dialog.setSize(500, 400);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout());
+        dialog.getContentPane().setBackground(new Color(239, 228, 210));
+
+        List<Reservation> reservations = trip.getReservations();
+
+        JPanel listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        listPanel.setOpaque(false);
+
+        if (reservations != null && !reservations.isEmpty()) {
+            for (Reservation res : reservations) {
+                JPanel resPanel = new JPanel(new BorderLayout());
+                resPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                resPanel.setOpaque(false);
+
+                JLabel infoLabel = new JLabel(res.toString()); // veya: res.getPassenger().getName() vs.
+                JButton cancelBtn = new JButton("İptal Et");
+                cancelBtn.addActionListener(e -> {
+                    // Sonradan doldurulacak: rezervasyon iptal işlemi
+                });
+
+                resPanel.add(infoLabel, BorderLayout.CENTER);
+                resPanel.add(cancelBtn, BorderLayout.EAST);
+                listPanel.add(resPanel);
+            }
+        } 
+        else {
+            JLabel noResLabel = new JLabel("Bu trip için hiç rezervasyon yok.");
+            noResLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            listPanel.add(noResLabel);
+        }
+
+        JScrollPane scrollPane = new JScrollPane(listPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBackground(new Color(239, 228, 210));
+
+        dialog.add(scrollPane, BorderLayout.CENTER);
+        dialog.setVisible(true);
+    }
 
 }
