@@ -5,7 +5,7 @@ import user.model.User;
 import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
-
+import dto.UserDTO;
 public class EditUserPanel extends JPanel {
 UserService userService;
     //Runnable: içinde yapılacak bir şey tanımlanır, sonra bu iş çağrıldığında çalıştırılır.
@@ -52,14 +52,22 @@ UserService userService;
         add(saveButton, gbc);
 
         saveButton.addActionListener(ev -> {
+            UserDTO newUserDTO = new UserDTO();
+            
+            
+                
+                
             try {
-                user.setName(nameField.getText().trim());
-                user.setSurname(surnameField.getText().trim());
-                user.setPassword(new String(passwordField.getPassword()).trim());
-                user.setPhoneNumber(phoneField.getText().trim());
-                user.setGender(genderCombo.getSelectedItem().toString().charAt(0));
+                
+                newUserDTO.setEmail(user.getEmail());
+                newUserDTO.setName(nameField.getText().trim());
+                newUserDTO.setSurname(surnameField.getText().trim());
+                newUserDTO.setPassword(new String(passwordField.getPassword()).trim());
+                newUserDTO.setPhoneNumber(phoneField.getText().trim());
+                newUserDTO.setGender(genderCombo.getSelectedItem().toString().charAt(0));
+                
 
-                boolean updated = userService.updateUser(user);
+                boolean updated = userService.updateUser(newUserDTO);
                 if (updated) {
                     JOptionPane.showMessageDialog(this, "User info updated.");
                     if (onUpdateSuccess != null) onUpdateSuccess.run(); // geri bildirim olarak kullanılabilir
