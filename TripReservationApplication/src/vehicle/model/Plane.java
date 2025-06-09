@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import seat.PlaneSeat;
 
 public class Plane extends Vehicle{
-    private int tailNumber;
-    private final List<Seat> seatList = createDefaultSeats();
+    private String tailNumber;
+    private List<Seat> seatList = createDefaultSeats();
     
-    public Plane(int capacity, int tailNumber){
+    public Plane(int capacity, String tailNumber){
         super(capacity);
         this.tailNumber=tailNumber;
     }
@@ -41,11 +41,11 @@ public class Plane extends Vehicle{
         return list;
     }
     
-    public int getTailNumber() {
+    public String getTailNumber() {
         return tailNumber;
     }
 
-    public void setTailNumber(int tailNumber) {
+    public void setTailNumber(String tailNumber) {
         this.tailNumber = tailNumber;
     }
     
@@ -64,8 +64,4 @@ public class Plane extends Vehicle{
         return new Plane(capacity , tailNumber);
     }
     
-    @Override
-    public List<Seat> getSeatList(){
-        return seatList;
-    }
 }
