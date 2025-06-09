@@ -1,5 +1,7 @@
 package gui;
 
+import gui.subpanels.UserAddForAdminPanel;
+import gui.subpanels.EditUserPanel;
 import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +9,7 @@ import tripreservationapplication.MainFrame;
 
 public class AdminPanel extends JPanel {
 
+    JLabel welcomeLabel;
     public AdminPanel(Admin admin) {
         setLayout(new GridLayout(1, 2));  // Sol ve sağ eşit genişlikte
         setBackground(new Color(239, 228, 210)); // Panel arkaplanı
@@ -15,7 +18,7 @@ public class AdminPanel extends JPanel {
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(new Color(239, 228, 210));
         leftPanel.setLayout(new GridBagLayout());
-        JLabel welcomeLabel = new JLabel("Welcome Admin " + admin.getName() + " " + admin.getSurname() +"!");
+        welcomeLabel = new JLabel("Welcome Admin!");
         welcomeLabel.setForeground(Color.BLACK);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
         leftPanel.add(welcomeLabel);
@@ -46,14 +49,14 @@ public class AdminPanel extends JPanel {
         });
 
         addUserBtn.addActionListener(e -> {
-//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-//            upm.addPanel("addUser", new UserAddPanel(admin));
-//            upm.showPanelByKey("addUser");
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("addUser", new UserAddForAdminPanel());
+            upm.showPanelByKey("addUser");
         });
 
         editUserBtn.addActionListener(e -> {
 //            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-//            upm.addPanel("editUser", new EditUserPanel(admin));
+//            upm.addPanel("editUser", new EditUserPanel());
 //            upm.showPanelByKey("editUser");
         });
 
@@ -87,4 +90,5 @@ public class AdminPanel extends JPanel {
         button.setFont(new Font("Arial", Font.BOLD, 14));
         return button;
     }
+    
 }

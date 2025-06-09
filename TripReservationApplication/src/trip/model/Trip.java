@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
+import vehicle.model.Vehicle;
 
 public abstract class Trip {
     private String departureStation;
@@ -85,6 +86,7 @@ public abstract class Trip {
         }
     }
     
+    public abstract Vehicle getVehicle();
      
     //--------------------------Builder Class------------------
     

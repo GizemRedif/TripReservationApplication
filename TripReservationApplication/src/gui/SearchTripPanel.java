@@ -1,5 +1,6 @@
 package gui;
 
+import gui.subpanels.TripsPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;

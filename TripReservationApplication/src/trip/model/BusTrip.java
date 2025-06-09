@@ -7,6 +7,7 @@ import vehicle.model.Bus;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import vehicle.model.Vehicle;
 
 
 public class BusTrip extends Trip{
@@ -23,7 +24,7 @@ public class BusTrip extends Trip{
         super(other.getDepartureStation(), other.getArrivalStation(), other.getDepartureDate(), other.getTripTime(),
                 other.getFare());
         super.setReservaitons(other.getReservations());
-        this.bus=other.getBus().clone();
+        this.bus=(Bus)other.getVehicle().clone();
         
     }
     
@@ -34,9 +35,10 @@ public class BusTrip extends Trip{
        
     }
     
-    public Bus getBus(){
+    @Override
+    public Vehicle getVehicle(){
         if(bus !=null){
-            return new Bus(bus);
+            return bus;
         }
         else{
             return null;

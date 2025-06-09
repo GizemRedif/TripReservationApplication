@@ -1,8 +1,9 @@
 package gui;
 
+import gui.subpanels.EditUserPanel;
 import javax.swing.*;
 import java.awt.*;
-//import searchCriteria.NewUserInfo;
+import tripreservationapplication.MainFrame;
 import user.Service.UserService;
 import user.model.User;
 
@@ -106,105 +107,21 @@ public class AccountPanel extends JPanel {
         JButton changeInfButton = new JButton("Change Information");
         styleButton(changeInfButton);
         infoPanel.add(changeInfButton);
-        
+
         //Change Inf butonuna basılınca bir pop-up cıkacak ve kullanıcı istedigini guncelleyecek.
         changeInfButton.addActionListener(e -> {
-            JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Update Information", true);
-            dialog.setSize(400, 400);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new GridBagLayout());
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
 
-            //Bileşenlerin (label, textfield, buton vs.) konumlandırma ve boyutlandırma kuralları tanımlanır.
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(10, 10, 10, 10);
-            gbc.fill = GridBagConstraints.HORIZONTAL;
+            upm.addPanel("editUser", new EditUserPanel(user, userService, () -> {
+                //Runnable: 
+                // Bu panelin label'larını güncelle
+                this.updateLabels(user);
 
-            JTextField nameField = new JTextField(user.getName(), 20);
-            JTextField surnameField = new JTextField(user.getSurname(), 20);
-            JTextField emailField = new JTextField(user.getEmail(), 20);
-            emailField.setEditable(false); // Kullanıcı e-mailini düzenleyemez
-            emailField.setBackground(Color.LIGHT_GRAY); // Daha net görünmesi için
-            JPasswordField passwordField = new JPasswordField(user.getPassword(), 20);
-            JTextField phoneField = new JTextField(user.getPhoneNumber(), 20);
+                // Sonra geri dön
+                upm.showPanelByKey("account");
+            }));
 
-            JLabel changeGenderLabel = new JLabel("Gender:");
-            String[] genders = {"Male", "Female", "Other"}; // M: Male, F: Female, O: Other
-            JComboBox<String> genderCombo = new JComboBox<>(genders);
-            genderCombo.setSelectedItem(String.valueOf(user.getGender()));
-
-            JButton saveButton = new JButton("Save");
-            styleButton(saveButton);
-            JButton cancelButton = new JButton("Cancel");
-            styleButton(cancelButton);
-
-            int y = 0;
-
-            dialog.add(new JLabel("First Name:"), gbcAt(gbc, 0, y));  //gbcAt ile her bileşen için gbc.gridx = ..., gbc.gridy = ... yazmaktan kurtulduk.
-            dialog.add(nameField, gbcAt(gbc, 1, y++));
-            dialog.add(new JLabel("Last Name:"), gbcAt(gbc, 0, y));
-            dialog.add(surnameField, gbcAt(gbc, 1, y++));
-            dialog.add(new JLabel("Email:"), gbcAt(gbc, 0, y));
-            dialog.add(emailField, gbcAt(gbc, 1, y++));
-            dialog.add(new JLabel("Password:"), gbcAt(gbc, 0, y));
-            dialog.add(passwordField, gbcAt(gbc, 1, y++));
-            dialog.add(new JLabel("Phone Number:"), gbcAt(gbc, 0, y));
-            dialog.add(phoneField, gbcAt(gbc, 1, y++));
-            dialog.add(changeGenderLabel, gbcAt(gbc, 0, y));
-            dialog.add(genderCombo, gbcAt(gbc, 1, y++));
-
-            gbc.gridwidth = 1;
-            dialog.add(saveButton, gbcAt(gbc, 0, y));
-            dialog.add(cancelButton, gbcAt(gbc, 1, y));
-
-            
-            //Kaydet butonuna tıklayınca kontroller yapılır ve sorun yoksa bilgiler guncellenir
-            saveButton.addActionListener(ev -> {
-                
-                // Eğer kullanıcı alanları değiştirmişse ve boş değilse, onları set et
-                if (!nameField.getText().trim().equals(user.getName())) {
-                    user.setName(nameField.getText().trim());
-                }
-
-                if (!surnameField.getText().trim().equals(user.getSurname())) {
-                    user.setSurname(surnameField.getText().trim());
-                }
-
-                String newPassword = new String(passwordField.getPassword()).trim();
-                if (!newPassword.isEmpty() && !newPassword.equals(user.getPassword())) {
-                    user.setPassword(newPassword);
-                }
-
-                if (!phoneField.getText().trim().equals(user.getPhoneNumber())) {
-                    user.setPhoneNumber(phoneField.getText().trim());
-                }
-
-                char selectedGender = genderCombo.getSelectedItem().toString().charAt(0);
-                if (selectedGender != user.getGender()) {
-                    user.setGender(selectedGender); // doğrudan güncelleniyor çünkü bu alan kontrol edilmiyor
-                }
-
-                try {
-                    boolean success = userService.updateUser(user);
-                    if (success) {
-                        // GUI'deki user nesnesi güncelleniyor
-                        nameLabel.setText("Hello " + user.getName() + " " + user.getSurname() + "!");
-                        phoneNumberLabel.setText("Phone Number: " + user.getPhoneNumber());
-                        genderLabel.setText("Gender: " + user.getGender());
-                        // şifreyi göstermek istemiyorsan yıldızlı kalabilir
-                        passwordLabel.setText("Password: *********");
-
-                        JOptionPane.showMessageDialog(dialog, "Information updated successfully.");
-                        dialog.dispose();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-
-
-            cancelButton.addActionListener(ev -> dialog.dispose());
-
-            dialog.setVisible(true);
+            upm.showPanelByKey("editUser");
         });
 
         contentPanel.add(infoPanel);
@@ -226,5 +143,12 @@ public class AccountPanel extends JPanel {
         copy.gridy = y;
         return copy;
     }
-
+    
+    public void updateLabels(User updatedUser) {
+        nameLabel.setText("Hello " + updatedUser.getName() + " " + updatedUser.getSurname() + "!");
+        phoneNumberLabel.setText("Phone Number: " + updatedUser.getPhoneNumber());
+        genderLabel.setText("Gender: " + updatedUser.getGender());
+        passwordLabel.setText("Password: *********");
+    }
 }
+

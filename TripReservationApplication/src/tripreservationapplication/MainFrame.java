@@ -4,7 +4,15 @@ import gui.LoginRegisterPanel;
 import gui.UserPanelManager;   
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
+import reservation.factory.ReservationFactory;
+import reservation.model.BusReservation;
+import reservation.model.Reservation;
+import reservation.repository.ReservationRepository;
+import reservation.service.ReservationService;
+import seat.BusSeat;
 import trip.model.BusTrip;
 import trip.model.Trip;
 import trip.service.TripService;
@@ -26,6 +34,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
 
         ornekOlustur();
+//        tripOrnegiOlustur();
   
         //Başlangıçta login paneli göster, menü bar yok
         setJMenuBar(null);
@@ -71,9 +80,10 @@ public class MainFrame extends JFrame {
     
     
     public void ornekOlustur(){
+        
         //DENEME AMACLI NESNELER BURADAN OLUSTURULUYOR. SONRA SİL
         //Passenger panel deneme amaclı yapılmıstır. sonra sil
-             User user = new Passenger("aa","bb","1","1","6765456782",'M',null);
+        User user = new Passenger("aa","bb","1","1","6765456782",'M',null);
         UserRepository rep = UserRepository.getInstance();
         rep.addUser(user);
         
@@ -85,9 +95,9 @@ public class MainFrame extends JFrame {
         
         
         
-        Bus bus = new Bus(12,"dd");
-        
-           //TRİP EKLEME DENEME AMACLI
+        //TRİP EKLEME DENEME AMACLI
+        TripService tripService = new TripService();
+        Bus bus = new Bus(40,"dd");
         Trip trip = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
@@ -95,39 +105,72 @@ public class MainFrame extends JFrame {
                 .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
+                .build();     
+        tripService.createTrip(trip);
+
+         
+        
+        //RESERVATİON EKLEME DENEME AMACLI
+//        ReservationService reservationService = new ReservationService();
+//        ReservationFactory factory = new ReservationFactory();
+//        Reservation reservation = factory.createReservation((Passenger)user,100, trip.getVehicle().getSeatList().get(1), trip);
+//        reservationService.createReservation(user, reservation);
+//        trip.getVehicle().getSeatList().get(1).setIsBooked(true);
+//        trip.getReservations();
+          
+        
+    }
+
+    
+    public void tripOrnegiOlustur(){
+        
+        User passenger = new Passenger("aa","bb","11","1","6765456782",'M',null);
+        UserRepository rep1 = UserRepository.getInstance();
+        rep1.addUser(passenger);
+        
+        
+        TripService tripService = new TripService();
+        Bus bus = new Bus(40,"dd");
+        Trip trip1 = new BusTrip.BusTripBuilder()
+                .setBus(bus)
+                .setDepartureStation("Adana")
+                .setArrivalStation("Ankara")
+                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setTripTime(LocalTime.of(22, 0))
+                .setFare(2200.00)
+                .build();     
         Trip trip2 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
-                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setDepartureDate(LocalDateTime.of(2025, 7, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
+                .build();     
         Trip trip3 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
-                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setDepartureDate(LocalDateTime.of(2025, 3, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
+                .build();     
         Trip trip4 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
-                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setDepartureDate(LocalDateTime.of(2025, 2, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
+                .build();     
         Trip trip5 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
                 .setArrivalStation("Ankara")
-                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+                .setDepartureDate(LocalDateTime.of(2025, 1, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
+                .build();     
         Trip trip6 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")
@@ -135,24 +178,13 @@ public class MainFrame extends JFrame {
                 .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
-                .build();
-        
-        
-        
-        
-        
-        
-        
-        TripService tripService = new TripService();
-        tripService.createTrip(trip);
+                .build();     
+        tripService.createTrip(trip1);
         tripService.createTrip(trip2);
         tripService.createTrip(trip3);
         tripService.createTrip(trip4);
         tripService.createTrip(trip5);
         tripService.createTrip(trip6);
         
- 
-        
     }
-
 }

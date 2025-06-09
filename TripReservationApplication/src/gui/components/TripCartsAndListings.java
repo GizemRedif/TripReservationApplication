@@ -1,48 +1,37 @@
-package gui;
 
-import trip.model.Trip;
-import user.model.User;
-import javax.swing.*;
-import java.awt.*;
+package gui.components;
+
+import gui.UserPanelManager;
+import gui.subpanels.SeatSelectionOrTripEditPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import trip.model.Trip;
 import tripreservationapplication.MainFrame;
 import user.model.Admin;
-//import user.model.Passenger;
+import user.model.User;
 
-public class TripsPanel extends JPanel {
+//TripsPanel -> uygun Tripleri listelemek icin kullanır.
 
-    public TripsPanel(List<Trip> trips, User user) {
+public class TripCartsAndListings extends JPanel {
+    
+    public TripCartsAndListings(List<Trip> trips, User user, String callingPanel){
+                                                             //Hangi panel cagırıyor onu yazarız. TripsPanel ya da PastTrips
+        
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
-
-        
-        //--------------Üst panel: Geri ve Filtrele butonları---------------------
-        JPanel topBar = new JPanel(new BorderLayout());
-        topBar.setBackground(new Color(19, 29, 79));
-
-        JButton backButton = new JButton("← Back");
-        backButton.addActionListener(e -> {
-            UserPanelManager panelManager = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            panelManager.setMenuBarVisible(true);
-            panelManager.showPanelByKey("searching");
-        });
-
-        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        leftPanel.setOpaque(false);
-        leftPanel.add(backButton);
-        
-        JButton filterButton = new JButton("🔍 Filter");
-        filterButton.addActionListener(e -> showFilterPopup());
-
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        rightPanel.setOpaque(false);
-        rightPanel.add(filterButton);
-
-        topBar.add(leftPanel, BorderLayout.WEST);
-        topBar.add(rightPanel, BorderLayout.EAST);
-        add(topBar, BorderLayout.NORTH);
-
         
         //-----------------------İçerik: Trip kartları----------------------------
         JPanel innerPanel = new JPanel();
@@ -76,8 +65,10 @@ public class TripsPanel extends JPanel {
             JLabel priceLabel = new JLabel("Price: " + trip.getFare() + "₺");
             priceLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             bottom.add(priceLabel, BorderLayout.WEST);
-
-            //Alt kısım:  Buton (User kontrolu yapılır ve buton yazısı belirlenir.)
+            
+            
+            if("TripsPanel".equals(callingPanel)){
+                 //Alt kısım:  Buton (User kontrolu yapılır ve buton yazısı belirlenir.)
             String buttonText = "Select Seat";
             if(user instanceof Admin){buttonText = "EDIT";}
             JButton selectSeatButton = new JButton(buttonText);
@@ -88,6 +79,9 @@ public class TripsPanel extends JPanel {
                 upm.addPanel("selectOrEdit", new SeatSelectionOrTripEditPanel(trip, user));  // paneli CardLayout’a ekle
                 upm.showPanelByKey("selectOrEdit");                            // geçiş yap
             });
+                
+            }
+           
             
             tripCard.add(bottom, BorderLayout.SOUTH);
 
@@ -102,25 +96,12 @@ public class TripsPanel extends JPanel {
         scrollPane.setBackground(new Color(239, 228, 210));
 
         add(scrollPane, BorderLayout.CENTER);
+        
+        
     }
-//----------------------------------------------------Contructor sonu-------------------------------------------
     
     
-    //Filtreleme pop-up'ı acılacak ve istenilen filtreler yapılacak.
-    private void showFilterPopup() {
-        JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(this), "Filter Trips", Dialog.ModalityType.APPLICATION_MODAL);
-        dialog.setSize(300, 200);
-        dialog.setLocationRelativeTo(this);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("Buraya filtre seçenekleri gelecek..."));
-
-        dialog.add(panel);
-        dialog.setVisible(true);
-    }
-
-    private void styleSelectOrEditButton(JButton button) {
+        private void styleSelectOrEditButton(JButton button) {
         button.setFocusPainted(false);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);
@@ -128,6 +109,4 @@ public class TripsPanel extends JPanel {
         button.setOpaque(true);
         button.setBorderPainted(false);
     }
-    
-   
 }

@@ -1,5 +1,5 @@
 
-package gui;
+package gui.subpanels;
 
 import javax.swing.JPanel;
 
