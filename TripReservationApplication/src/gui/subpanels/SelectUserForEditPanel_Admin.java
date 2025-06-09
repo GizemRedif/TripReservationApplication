@@ -70,10 +70,7 @@ public class SelectUserForEditPanel_Admin extends JPanel {
                     }));
                     upm.showPanelByKey("editUser");
                 }
-                
-                
-                
-                
+
                 // örnek: userService.getUserByEmail(email);
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter an email.", "Warning", JOptionPane.WARNING_MESSAGE);

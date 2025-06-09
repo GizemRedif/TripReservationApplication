@@ -30,7 +30,13 @@ public class BackButton extends JPanel{
         JButton backButton = new JButton("← Back");
         backButton.addActionListener(e -> {
             UserPanelManager panelManager = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            panelManager.setMenuBarVisible(true);
+            if(previousPanel.equalsIgnoreCase("searching")){
+                panelManager.setMenuBarVisible(true);
+            }
+            else{
+                panelManager.setMenuBarVisible(false);
+            }
+            
             panelManager.showPanelByKey(previousPanel);
         });
 
