@@ -1,22 +1,33 @@
 
 package reservation.service;
 
+import dto.ReservationDTO;
 import java.util.Collections;
 import java.util.List;
 import reservation.model.Reservation;
 import reservation.repository.ReservationRepository;
 import dto.ReservationSearchCriteria;
+import reservation.factory.ReservationFactory;
+import reservation.model.BusReservation;
 import trip.model.Trip;
+import user.model.Passenger;
 import user.model.User;
 
 public class ReservationService {
     private final ReservationRepository reservationRepository = ReservationRepository.getInstance();
     
-    public void createReservation(User user,Reservation reservation){
-        if(reservation.getFare()<0){
-            throw new IllegalArgumentException("Fare cannot be negative.");
+    public void createReservation(User user,ReservationDTO reservationDTO){
+
+        Class<? extends Reservation> reservationType = reservationDTO.getReservationType();
+        Reservation reservation;
+        Passenger passenger = (Passenger) user;
+        ReservationFactory factory = new ReservationFactory();
+        if(reservationType == BusReservation.class){
+            reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getBusTrip());
         }
-        
+        else{
+            reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getFlight());
+        }
         reservationRepository.addReservation(reservation);
         //burada aynı zamanda ilgili Trip nesnesinin rezervasyon listesi içine de bu rezervasyonu eklemeliyiz
     }    

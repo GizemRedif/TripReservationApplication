@@ -1,9 +1,12 @@
 package dto;
 
 import reservation.model.Reservation;
+import seat.BusSeat;
+import seat.PlaneSeat;
 import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import user.model.Passenger;
+import seat.Seat;
 
 public class ReservationDTO {
 
@@ -12,6 +15,7 @@ public class ReservationDTO {
     private Class<? extends Reservation> reservationType;
     private BusTrip busTrip;
     private FlightTrip flight;
+    private Seat seat; 
 
     public Passenger getPassenger() {
         return passenger;
@@ -51,6 +55,14 @@ public class ReservationDTO {
 
     public void setFlight(FlightTrip flight) {
         this.flight = flight;
+    }
+
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
     
 }
