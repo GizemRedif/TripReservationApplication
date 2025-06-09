@@ -6,6 +6,7 @@ import java.util.List;
 import reservation.model.Reservation;
 import reservation.repository.ReservationRepository;
 import dto.ReservationSearchCriteria;
+import trip.model.Trip;
 import user.model.User;
 
 public class ReservationService {
@@ -15,7 +16,8 @@ public class ReservationService {
         if(reservation.getFare()<0){
             throw new IllegalArgumentException("Fare cannot be negative.");
         }
-        reservationRepository.addReservation(user, reservation);
+        
+        reservationRepository.addReservation(reservation);
         //burada aynı zamanda ilgili Trip nesnesinin rezervasyon listesi içine de bu rezervasyonu eklemeliyiz
     }    
     
