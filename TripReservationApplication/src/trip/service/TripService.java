@@ -50,23 +50,13 @@ private final TripRepository tripRepository = TripRepository.getInstance();
     }
     
     public boolean updateTrip(Trip trip ,TripDTO newTripDTO){
-        List<Trip> allTrips = tripRepository.getAllTrips();
-        for (Trip t : allTrips) {
-            if (t.equals(trip)) { 
-                checkTripInfo(newTripDTO);
+        checkTripInfo(newTripDTO);
 
-                trip.setDepartureStation(newTripDTO.getDepartureStation());
-                trip.setArrivalStation(newTripDTO.getArrivalStation());
-                trip.setDepartureDate(newTripDTO.getDepartureDate());
-                trip.setTripTime(newTripDTO.getTripTime());
-                trip.setFare(newTripDTO.getFare());
+        trip.setDepartureDate(newTripDTO.getDepartureDate());
+        trip.setTripTime(newTripDTO.getTripTime());
+        trip.setFare(newTripDTO.getFare());
                 
-
-                return true;
-            }
-        }
-        System.out.println("Trip not found.");
-        return false;
+        return true;
     }
     private void checkTripInfo(TripDTO tripDTO){ 
         if(tripDTO.getTripType()==BusTrip.class){ //burdaki kontroller gereksiz olabilir.
