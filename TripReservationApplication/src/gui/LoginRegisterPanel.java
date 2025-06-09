@@ -83,7 +83,7 @@ public class LoginRegisterPanel extends JPanel {
         UserService userService = new UserService(); // kendi UserService implementasyonuna göre ayarla
         
         //USERTYPE EKLEDİM CONSTRUCTORA, USERTYPEA GORE NEW USER OLUSTURSUN. 
-        return new CreateAUser(userService, tabbedPane,true);
+        return new CreateAUser(userService, tabbedPane,true, "Passenger");
     }
 
     private void styleButton(JButton button) {

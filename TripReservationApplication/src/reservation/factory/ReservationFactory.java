@@ -12,7 +12,7 @@ import trip.model.Trip;
 import seat.Seat;
 
 public class ReservationFactory {
-    public  Reservation createReservation(Passenger passenger, int fare, Seat seat, Trip trip){
+    public  Reservation createReservation(Passenger passenger, double fare, Seat seat, Trip trip){
         if(trip == null){
             throw new IllegalArgumentException("trip can not be null");
         }

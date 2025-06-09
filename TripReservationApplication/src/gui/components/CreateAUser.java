@@ -1,5 +1,6 @@
 package gui.components;
 
+import dto.UserDTO;
 import user.model.Passenger;
 import user.model.User;
 
@@ -15,8 +16,8 @@ public class CreateAUser extends JPanel {
 
     private final UserService userService;
     private final JTabbedPane tabbedPane;
-                                                                                             //, String userType
-    public CreateAUser(UserService userService, JTabbedPane tabbedPane, boolean isTappedChange) {
+    
+    public CreateAUser(UserService userService, JTabbedPane tabbedPane, boolean isTappedChange, String userType) {
         this.userService = userService;
         this.tabbedPane = tabbedPane;
 
@@ -50,17 +51,16 @@ public class CreateAUser extends JPanel {
 
         registerButton.addActionListener(e -> {
             String selectedGender = (String) genderCombo.getSelectedItem();
-
+            
+            UserDTO newUser = new UserDTO();
+            newUser.setName(firstNameField.getText().trim());
+            newUser.setSurname(lastNameField.getText().trim());
+            newUser.setEmail(emailField.getText().trim());
+            newUser.setPassword(new String(passwordField.getPassword()));
+            newUser.setPhoneNumber(phoneField.getText().trim());
+            newUser.setGender(selectedGender.charAt(0));
+                
             try {
-                User newUser = new Passenger.PassengerBuilder()
-                        .setName(firstNameField.getText().trim())
-                        .setSurname(lastNameField.getText().trim())
-                        .seteMail(emailField.getText().trim())
-                        .setPassword(new String(passwordField.getPassword()))
-                        .setPhoneNumber(phoneField.getText().trim())
-                        .setGender(selectedGender.charAt(0))
-                        .build();
-
                 userService.createUser(newUser);
 
                 JOptionPane.showMessageDialog(this, "User created successfully. Please log in!", "Welcome", JOptionPane.INFORMATION_MESSAGE);

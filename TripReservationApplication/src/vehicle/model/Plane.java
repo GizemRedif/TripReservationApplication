@@ -60,6 +60,11 @@ public class Plane extends Vehicle{
 //    }
     
     @Override
+    public List<Seat> getSeatList(){
+        return seatList;
+    }
+    
+    @Override
     public Plane clone(){
         return new Plane(capacity , tailNumber);
     }

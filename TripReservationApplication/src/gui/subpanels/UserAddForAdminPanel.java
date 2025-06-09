@@ -42,7 +42,7 @@ public class UserAddForAdminPanel extends JPanel {
         UserService userService = new UserService(); // kendi UserService implementasyonuna göre ayarla
                
         //USERTYPE EKLEDİM CONSTRUCTORA, USERTYPEA GORE NEW USER OLUSTURSUN. 
-        return new CreateAUser(userService, tabbedPane,true);
+        return new CreateAUser(userService, tabbedPane,true,userType);
     }
 
     private void styleButton(JButton button) {

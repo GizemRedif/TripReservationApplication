@@ -96,17 +96,17 @@ public class MainFrame extends JFrame {
         
         
         //TRİP EKLEME DENEME AMACLI
-        TripService tripService = new TripService();
-        Bus bus = new Bus(40,"dd");
-        Trip trip = new BusTrip.BusTripBuilder()
-                .setBus(bus)
-                .setDepartureStation("Adana")
-                .setArrivalStation("Ankara")
-                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
-                .setTripTime(LocalTime.of(22, 0))
-                .setFare(2200.00)
-                .build();     
-        tripService.createTrip(trip);
+//        TripService tripService = new TripService();
+//        Bus bus = new Bus(40,"dd");
+//        Trip trip = new BusTrip.BusTripBuilder()
+//                .setBus(bus)
+//                .setDepartureStation("Adana")
+//                .setArrivalStation("Ankara")
+//                .setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 0))   //15 Haziran 2025, saat 10:00
+//                .setTripTime(LocalTime.of(22, 0))
+//                .setFare(2200.00)
+//                .build();     
+//        tripService.createTrip(trip);
 
          
         
@@ -179,12 +179,12 @@ public class MainFrame extends JFrame {
                 .setTripTime(LocalTime.of(22, 0))
                 .setFare(2200.00)
                 .build();     
-        tripService.createTrip(trip1);
-        tripService.createTrip(trip2);
-        tripService.createTrip(trip3);
-        tripService.createTrip(trip4);
-        tripService.createTrip(trip5);
-        tripService.createTrip(trip6);
+//        tripService.createTrip(trip1);
+//        tripService.createTrip(trip2);
+//        tripService.createTrip(trip3);
+//        tripService.createTrip(trip4);
+//        tripService.createTrip(trip5);
+//        tripService.createTrip(trip6);
         
     }
 }
