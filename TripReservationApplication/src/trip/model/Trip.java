@@ -86,6 +86,14 @@ public abstract class Trip {
         }
     }
     
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
+    }
+    
+    public void deleteReservation(Reservation reservation){
+        reservations.remove(reservation);
+    }
+    
     public abstract Vehicle getVehicle();
      
     //--------------------------Builder Class------------------
