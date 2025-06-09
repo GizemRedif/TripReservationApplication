@@ -10,6 +10,9 @@ public class UserService {
     
         private final UserRepository userRepository = UserRepository.getInstance();
         
+        public User getUserByEmail(String email){
+            return userRepository.getUserByEmail(email);
+        }
         public boolean createUser(UserDTO userDTO){
             
             if(userDTO == null){return false;}
@@ -64,14 +67,14 @@ public class UserService {
             }
         }
         
-        public boolean updateUser(User newUser){
+        public boolean updateUser(UserDTO newUser){
 //            if(newUser== null || newUser.getEmail()== null){
 //                throw new IllegalArgumentException("Updated user or email cannot be null.");
 //            }
              
             User existingUser =userRepository.getUserByEmail(newUser.getEmail());
             
-            checkUserInfo(toUserDTO(newUser));
+            checkUserInfo(newUser);
             
             if(newUser.getName()!= null){
                 existingUser.setName(newUser.getName());
@@ -109,17 +112,4 @@ public class UserService {
                 }
             }
         }
-        public static UserDTO toUserDTO(User user) {
-           if (user == null) return null;
-
-           UserDTO dto = new UserDTO();
-           dto.setName(user.getName());
-           dto.setSurname(user.getSurname());
-           dto.setEmail(user.getEmail());
-           dto.setPassword(user.getPassword());
-           dto.setPhoneNumber(user.getPhoneNumber());
-           dto.setGender(user.getGender());
-           dto.setUserType(user.getClass()); // burası önemli!
-           return dto;
-       }
 }

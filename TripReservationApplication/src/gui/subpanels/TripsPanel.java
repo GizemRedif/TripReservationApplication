@@ -21,7 +21,7 @@ public class TripsPanel extends JPanel {
         setBackground(new Color(239, 228, 210));
 
         // Üstte geri butonları
-        add(new BackButton("editUser"), BorderLayout.NORTH);
+        add(new BackButton("searching"), BorderLayout.NORTH);
 
 
         // TripsPanel içinde: İcerik ve Trip Kartları olusturulur.
