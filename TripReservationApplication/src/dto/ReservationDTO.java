@@ -12,8 +12,7 @@ public class ReservationDTO {
     private Passenger passenger;
     private double fare;
     private Class<? extends Reservation> reservationType;
-    private BusTrip busTrip;
-    private FlightTrip flight;
+    private Trip trip;
     private Seat seat; 
 
     public Passenger getPassenger() {
@@ -28,14 +27,7 @@ public class ReservationDTO {
         return reservationType;
     }
 
-    public BusTrip getBusTrip() {
-        return busTrip;
-    }
-
-    public FlightTrip getFlight() {
-        return flight;
-    }
-
+   
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
     }
@@ -48,12 +40,12 @@ public class ReservationDTO {
         this.reservationType = reservationType;
     }
 
-    public void setBusTrip(BusTrip busTrip) {
-        this.busTrip = busTrip;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
-    public void setFlight(FlightTrip flight) {
-        this.flight = flight;
+    public Trip getTrip() {
+        return trip;
     }
 
     public Seat getSeat() {
@@ -64,9 +56,7 @@ public class ReservationDTO {
         this.seat = seat;
     }
 
-    public void setTrip(Trip trip) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }
 

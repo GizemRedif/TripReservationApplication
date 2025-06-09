@@ -18,16 +18,11 @@ public class ReservationService {
     
     public void createReservation(User user,ReservationDTO reservationDTO){
 
-        Class<? extends Reservation> reservationType = reservationDTO.getReservationType();
         Reservation reservation;
         Passenger passenger = (Passenger) user;
         ReservationFactory factory = new ReservationFactory();
-        if(reservationType == BusReservation.class){
-            reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getBusTrip());
-        }
-        else{
-            reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getFlight());
-        }
+        reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getTrip());
+       
         reservationRepository.addReservation(reservation);
         reservation.getTrip().addReservation(reservation);
     }    

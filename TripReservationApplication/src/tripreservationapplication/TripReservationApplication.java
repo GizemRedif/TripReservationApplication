@@ -161,7 +161,7 @@ public class TripReservationApplication {
         
         // BusTrips
         TripDTO busTrip1 = new TripDTO();
-        busTrip1.setDepartureStation("Istanbul");
+        busTrip1.setDepartureStation("Adana");
         busTrip1.setArrivalStation("Ankara");
         busTrip1.setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 30));
         busTrip1.setTripTime(LocalTime.of(12, 0));
@@ -197,61 +197,61 @@ public class TripReservationApplication {
         busTrip4.setTripType(BusTrip.class);
         
         TripDTO busTrip5 = new TripDTO();
-        busTrip1.setDepartureStation("Istanbul");
-        busTrip1.setArrivalStation("Ankara");
-        busTrip1.setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 30));
-        busTrip1.setTripTime(LocalTime.of(2, 30));
-        busTrip1.setFare(200);
-        busTrip1.setVehicle(vehicleService.getVehicleByIdentifier("34 AA 1313"));
-        busTrip1.setTripType(BusTrip.class);
+        busTrip5.setDepartureStation("Adana");
+        busTrip5.setArrivalStation("Ankara");
+        busTrip5.setDepartureDate(LocalDateTime.of(2025, 6, 15, 10, 30));
+        busTrip5.setTripTime(LocalTime.of(2, 30));
+        busTrip5.setFare(200);
+        busTrip5.setVehicle(vehicleService.getVehicleByIdentifier("34 AA 1313"));
+        busTrip5.setTripType(BusTrip.class);
 
         TripDTO busTrip6 = new TripDTO();
-        busTrip2.setDepartureStation("Istanbul");
-        busTrip2.setArrivalStation("Ankara");
-        busTrip2.setDepartureDate(LocalDateTime.of(2025, 6, 15, 12, 00));
-        busTrip2.setTripTime(LocalTime.of(2, 45));
-        busTrip2.setFare(220);
-        busTrip2.setVehicle(vehicleService.getVehicleByIdentifier("35 BB 2525"));
-        busTrip2.setTripType(BusTrip.class);
+        busTrip6.setDepartureStation("Adana");
+        busTrip6.setArrivalStation("Ankara");
+        busTrip6.setDepartureDate(LocalDateTime.of(2025, 6, 15, 12, 00));
+        busTrip6.setTripTime(LocalTime.of(2, 45));
+        busTrip6.setFare(220);
+        busTrip6.setVehicle(vehicleService.getVehicleByIdentifier("35 BB 2525"));
+        busTrip6.setTripType(BusTrip.class);
         
         
         
         TripDTO busTrip7 = new TripDTO();
-        busTrip3.setDepartureStation("Istanbul");
-        busTrip3.setArrivalStation("Ankara");
-        busTrip3.setDepartureDate(LocalDateTime.of(2025, 6, 15, 13, 30));
-        busTrip3.setTripTime(LocalTime.of(3, 30));
-        busTrip3.setFare(240);
-        busTrip3.setVehicle(vehicleService.getVehicleByIdentifier("06 CC 3636"));
-        busTrip3.setTripType(BusTrip.class);
+        busTrip7.setDepartureStation("Adana");
+        busTrip7.setArrivalStation("Ankara");
+        busTrip7.setDepartureDate(LocalDateTime.of(2025, 6, 15, 13, 30));
+        busTrip7.setTripTime(LocalTime.of(3, 30));
+        busTrip7.setFare(240);
+        busTrip7.setVehicle(vehicleService.getVehicleByIdentifier("06 CC 3636"));
+        busTrip7.setTripType(BusTrip.class);
 
         TripDTO busTrip8 = new TripDTO();
-        busTrip4.setDepartureStation("Istanbul");
-        busTrip4.setArrivalStation("Ankara");
-        busTrip4.setDepartureDate(LocalDateTime.of(2025, 6, 15, 15, 00));
-        busTrip4.setTripTime(LocalTime.of(2, 50));
-        busTrip4.setFare(260);
-        busTrip4.setVehicle(vehicleService.getVehicleByIdentifier("34 AA 1313"));
-        busTrip4.setTripType(BusTrip.class);
+        busTrip8.setDepartureStation("Adana");
+        busTrip8.setArrivalStation("Ankara");
+        busTrip8.setDepartureDate(LocalDateTime.of(2025, 6, 15, 15, 00));
+        busTrip8.setTripTime(LocalTime.of(2, 50));
+        busTrip8.setFare(260);
+        busTrip8.setVehicle(vehicleService.getVehicleByIdentifier("34 AA 1313"));
+        busTrip8.setTripType(BusTrip.class);
 
         TripDTO busTrip9 = new TripDTO();
-        busTrip5.setDepartureStation("Istanbul");
-        busTrip5.setArrivalStation("Ankara");
-        busTrip5.setDepartureDate(LocalDateTime.of(2025, 6, 15, 17, 00));
-        busTrip5.setTripTime(LocalTime.of(2, 40));
-        busTrip5.setFare(280);
-        busTrip5.setVehicle(vehicleService.getVehicleByIdentifier("35 BB 2525"));
-        busTrip5.setTripType(BusTrip.class);
+        busTrip9.setDepartureStation("Adana");
+        busTrip9.setArrivalStation("Ankara");
+        busTrip9.setDepartureDate(LocalDateTime.of(2025, 6, 15, 17, 00));
+        busTrip9.setTripTime(LocalTime.of(2, 40));
+        busTrip9.setFare(280);
+        busTrip9.setVehicle(vehicleService.getVehicleByIdentifier("35 BB 2525"));
+        busTrip9.setTripType(BusTrip.class);
         
         
         TripDTO busTrip10 = new TripDTO();
-        busTrip6.setDepartureStation("Istanbul");
-        busTrip6.setArrivalStation("Ankara");
-        busTrip6.setDepartureDate(LocalDateTime.of(2025, 6, 15, 18, 30));
-        busTrip6.setTripTime(LocalTime.of(3, 10));
-        busTrip6.setFare(300);
-        busTrip6.setVehicle(vehicleService.getVehicleByIdentifier("06 CC 3636"));
-        busTrip6.setTripType(BusTrip.class);
+        busTrip10.setDepartureStation("Adana");
+        busTrip10.setArrivalStation("Ankara");
+        busTrip10.setDepartureDate(LocalDateTime.of(2025, 6, 15, 18, 30));
+        busTrip10.setTripTime(LocalTime.of(3, 10));
+        busTrip10.setFare(300);
+        busTrip10.setVehicle(vehicleService.getVehicleByIdentifier("06 CC 3636"));
+        busTrip10.setTripType(BusTrip.class);
 
         
         
@@ -259,8 +259,8 @@ public class TripReservationApplication {
         //FlightTrips
         
         TripDTO flightTrip1 = new TripDTO();
-        flightTrip1.setDepartureStation("Istanbul");
-        flightTrip1.setArrivalStation("Izmir");
+        flightTrip1.setDepartureStation("İstanbul");
+        flightTrip1.setArrivalStation("İzmir");
         flightTrip1.setDepartureDate(LocalDateTime.of(2025, 6, 15, 9, 0));
         flightTrip1.setTripTime(LocalTime.of(1, 0));
         flightTrip1.setFare(950);
@@ -268,8 +268,8 @@ public class TripReservationApplication {
         flightTrip1.setTripType(FlightTrip.class);
 
         TripDTO flightTrip2 = new TripDTO();
-        flightTrip2.setDepartureStation("Istanbul");
-        flightTrip2.setArrivalStation("Izmir");
+        flightTrip2.setDepartureStation("İstanbul");
+        flightTrip2.setArrivalStation("İzmir");
         flightTrip2.setDepartureDate(LocalDateTime.of(2025, 6, 15, 11, 0));
         flightTrip2.setTripTime(LocalTime.of(1, 5));
         flightTrip2.setFare(970);
@@ -277,8 +277,8 @@ public class TripReservationApplication {
         flightTrip2.setTripType(FlightTrip.class);
 
         TripDTO flightTrip3 = new TripDTO();
-        flightTrip3.setDepartureStation("Istanbul");
-        flightTrip3.setArrivalStation("Izmir");
+        flightTrip3.setDepartureStation("İstanbul");
+        flightTrip3.setArrivalStation("İzmir");
         flightTrip3.setDepartureDate(LocalDateTime.of(2025, 6, 15, 13, 0));
         flightTrip3.setTripTime(LocalTime.of(1, 10));
         flightTrip3.setFare(990);
@@ -295,8 +295,8 @@ public class TripReservationApplication {
         flightTrip4.setTripType(FlightTrip.class);
 
         TripDTO flightTrip5 = new TripDTO();
-        flightTrip5.setDepartureStation("Istanbul");
-        flightTrip5.setArrivalStation("Izmir");
+        flightTrip5.setDepartureStation("İstanbul");
+        flightTrip5.setArrivalStation("İzmir");
         flightTrip5.setDepartureDate(LocalDateTime.of(2025, 6, 15, 17, 0));
         flightTrip5.setTripTime(LocalTime.of(1, 15));
         flightTrip5.setFare(1030);
@@ -305,8 +305,8 @@ public class TripReservationApplication {
 
         
         TripDTO flightTrip6 = new TripDTO();
-        flightTrip6.setDepartureStation("Istanbul");
-        flightTrip6.setArrivalStation("Izmir");
+        flightTrip6.setDepartureStation("İstanbul");
+        flightTrip6.setArrivalStation("İzmir");
         flightTrip6.setDepartureDate(LocalDateTime.of(2025, 6, 15, 19, 0));
         flightTrip6.setTripTime(LocalTime.of(1, 10));
         flightTrip6.setFare(1050);
@@ -314,40 +314,40 @@ public class TripReservationApplication {
         flightTrip6.setTripType(FlightTrip.class);
         
         TripDTO flightTrip7 = new TripDTO();
-        flightTrip1.setDepartureStation("Istanbul");
-        flightTrip1.setArrivalStation("Izmir");
-        flightTrip1.setDepartureDate(LocalDateTime.of(2025, 6, 15, 9, 0));
-        flightTrip1.setTripTime(LocalTime.of(1, 0));
-        flightTrip1.setFare(950);
-        flightTrip1.setVehicle(vehicleService.getVehicleByIdentifier("TK101"));
-        flightTrip1.setTripType(FlightTrip.class);
+        flightTrip7.setDepartureStation("İstanbul");
+        flightTrip7.setArrivalStation("İzmir");
+        flightTrip7.setDepartureDate(LocalDateTime.of(2025, 6, 15, 9, 0));
+        flightTrip7.setTripTime(LocalTime.of(1, 0));
+        flightTrip7.setFare(950);
+        flightTrip7.setVehicle(vehicleService.getVehicleByIdentifier("TK101"));
+        flightTrip7.setTripType(FlightTrip.class);
 
         TripDTO flightTrip8 = new TripDTO();
-        flightTrip2.setDepartureStation("Ankara");
-        flightTrip2.setArrivalStation("Van");
-        flightTrip2.setDepartureDate(LocalDateTime.of(2023, 6, 16, 16, 30));
-        flightTrip2.setTripTime(LocalTime.of(1, 45));
-        flightTrip2.setFare(1200);
-        flightTrip2.setVehicle(vehicleService.getVehicleByIdentifier("PC202"));
-        flightTrip2.setTripType(FlightTrip.class);
+        flightTrip8.setDepartureStation("Ankara");
+        flightTrip8.setArrivalStation("Van");
+        flightTrip8.setDepartureDate(LocalDateTime.of(2023, 6, 16, 16, 30));
+        flightTrip8.setTripTime(LocalTime.of(1, 45));
+        flightTrip8.setFare(1200);
+        flightTrip8.setVehicle(vehicleService.getVehicleByIdentifier("PC202"));
+        flightTrip8.setTripType(FlightTrip.class);
 
         TripDTO flightTrip9 = new TripDTO();
-        flightTrip3.setDepartureStation("Antalya");
-        flightTrip3.setArrivalStation("Istanbul");
-        flightTrip3.setDepartureDate(LocalDateTime.of(2025, 6, 17, 11, 15));
-        flightTrip3.setTripTime(LocalTime.of(1, 15));
-        flightTrip3.setFare(1000);
-        flightTrip3.setVehicle(vehicleService.getVehicleByIdentifier("THY303"));
-        flightTrip3.setTripType(FlightTrip.class);
+        flightTrip9.setDepartureStation("Antalya");
+        flightTrip9.setArrivalStation("İstanbul");
+        flightTrip9.setDepartureDate(LocalDateTime.of(2025, 6, 17, 11, 15));
+        flightTrip9.setTripTime(LocalTime.of(1, 15));
+        flightTrip9.setFare(1000);
+        flightTrip9.setVehicle(vehicleService.getVehicleByIdentifier("THY303"));
+        flightTrip9.setTripType(FlightTrip.class);
 
         TripDTO flightTrip10 = new TripDTO();
-        flightTrip4.setDepartureStation("Diyarbakır");
-        flightTrip4.setArrivalStation("Izmir");
-        flightTrip4.setDepartureDate(LocalDateTime.of(2022, 6, 18, 15, 0));
-        flightTrip4.setTripTime(LocalTime.of(2, 0));
-        flightTrip4.setFare(1300);
-        flightTrip4.setVehicle(vehicleService.getVehicleByIdentifier("TK101"));
-        flightTrip4.setTripType(FlightTrip.class);
+        flightTrip10.setDepartureStation("Diyarbakır");
+        flightTrip10.setArrivalStation("İzmir");
+        flightTrip10.setDepartureDate(LocalDateTime.of(2022, 6, 18, 15, 0));
+        flightTrip10.setTripTime(LocalTime.of(2, 0));
+        flightTrip10.setFare(1300);
+        flightTrip10.setVehicle(vehicleService.getVehicleByIdentifier("TK101"));
+        flightTrip10.setTripType(FlightTrip.class);
 
         tripService.createTrip(busTrip1);
         tripService.createTrip(busTrip2);
