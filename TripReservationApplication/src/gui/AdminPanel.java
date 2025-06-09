@@ -2,6 +2,7 @@ package gui;
 
 import gui.subpanels.UserAddForAdminPanel;
 import gui.subpanels.SelectUserForEditPanel_Admin;
+import gui.subpanels.TripAddPanel_Admin;
 import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
@@ -43,9 +44,9 @@ public class AdminPanel extends JPanel {
         });
 
         addTripBtn.addActionListener(e -> {
-//            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-//            upm.addPanel("addTrip", new TripAddPanel(admin));
-//            upm.showPanelByKey("addTrip");
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("addTrip", new TripAddPanel_Admin());
+            upm.showPanelByKey("addTrip");
         });
 
         addUserBtn.addActionListener(e -> {

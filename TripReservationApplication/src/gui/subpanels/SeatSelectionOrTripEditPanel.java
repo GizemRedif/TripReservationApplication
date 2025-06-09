@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import reservation.model.Reservation;
 import seat.Seat;
+import trip.model.BusTrip;
+import trip.model.FlightTrip;
 import trip.model.Trip;
 import trip.service.TripService;
 import tripreservationapplication.MainFrame;
@@ -52,55 +54,41 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         seatPanel.setOpaque(false);
 
         int seatIndex = 0;
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 15; col++) {
-                if (row == 1) {
-                    // 🔸 Boşluk satırı
+        if (trip instanceof BusTrip) {
+            for (int row = 0; row < 4; row++) {
+                for (int col = 0; col < 15; col++) {
+                    if (row == 1) {
+                        JPanel empty = new JPanel();
+                        empty.setOpaque(false);
+                        seatPanel.add(empty);
+                    } else {
+                        if (seatIndex < seatList.size()) {
+                            Seat seat = seatList.get(seatIndex++);
+                            JButton seatButton = createSeatButton(seat, emptyIcon, bookedIcon);
+                            seatPanel.add(seatButton);
+                        }
+                    }
+                }
+            }
+        } else if (trip instanceof FlightTrip) {
+            for (int i = 0; i < 25; i++) {
+                int row = i / 5;
+                int col = i % 5;
+
+                if (row == 3) {
                     JPanel empty = new JPanel();
                     empty.setOpaque(false);
                     seatPanel.add(empty);
                 } else {
                     if (seatIndex < seatList.size()) {
                         Seat seat = seatList.get(seatIndex++);
-                        JButton seatButton = new JButton();
-
-                        // 🔹 İlk ikon
-                        if (seat.getIsBooked()) {
-                            seatButton.setIcon(bookedIcon);
-                        } else {
-                            seatButton.setIcon(emptyIcon);
-                        }
-
-                        seatButton.setPreferredSize(new Dimension(40, 40));
-                        seatButton.setContentAreaFilled(false);
-                        seatButton.setBorderPainted(false);
-                        seatButton.setFocusPainted(false);
-
-                        // 🔓 Passenger ise tıklanabilir ve toggle yapılabilir
-                        if (!(user instanceof Admin)) {
-                            seatButton.addActionListener(e -> {
-                                boolean newStatus = !seat.getIsBooked();          
-                                seat.setIsBooked(newStatus);
-                                seatButton.setIcon(newStatus ? bookedIcon : emptyIcon); // ikon güncelle
-
-                                // listeye ekle/çıkar
-                                if (newStatus) {
-                                    selectedSeats.add(seat);
-                                } else {
-                                    selectedSeats.remove(seat);
-                                }
-                            });
-                        }
-                        else {
-                            seatButton.setEnabled(false); // Admin ise devre dışı
-                        }
-
-                    seatPanel.add(seatButton);
-}
-
+                        JButton seatButton = createSeatButton(seat, emptyIcon, bookedIcon);
+                        seatPanel.add(seatButton);
+                    }
                 }
             }
         }
+
 
         wrapperPanel.add(seatPanel);
         // 🔄 BackButton ve koltuk panelini birlikte tutacak üst panel
@@ -282,5 +270,35 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
         dialog.add(scrollPane, BorderLayout.CENTER);
         dialog.setVisible(true);
     }
+
+    
+   private JButton createSeatButton(Seat seat, ImageIcon emptyIcon, ImageIcon bookedIcon) {
+        JButton seatButton = new JButton();
+        seatButton.setIcon(seat.getIsBooked() ? bookedIcon : emptyIcon);
+        seatButton.setPreferredSize(new Dimension(40, 40));
+        seatButton.setContentAreaFilled(false);
+        seatButton.setBorderPainted(false);
+        seatButton.setFocusPainted(false);
+
+        if (!(user instanceof Admin)) {
+            // 🛑 Koltuk zaten doluysa passenger için tıklanamaz olsun
+            if (seat.getIsBooked()) {
+                seatButton.setEnabled(false);
+            } else {
+                seatButton.addActionListener(e -> {
+                    boolean newStatus = !seat.getIsBooked();
+                    seat.setIsBooked(newStatus);
+                    seatButton.setIcon(newStatus ? bookedIcon : emptyIcon);
+                    if (newStatus) selectedSeats.add(seat);
+                    else selectedSeats.remove(seat);
+                });
+            }
+        } else {
+            seatButton.setEnabled(false);
+        }
+
+        return seatButton;
+    }
+
 
 }

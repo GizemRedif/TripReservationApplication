@@ -18,7 +18,7 @@ public class TripReservationApplication {
         ReservationService reservationService = new ReservationService();
         
         UserDTO mert = new UserDTO();
-        mert.setName("mert ali");
+        mert.setName("mert");
         mert.setSurname("berrak");
         mert.setEmail("mertaliberrak@gmail.com");
         mert.setPhoneNumber("05535240469");

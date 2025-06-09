@@ -124,6 +124,38 @@ public class AccountPanel extends JPanel {
             upm.showPanelByKey("editUser");
         });
 
+        
+        // Logout Button Panel---------------------------------------------------------------------------------------
+        JButton logoutButton = new JButton("Logout");
+        styleButton(logoutButton);
+        logoutButton.addActionListener(e -> {
+            MainFrame mainFrame = MainFrame.getInstance();
+            mainFrame.setContentPane(new LoginRegisterPanel());
+            mainFrame.revalidate();
+            mainFrame.repaint();
+        });
+        infoPanel.add(Box.createVerticalStrut(20));
+        infoPanel.add(logoutButton);
+
+        // Delete Account Button Panel---------------------------------------------------------------------------------------
+        JButton deleteAccountButton = new JButton("Delete Account");
+        deleteAccountButton.setFocusPainted(true);
+        deleteAccountButton.setBackground(new Color(149, 76, 46));
+        deleteAccountButton.setForeground(Color.WHITE);
+        deleteAccountButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        deleteAccountButton.setMaximumSize(new Dimension(200, 30));
+
+        deleteAccountButton.addActionListener(e -> {
+     
+            //HESABI SİL
+            
+        });
+
+        infoPanel.add(Box.createVerticalStrut(10));
+        infoPanel.add(deleteAccountButton);
+
+
+        
         contentPanel.add(infoPanel);
     }
 
