@@ -1,5 +1,6 @@
 package gui.subpanels;
         
+import dto.TripDTO;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.time.LocalTime;
 import java.util.List;
 import seat.Seat;
 import trip.model.Trip;
+import trip.service.TripService;
 import user.model.User;
 import user.model.Admin;
 
@@ -15,12 +17,14 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
     private Trip trip;
     private List<Seat> seatList;
     private User user;
-
+    private TripService tripService ;
+    
     public SeatSelectionOrTripEditPanel(Trip trip, User user) {
         this.trip = trip;
         this.user = user;
         this.seatList = trip.getVehicle().getSeatList();
-
+        this.tripService = new TripService() ;
+        
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
@@ -95,6 +99,7 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
     }
     
     private void showTripEditPopup(Trip trip) {
+        
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Trip Düzenle", true);
         dialog.setSize(500, 550);
         dialog.setLocationRelativeTo(this);
@@ -165,9 +170,11 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
                 int tripHour = Integer.parseInt(tripHourField.getText());
                 int tripMinute = Integer.parseInt(tripMinuteField.getText());
 
-                trip.setDepartureDate(newDeparture);
-                trip.setFare(Double.parseDouble(fareField.getText()));
-                trip.setTripTime(LocalTime.of(tripHour, tripMinute));
+                TripDTO tripDTO = new TripDTO();
+                tripDTO.setDepartureDate(newDeparture);
+                tripDTO.setFare(Double.parseDouble(fareField.getText()));
+                tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
+                tripService.updateTrip(trip, tripDTO);
 
                 dialog.dispose();
             } catch (Exception ex) {
