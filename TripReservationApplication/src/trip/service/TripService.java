@@ -11,6 +11,7 @@ public class TripService {
 
 private final TripRepository tripRepository = TripRepository.getInstance();
 
+    //buraya belirtilen Tripteki rezervasyon listesine verilen rezervasyonu ekleyen bir metod yazılmalı
     public boolean createTrip(Trip trip) {
         if (trip == null){return false;}
         
@@ -34,7 +35,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
                 trip.setDepartureDate(newTrip.getDepartureDate());
                 trip.setTripTime(newTrip.getTripTime());
                 trip.setFare(newTrip.getFare());
-                trip.setPassengers(newTrip.getPassengers());
+                trip.setReservaitons(newTrip.getReservations());
 
                 return true;
             }

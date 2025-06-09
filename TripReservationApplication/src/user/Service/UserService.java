@@ -39,15 +39,11 @@ public class UserService {
         }
         
         public boolean updateUser(User newUser){
-            if(newUser== null || newUser.getEmail()== null){
-                throw new IllegalArgumentException("Updated user or email cannot be null.");
-            }
+//            if(newUser== null || newUser.getEmail()== null){
+//                throw new IllegalArgumentException("Updated user or email cannot be null.");
+//            }
              
             User existingUser =userRepository.getUserByEmail(newUser.getEmail());
-            if(existingUser == null){
-                System.out.println("User with the specified email does not exist.");
-                return false;
-            }
             
             checkUserInfo(newUser);
             
