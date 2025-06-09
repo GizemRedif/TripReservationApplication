@@ -27,8 +27,9 @@ public class Bus extends Vehicle {
         }
         return list;
     }
-     
-    public String getPlate() {
+    
+    @Override
+    public String getIdentifier() {
         return plate;
     }
 

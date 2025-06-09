@@ -41,7 +41,8 @@ public class Plane extends Vehicle{
         return list;
     }
     
-    public String getTailNumber() {
+    @Override
+    public String getIdentifier() {
         return tailNumber;
     }
 

@@ -27,6 +27,8 @@ public abstract class Vehicle implements Cloneable{
         }
     }
     
+    public abstract String getIdentifier();
+    
     public abstract List<Seat> getSeatList();
 }
 

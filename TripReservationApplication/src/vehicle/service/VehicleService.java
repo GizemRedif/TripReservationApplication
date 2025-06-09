@@ -22,7 +22,11 @@ public class VehicleService {
         return true;
     }
     
-    public boolean deleteVehicle(Vehicle vehicle){
-        return vehicleRepository.deleteVehicle(vehicle);
+    public boolean deleteVehicleByIdentifier(String identifier){
+        return vehicleRepository.deleteVehicle(identifier);
+    }
+    
+    public Vehicle getVehicleByIdentifier(String indentifier){
+        return vehicleRepository.getVehicleByIdentifierNumber(indentifier);
     }
 }

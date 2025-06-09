@@ -4,13 +4,15 @@ import vehicle.model.Vehicle;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VehicleRepository {
     private static VehicleRepository instance;
-    private List<Vehicle> vehicleList;
+    private Map<String,Vehicle> vehiclesWithIdentifier;
 
     private VehicleRepository() {
-        this.vehicleList = new ArrayList<>();
+        this.vehiclesWithIdentifier = new HashMap();
     }
 
     public static VehicleRepository getInstance() {
@@ -22,10 +24,15 @@ public class VehicleRepository {
     
     /*add a new vehicle*/
     public void addVehicle(Vehicle vehicle){
-        vehicleList.add(vehicle);
+        vehiclesWithIdentifier.put(vehicle.getIdentifier(),vehicle);
     }
     
-    public boolean deleteVehicle(Vehicle user){
-        return vehicleList.remove(user);
+    public boolean deleteVehicle(String identifier){
+        vehiclesWithIdentifier.remove(identifier);
+        return true;
+    }
+    
+    public Vehicle getVehicleByIdentifierNumber(String identifier) {
+        return vehiclesWithIdentifier.get(identifier);
     }
 }
