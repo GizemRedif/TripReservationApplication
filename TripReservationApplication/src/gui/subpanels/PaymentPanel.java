@@ -8,10 +8,11 @@ import tripreservationapplication.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import user.model.Passenger;
 
 public class PaymentPanel extends JPanel {
 
-    public PaymentPanel(List<Seat> selectedSeats, Trip trip) {
+    public PaymentPanel(List<Seat> selectedSeats, Trip trip, Passenger passenger) {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 

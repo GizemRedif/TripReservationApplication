@@ -123,7 +123,7 @@ public class SeatSelectionOrTripEditPanel extends JPanel {
             JButton payButton = new JButton("Odemeye Gec");
             payButton.addActionListener(e -> {
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-                upm.addPanel("paymentPanel", new PaymentPanel(selectedSeats, trip));
+                upm.addPanel("paymentPanel", new PaymentPanel(selectedSeats, trip, (Passenger) user));
                 upm.showPanelByKey("paymentPanel");
             });
             buttonPanel.add(payButton);

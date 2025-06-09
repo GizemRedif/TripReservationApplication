@@ -97,6 +97,8 @@ public class TripReservationApplication {
         userService.createUser(onur);
         userService.createUser(fatih);
         userService.createUser(mustafa);
+        
+        
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
