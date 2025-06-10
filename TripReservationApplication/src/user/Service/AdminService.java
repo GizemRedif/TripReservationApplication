@@ -18,9 +18,9 @@ public class AdminService {
         return userService.deleteUser(user);
     }
 
-    public boolean addTrip(TripDTO tripDTO) {
-        return tripService.createTrip(tripDTO); 
-    }
+//    public boolean addTrip(TripDTO tripDTO) {
+//        return tripService.createTrip(tripDTO); 
+//    }
 
     public boolean deleteTrip(Trip trip) {
         return tripService.cancelTrip(trip);

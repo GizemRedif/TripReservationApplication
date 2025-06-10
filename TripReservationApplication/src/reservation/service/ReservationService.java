@@ -22,7 +22,8 @@ public class ReservationService {
         Passenger passenger = (Passenger) user;
         ReservationFactory factory = new ReservationFactory();
         reservation = factory.createReservation(passenger, reservationDTO.getFare(), reservationDTO.getSeat(), reservationDTO.getTrip());
-       
+        reservationDTO.getSeat().setIsBooked(true);
+        
         reservationRepository.addReservation(reservation);
         reservation.getTrip().addReservation(reservation);
     }    
