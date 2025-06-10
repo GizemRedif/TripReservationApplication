@@ -40,8 +40,9 @@ public class ReservationRepository {
             usersReservationList.add(reservation);
             reservationsWithUser.put(user, usersReservationList);
         }
-        
+        else{
         reservationsWithUser.get(user).add(reservation);
+        }
     }
     
     public boolean deleteReservation(Reservation reservation){

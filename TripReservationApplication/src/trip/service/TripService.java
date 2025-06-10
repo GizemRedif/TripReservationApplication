@@ -14,8 +14,8 @@ public class TripService {
 
 private final TripRepository tripRepository = TripRepository.getInstance();
 
-    public boolean createTrip(TripDTO tripDTO) {
-        if (tripDTO == null){return false;}
+    public Trip createTrip(TripDTO tripDTO) {
+        if (tripDTO == null){return null;}
         
         checkTripInfo(tripDTO);
         Trip trip;
@@ -42,7 +42,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         }
      
         tripRepository.addTrip(trip);
-        return true;
+        return trip;
     }
     
     public boolean cancelTrip(Trip trip){
