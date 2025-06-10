@@ -11,7 +11,7 @@ import user.model.User;
 public class LoginRegisterPanel extends JPanel {
 
     UserService userService = new UserService(); //Bu sınıftaki createUser ve login metotlarını kullanabilmek icin olusturuldu
-    private final JTabbedPane tabbedPane; // Ekledik
+    private final JTabbedPane tabbedPane; 
 
     public LoginRegisterPanel() {
         setLayout(new GridBagLayout()); 
@@ -20,21 +20,19 @@ public class LoginRegisterPanel extends JPanel {
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout(0, 20)); // Başlık ile sekme arası boşluk
         containerPanel.setPreferredSize(new Dimension(420, 460));
-        containerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1, true));
         containerPanel.setBackground(Color.WHITE);
 
-        // 🔹 Başlık paneli
-        JLabel titleLabel = new JLabel("Uygulama Adı", SwingConstants.CENTER);
+        //Başlık paneli
+        JLabel titleLabel = new JLabel("THİS TİCKET", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(33, 37, 41));  
+        titleLabel.setForeground(new Color(19, 29, 79));  //Yazı rengi
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        // 🔹 Sekmeler altta olacak şekilde oluşturuluyor
+        //Sekmeler altta olacak şekilde oluşturuluyor
         tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
         tabbedPane.addTab("Login", createLoginPanel());
         tabbedPane.addTab("Register", createRegisterPanel());
 
-        // 🔹 Panellere ekleme sırası
         containerPanel.add(titleLabel, BorderLayout.NORTH);
         containerPanel.add(tabbedPane, BorderLayout.CENTER);
 
@@ -46,7 +44,7 @@ public class LoginRegisterPanel extends JPanel {
     private JPanel createLoginPanel() {
         JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(new Color(239, 228, 210));
 
         JLabel emailLabel = new JLabel("Email:");
         JTextField emailField = new JTextField();
@@ -79,16 +77,14 @@ public class LoginRegisterPanel extends JPanel {
     }
 
     private JPanel createRegisterPanel() {
-        UserService userService = new UserService(); // kendi UserService implementasyonuna göre ayarla
-        
-        //USERTYPE EKLEDİM CONSTRUCTORA, USERTYPEA GORE NEW USER OLUSTURSUN. 
+        //User olusturma paneli cagırılır ve tappedPane icerisinde gosterilir,
         return new CreateAUser(userService, tabbedPane,true, "Passenger");
     }
 
     private void styleButton(JButton button) {
-    button.setFocusPainted(false);
-    button.setBackground(new Color(19, 29, 79));
-    button.setForeground(Color.WHITE);
-    button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        button.setFocusPainted(true);
+        button.setBackground(new Color(19, 29, 79));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 }

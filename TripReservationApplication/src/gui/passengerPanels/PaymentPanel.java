@@ -1,7 +1,8 @@
-package gui.subpanels;
+package gui.passengerPanels;
 
 import dto.ReservationDTO;
 import gui.UserPanelManager;
+import gui.components.BackButton;
 import trip.model.Trip;
 import seat.Seat;
 import tripreservationapplication.MainFrame;
@@ -19,6 +20,8 @@ public class PaymentPanel extends JPanel {
         
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
+        
+        add(new BackButton("selectOrEdit"), BorderLayout.NORTH);
 
         double totalFare = selectedSeats.size() * trip.getFare();
 
@@ -48,16 +51,7 @@ public class PaymentPanel extends JPanel {
 
         // 🔘 ÖDEME butonuna tıklanınca popup açılır
         payButton.addActionListener(e -> {
-            int result = JOptionPane.showOptionDialog(
-                this,
-                "Rezervasyon başarıyla oluşturuldu!",
-                "Ödeme Onayı",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                new Object[]{"Tamam"},
-                "Tamam"
-            );
+            int result = JOptionPane.showOptionDialog(this,"Reservation created successfully!","Success",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null, new Object[]{"Okey"},"Okey");
 
             if (result == 0) { // "Tamam" butonuna basıldıysa
                 for (Seat seat : selectedSeats) {

@@ -9,7 +9,7 @@ import user.Service.UserService;
 import user.model.Admin;
 
 //User olusturulan yerlerde cagırılır. (Passenger ve Admin)
-//LoginRegisterPanel -> Register alanı
+//LoginRegisterPanel -> Register alanı (Passenger olusturulur)
 //AdminPanel -> UserAddPanel -> Admin Add ve Passenger Add alanı
 
 public class CreateAUser extends JPanel {
@@ -22,11 +22,12 @@ public class CreateAUser extends JPanel {
         this.tabbedPane = tabbedPane;
 
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        setBackground(new Color(239, 228, 210));
+
 
         JPanel formPanel = new JPanel(new GridLayout(7, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        formPanel.setBackground(Color.WHITE);
+        formPanel.setBackground(new Color(239, 228, 210));
 
         JLabel firstNameLabel = new JLabel("First Name:");
         JTextField firstNameField = new JTextField();

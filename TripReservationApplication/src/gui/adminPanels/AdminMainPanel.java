@@ -1,21 +1,23 @@
-package gui;
+package gui.adminPanels;
 
-import gui.subpanels.UserAddForAdminPanel;
-import gui.subpanels.SelectUserForEditPanel_Admin;
-import gui.subpanels.TripAddPanel_Admin;
+import gui.AccountPanel;
+import gui.SearchTripPanel;
+import gui.UserPanelManager;
 import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
 
-public class AdminPanel extends JPanel {
+//Admin giris yaptıgında ilk gosterilen panel
+public class AdminMainPanel extends JPanel {
 
-    JLabel welcomeLabel;
-    public AdminPanel(Admin admin) {
+    JLabel welcomeLabel; 
+    
+    public AdminMainPanel(Admin admin) {
         setLayout(new GridLayout(1, 2));  // Sol ve sağ eşit genişlikte
         setBackground(new Color(239, 228, 210)); // Panel arkaplanı
 
-        // 🔹 Sol Panel – "Welcome" yazısı
+        // Sol Panel – "Welcome" yazısı
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(new Color(239, 228, 210));
         leftPanel.setLayout(new GridBagLayout());
@@ -24,7 +26,7 @@ public class AdminPanel extends JPanel {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
         leftPanel.add(welcomeLabel);
 
-        // 🔹 Sağ Panel – Butonlar
+        // Sağ Panel – Butonlar
         JPanel rightPanel = new JPanel(new GridLayout(5, 1, 10, 10));
         rightPanel.setBackground(new Color(239, 228, 210));
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -39,28 +41,27 @@ public class AdminPanel extends JPanel {
         // ActionListener'lar
         editTripBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            upm.addPanel("editTrip", new SearchTripPanel(admin));
-            upm.showPanelByKey("editTrip");
+            upm.addPanel("searching", new SearchTripPanel(admin));
+            upm.showPanelByKey("searching");
         });
 
         addTripBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            upm.addPanel("addTrip", new TripAddPanel_Admin());
+            upm.addPanel("addTrip", new TripAddPanel());
             upm.showPanelByKey("addTrip");
         });
 
         addUserBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            upm.addPanel("addUser", new UserAddForAdminPanel());
+            upm.addPanel("addUser", new UserAddPanel());
             upm.showPanelByKey("addUser");
         });
 
         editUserBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            upm.addPanel("selectUserForEditPanel", new SelectUserForEditPanel_Admin());
+            upm.addPanel("selectUserForEditPanel", new SelectUserForEditPanel());
             upm.showPanelByKey("selectUserForEditPanel");
-//        });
-});
+        });
         
         accountBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
@@ -83,7 +84,7 @@ public class AdminPanel extends JPanel {
 
     
     
-    // 🔧 Ortak buton tasarımı
+    // Ortak buton tasarımı
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(new Color(19, 29, 79));
@@ -92,5 +93,4 @@ public class AdminPanel extends JPanel {
         button.setFont(new Font("Arial", Font.BOLD, 14));
         return button;
     }
-    
 }

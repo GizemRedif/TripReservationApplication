@@ -1,4 +1,4 @@
-package gui.subpanels;
+package gui;
 
 import user.model.User;
 
@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
 import dto.UserDTO;
+
+//AccountPanel -> Change Information butonu ile cagırılır.
+
+
 public class EditUserPanel extends JPanel {
 UserService userService;
     //Runnable: içinde yapılacak bir şey tanımlanır, sonra bu iş çağrıldığında çalıştırılır.
@@ -94,10 +98,12 @@ UserService userService;
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial", Font.BOLD, 14));
     }
+   
 
+    //GridBagConstraints nesnesinin x ve y koordinatlarını (gridx, gridy) ayarlayıp geri döner
     private GridBagConstraints gbcAt(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;
         gbc.gridy = y;
         return gbc;
-    }
+    }    
 }

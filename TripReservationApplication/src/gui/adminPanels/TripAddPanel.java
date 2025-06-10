@@ -1,5 +1,4 @@
-
-package gui.subpanels;
+package gui.adminPanels;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -12,9 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TripAddPanel_Admin extends JPanel {
+public class TripAddPanel extends JPanel {
     
-    public TripAddPanel_Admin(){
+    public TripAddPanel(){
         
         setLayout(new GridBagLayout());
         setBackground(new Color(245, 245, 245));

@@ -1,6 +1,5 @@
 package gui;
 
-import gui.subpanels.EditUserPanel;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
@@ -69,7 +68,7 @@ public class AccountPanel extends JPanel {
         //Password panel---------------------------------------------------------------------------------------
         JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         passwordPanel.setBackground(Color.WHITE);
-        passwordLabel = new JLabel("Password: *********                                                           ");
+        passwordLabel = new JLabel("Password: *********");
         passwordPanel.add(passwordLabel);
         infoPanel.add(passwordPanel);
         infoPanel.add(Box.createVerticalStrut(10));
@@ -78,7 +77,7 @@ public class AccountPanel extends JPanel {
         //Phone Number Panel---------------------------------------------------------------------------------------
         JPanel phoneNumberPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         phoneNumberPanel.setBackground(Color.WHITE);
-        phoneNumberLabel = new JLabel("Phone Number: " + phoneNumber + "                                                           ");
+        phoneNumberLabel = new JLabel("Phone Number: " + phoneNumber);
         phoneNumberPanel.add(phoneNumberLabel);
         infoPanel.add(phoneNumberPanel);
         infoPanel.add(Box.createVerticalStrut(10));
@@ -87,7 +86,7 @@ public class AccountPanel extends JPanel {
         //Gender Panel---------------------------------------------------------------------------------------
         JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         genderPanel.setBackground(Color.WHITE);
-        genderLabel = new JLabel("Gender: ");
+        genderLabel = new JLabel("Gender: " + gender);
         genderPanel.add(genderLabel);
         infoPanel.add(genderPanel);
         infoPanel.add(Box.createVerticalStrut(20));
@@ -97,7 +96,10 @@ public class AccountPanel extends JPanel {
         JButton aboutButton = new JButton("About Us");
         styleButton(aboutButton);
         aboutButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "aabbcc", "About Us", JOptionPane.INFORMATION_MESSAGE);
+            ImageIcon us = new ImageIcon(getClass().getResource("/gui/pictures/us.jpg"));
+            Image scaledImage = us.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH); // Resim boyutlandırılır
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            JOptionPane.showMessageDialog(this, "Our days passed here :)","About Us", JOptionPane.INFORMATION_MESSAGE, scaledIcon);
         });
         infoPanel.add(aboutButton);
         infoPanel.add(Box.createVerticalStrut(20));
@@ -107,20 +109,14 @@ public class AccountPanel extends JPanel {
         JButton changeInfButton = new JButton("Change Information");
         styleButton(changeInfButton);
         infoPanel.add(changeInfButton);
-
         //Change Inf butonuna basılınca bir pop-up cıkacak ve kullanıcı istedigini guncelleyecek.
         changeInfButton.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-
+            //EditUser paneli acılacak.
             upm.addPanel("editUser", new EditUserPanel(user, () -> {
-                //Runnable: 
-                // Bu panelin label'larını güncelle
-                this.updateLabels(user);
-
-                // Sonra geri dön
-                upm.showPanelByKey("account");
+                this.updateLabels(user); // Bu panelin label'larını güncelle
+                upm.showPanelByKey("account"); // Sonra geri dön
             }));
-
             upm.showPanelByKey("editUser");
         });
 
@@ -130,7 +126,7 @@ public class AccountPanel extends JPanel {
         styleButton(logoutButton);
         logoutButton.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
-            mainFrame.setContentPane(new LoginRegisterPanel());
+            mainFrame.setContentPane(new LoginRegisterPanel());  //Cıkıs yapınca LoginRegisterPanel'e donulur.
             mainFrame.revalidate();
             mainFrame.repaint();
         });
@@ -144,27 +140,24 @@ public class AccountPanel extends JPanel {
         deleteAccountButton.setForeground(Color.WHITE);
         deleteAccountButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         deleteAccountButton.setMaximumSize(new Dimension(200, 30));
-
-    deleteAccountButton.addActionListener(e -> {
-        userService.deleteUser(user);
-
-        int result = JOptionPane.showOptionDialog(null,"User deleted successfully.","Account Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Tamam"}, "Tamam");
-
-        if (result == 0) {
-            MainFrame mainFrame = MainFrame.getInstance();
-            mainFrame.setContentPane(new LoginRegisterPanel());
-            mainFrame.revalidate();
-            mainFrame.repaint();
-        }
-    });
-
+        
+        deleteAccountButton.addActionListener(e -> {
+            userService.deleteUser(user);
+            int result = JOptionPane.showOptionDialog(null,"User deleted successfully.","Account Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
+            if (result == 0) { //Okey butonuna basılınca LoginRegisterPanel'e donulur.
+                MainFrame mainFrame = MainFrame.getInstance();
+                mainFrame.setContentPane(new LoginRegisterPanel());
+                mainFrame.revalidate();
+                mainFrame.repaint();
+            }
+        });
         infoPanel.add(Box.createVerticalStrut(10));
         infoPanel.add(deleteAccountButton);
-
 
         
         contentPanel.add(infoPanel);
     }
+//-------------------------------------------End of constructor method-----------------------------
 
     
     private void styleButton(JButton button) {
@@ -175,14 +168,7 @@ public class AccountPanel extends JPanel {
         button.setMaximumSize(new Dimension(200, 30));
     }
     
-    //Bu metot, GridBagLayout içinde bir bileşeni belirli bir hücreye (satır, sütun) yerleştirmek için kullanılan GridBagConstraints nesnesini kopyalar ve konumunu (gridx, gridy) belirler.
-    private GridBagConstraints gbcAt(GridBagConstraints base, int x, int y) {
-        GridBagConstraints copy = (GridBagConstraints) base.clone();  //mevcut constraints ayarlarının bir kopyasını çıkarır. Böylece aynı ayarları tekrar yazmadan kullanırsın.
-        copy.gridx = x;
-        copy.gridy = y;
-        return copy;
-    }
-    
+    //Account kısmında gorunen bilgiler guncellenir.
     public void updateLabels(User updatedUser) {
         nameLabel.setText("Hello " + updatedUser.getName() + " " + updatedUser.getSurname() + "!");
         phoneNumberLabel.setText("Phone Number: " + updatedUser.getPhoneNumber());
@@ -190,4 +176,3 @@ public class AccountPanel extends JPanel {
         passwordLabel.setText("Password: *********");
     }
 }
-

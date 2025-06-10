@@ -1,6 +1,5 @@
 package gui;
 
-import gui.subpanels.TripsPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -41,8 +40,8 @@ public class SearchTripPanel extends JPanel {
      
     private JPanel createSearchForm(String vehicle, User user) {
         
-        JPanel outerPanel = new JPanel(new BorderLayout()); //BorderLayout: kuzey/güney/doğu/batı/merkez
-        JPanel panel = new JPanel(new GridBagLayout()); //GridBagLayout:  neredeyse piksel seviyesinde kontrol
+        JPanel outerPanel = new JPanel(new BorderLayout()); 
+        JPanel panel = new JPanel(new GridBagLayout()); 
         panel.setPreferredSize(new Dimension(400, 220));
 
         if("Bus".equals(vehicle)){  //Bus ve Flight arka planı farklı olması icin 
@@ -54,7 +53,6 @@ public class SearchTripPanel extends JPanel {
             outerPanel.setBackground(Color.WHITE);
         }
         
-        //GridBagConstraints: GridBagLayout ile birlikte kullanılır ve her bileşenin konumunu ve davranışını belirler.
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10); // Bileşenin etrafındaki boşluk (üst, sol, alt, sağ)
         gbc.fill = GridBagConstraints.HORIZONTAL; // Yatay olarak genişlesin ama dikeyde sabit kalsın
@@ -86,13 +84,13 @@ public class SearchTripPanel extends JPanel {
             
             TripSearchCriteria tripCriteria = new TripSearchCriteria();
 
-            //Kullanıcının liste ile sectigi tarih LocalDateTime turune donusturuluyor
+            //Kullanıcının combo ile sectigi tarih LocalDateTime turune donusturuluyor
             int year = Integer.parseInt((String) yearCombo.getSelectedItem());
             int month = Integer.parseInt((String) monthCombo.getSelectedItem());
             int day = Integer.parseInt((String) dayCombo.getSelectedItem());
             LocalDateTime departureTime = LocalDate.of(year, month, day).atStartOfDay();
     
-            //TripSearchCriteria nesnesine kullanıcının girdigi degerler tanıyor. 
+            //TripSearchCriteria nesnesine, kullanıcının girdigi degerler tanıyor. 
             tripCriteria.setDepartureStation((String)fromCombo.getSelectedItem());
             tripCriteria.setArrivalStation((String) toCombo.getSelectedItem());
             if (vehicle.equals("Bus")) {
@@ -110,11 +108,11 @@ public class SearchTripPanel extends JPanel {
                 tripsToList = tripService.filterTrips(tripCriteria);
             } 
             catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Geçersiz Arama Kriteri", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Invalid Search Criteria", JOptionPane.ERROR_MESSAGE);
                 return; // hata varsa devam etme
             } 
             catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Beklenmeyen bir hata oluştu:\n" + ex.getMessage(), "Hata", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "An unexpected error occurred:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -130,7 +128,7 @@ public class SearchTripPanel extends JPanel {
 
             }
         });
-//----------------------------------------------------------------------------------------------------------------------  
+//---------Arama Butonu sonu-------------------------------------------------------------------------------------------------------------  
         
         int row = 0;
         Insets defaultInsets = new Insets(10, 10, 5, 10);
@@ -161,7 +159,7 @@ public class SearchTripPanel extends JPanel {
     }
 
     private void styleButton(JButton button) {
-        button.setFocusPainted(false);
+        button.setFocusPainted(true);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -186,7 +184,7 @@ public class SearchTripPanel extends JPanel {
         int maxDay = YearMonth.of(currentYear, currentMonth).lengthOfMonth();
 
         //Admin ve Passengera gore secilebilecek tarihler ayarlanır. 
-        //Admin eski tripleri de goruntuleyebilecekken ;apssenger sadece bugun ve sonrasını goruntuleyebilir.
+        //Admin eski tripleri de goruntuleyebilecekken ;passenger sadece bugun ve sonrasını goruntuleyebilir.
 
         int startYear = (user instanceof Admin) ? 2023 : currentYear;
         for (int y = startYear; y <= 2030; y++) {

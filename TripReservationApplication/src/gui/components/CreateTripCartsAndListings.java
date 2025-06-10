@@ -2,7 +2,7 @@
 package gui.components;
 
 import gui.UserPanelManager;
-import gui.subpanels.SeatSelectionOrTripEditPanel;
+import gui.SeatSelect_TripEditPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,9 +25,9 @@ import user.model.User;
 
 //TripsPanel -> uygun Tripleri listelemek icin kullanır.
 
-public class TripCartsAndListings extends JPanel {
+public class CreateTripCartsAndListings extends JPanel {
     
-    public TripCartsAndListings(List<Trip> trips, User user, String callingPanel){
+    public CreateTripCartsAndListings(List<Trip> trips, User user, String callingPanel){
                                                              //Hangi panel cagırıyor onu yazarız. TripsPanel ya da PastTrips
         
         setLayout(new BorderLayout());
@@ -76,7 +76,7 @@ public class TripCartsAndListings extends JPanel {
             bottom.add(selectSeatButton, BorderLayout.EAST);
             selectSeatButton.addActionListener(e ->{
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-                upm.addPanel("selectOrEdit", new SeatSelectionOrTripEditPanel(trip, user));  // paneli CardLayout’a ekle
+                upm.addPanel("selectOrEdit", new SeatSelect_TripEditPanel(trip, user));  // paneli CardLayout’a ekle
                 upm.showPanelByKey("selectOrEdit");                            // geçiş yap
             });
                 

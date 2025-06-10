@@ -1,6 +1,6 @@
-package gui;
+package gui.passengerPanels;
 
-import gui.components.TripCartsAndListings;
+import gui.components.CreateTripCartsAndListings;
 import trip.model.Trip;
 import trip.service.TripService;
 import user.model.User;
