@@ -8,11 +8,11 @@ import user.model.Passenger;
 
 public class FlightReservation extends Reservation {
     
-    private PlaneSeat seat;
-    private FlightTrip flight;
+    private PlaneSeat seat; // Holds the airplane seat information.
+    private FlightTrip flight; // Holds the flight trip information.
     
     public FlightReservation(Passenger passenger, double fare, PlaneSeat seat,FlightTrip flight){
-        super(passenger,fare);
+        super(passenger,fare); // Passenger and fare information is taken from the superclass.
         this.flight = flight;
         this.seat = seat;
     }
@@ -21,12 +21,13 @@ public class FlightReservation extends Reservation {
         return seat;
     }
 
+    //Seat information is set. Only objects of type PlaneSeat are accepted.
     public void setSeat(Seat seat) {
         if(seat instanceof PlaneSeat PlaneSeat){
             this.seat = PlaneSeat;
         }
         else{
-            throw new IllegalArgumentException("seat typte must be BusSeat");
+            throw new IllegalArgumentException("seat typte must be BusSeat"); // An exception is thrown if a seat of the wrong type is assigned.
         }
     }
     
@@ -41,22 +42,14 @@ public class FlightReservation extends Reservation {
     
     public void setTrip(Trip trip){
         if(trip == null){
-            throw new IllegalArgumentException("flight can not be null");
+            throw new IllegalArgumentException("Flight can not be null"); // Null trip is not accepted.
         }
         if(trip instanceof FlightTrip flightTrip){
             this.flight = flightTrip;
         }
         else{
-            throw new IllegalArgumentException("Trip typte must be FlightTrip");
+            throw new IllegalArgumentException("Trip typte must be FlightTrip"); // An exception is thrown if a trip of the wrong type is assigned.
         }
     }
-   
-//    @Override
-//    public Reservation copy() {
-//        return new FlightReservation(this.getPassenger(), this.getFare(), this.getSeat(), this.getFlightTrip());
-//    }
-  
-    
-   
-    
+
 }
