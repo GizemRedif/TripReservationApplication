@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import vehicle.model.Bus;
+import vehicle.model.Plane;
 
 public class VehicleRepository {
     private static VehicleRepository instance;
@@ -34,5 +36,25 @@ public class VehicleRepository {
     
     public Vehicle getVehicleByIdentifierNumber(String identifier) {
         return vehiclesWithIdentifier.get(identifier);
+    }
+    
+    public List<Vehicle> getAllBuses(){
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Map.Entry<String , Vehicle> vehicle : vehiclesWithIdentifier.entrySet()){
+            if(vehicle.getValue() instanceof Bus){
+                vehicleList.add(vehicle.getValue());
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getAllPlanes(){
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Map.Entry<String , Vehicle> vehicle : vehiclesWithIdentifier.entrySet()){
+            if(vehicle.getValue() instanceof Plane){
+                vehicleList.add(vehicle.getValue());
+            }   
+        }
+        return vehicleList;
     }
 }

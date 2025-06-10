@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/adminPanels/VehicleAddPanel.java</file>
             <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/adminPanels/TripAddPanel.java</file>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/adminPanels/AdminMainPanel.java</file>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/adminPanels/UserAddPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/SearchTripPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/vehicle/service/VehicleService.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/dto/VehicleDTO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,6 +1,7 @@
 package vehicle.service;
 
 import dto.VehicleDTO;
+import java.util.List;
 import vehicle.model.Bus;
 import vehicle.model.Plane;
 import vehicle.model.Vehicle;
@@ -28,5 +29,13 @@ public class VehicleService {
     
     public Vehicle getVehicleByIdentifier(String indentifier){
         return vehicleRepository.getVehicleByIdentifierNumber(indentifier);
+    }
+    
+    public List<Vehicle> getAllBuses(){
+        return vehicleRepository.getAllBuses();
+    }
+    
+    public List<Vehicle> getAllPlanes(){
+        return vehicleRepository.getAllPlanes();
     }
 }

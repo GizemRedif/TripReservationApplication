@@ -27,13 +27,14 @@ public class AdminMainPanel extends JPanel {
         leftPanel.add(welcomeLabel);
 
         // Sağ Panel – Butonlar
-        JPanel rightPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+        JPanel rightPanel = new JPanel(new GridLayout(6, 1, 10, 10)); //6 tane buton 
         rightPanel.setBackground(new Color(239, 228, 210));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Butonlar
         JButton editTripBtn = createStyledButton("Edit Trip/Reservation");
         JButton addTripBtn = createStyledButton("Trip Add");
+        JButton addVehicleBtn = createStyledButton("Vehicle Add");
         JButton addUserBtn = createStyledButton("User Add");
         JButton editUserBtn = createStyledButton("Edit User");
         JButton accountBtn = createStyledButton("My Account");
@@ -49,6 +50,12 @@ public class AdminMainPanel extends JPanel {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
             upm.addPanel("addTrip", new TripAddPanel());
             upm.showPanelByKey("addTrip");
+        });
+        
+        addVehicleBtn.addActionListener(e -> {
+            UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+            upm.addPanel("addVehicle", new VehicleAddPanel());
+            upm.showPanelByKey("addVehicle");
         });
 
         addUserBtn.addActionListener(e -> {
@@ -72,6 +79,7 @@ public class AdminMainPanel extends JPanel {
         // Butonları sağ panele ekle
         rightPanel.add(editTripBtn);
         rightPanel.add(addTripBtn);
+        rightPanel.add(addVehicleBtn);
         rightPanel.add(addUserBtn);
         rightPanel.add(editUserBtn);
         rightPanel.add(accountBtn);
@@ -89,7 +97,7 @@ public class AdminMainPanel extends JPanel {
         JButton button = new JButton(text);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
+        button.setFocusPainted(true);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         return button;
     }
