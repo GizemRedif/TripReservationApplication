@@ -1,68 +1,79 @@
 package gui.passengerPanels;
 
 import gui.components.CreateTripCartsAndListings;
+import reservation.model.Reservation;
+import reservation.service.ReservationService;
+import trip.model.BusTrip;
+import trip.model.FlightTrip;
 import trip.model.Trip;
-import trip.service.TripService;
-import user.model.User;
+import user.model.Passenger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import reservation.model.Reservation;
-import reservation.service.ReservationService;
-import user.model.Passenger;
 
 public class MyTripsPanel extends JPanel {
+
+    ReservationService reservationService = new ReservationService();
 
     public MyTripsPanel(Passenger passenger) {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-        TripService tripService = new TripService();
-        ReservationService reservationService = new ReservationService();
-        List<Reservation> allTrips = reservationService.getReservationsByUser(passenger);
+        // Tüm rezervasyonları al ve trip'leri ayır
+        List<Reservation> allReservations = reservationService.getReservationsByUser(passenger);
+        List<Trip> busTrips = new ArrayList<>();
+        List<Trip> flightTrips = new ArrayList<>();
 
-        // Yolculukları zamana göre ayır
-        LocalDateTime now = LocalDateTime.now();
-//        List<Reservation> pastTrips = allTrips.stream()
-//                .filter(trip -> trip.getDepartureDate().isBefore(now))
-//                .collect(Collectors.toList());
-//
-//        List<Reservation> futureTrips = allTrips.stream()
-//                .filter(trip -> !trip.getDepartureDate().isBefore(now))
-//                .collect(Collectors.toList());
+        for (Reservation res : allReservations) {
+            Trip trip = res.getTrip();
+            if (trip instanceof BusTrip) {
+                busTrips.add(trip);
+            } else if (trip instanceof FlightTrip) {
+                flightTrips.add(trip);
+            }
+        }
 
-        // İçerik paneli
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBackground(new Color(239, 228, 210));
+        // Başlık
+        JLabel titleLabel = new JLabel("My Trips");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(titleLabel, BorderLayout.NORTH);
 
-        // 🔹 GELECEK YOLCULUKLAR
-        JLabel upcomingLabel = new JLabel("Upcoming Trips");
-        upcomingLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        upcomingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        contentPanel.add(upcomingLabel);
-        contentPanel.add(Box.createVerticalStrut(10));
-//        contentPanel.add(new TripCartsAndListings(futureTrips, passenger, "MyTripsPanel"));
+        // Sekmeler
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        contentPanel.add(Box.createVerticalStrut(30)); // boşluk
+        tabbedPane.addTab("Bus", createTripScrollPanel(busTrips, passenger));
+        tabbedPane.addTab("Flight", createTripScrollPanel(flightTrips, passenger));
 
-        // 🔸 GEÇMİŞ YOLCULUKLAR
-        JLabel pastLabel = new JLabel("Past Trips");
-        pastLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        pastLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        contentPanel.add(pastLabel);
-        contentPanel.add(Box.createVerticalStrut(10));
-//        contentPanel.add(new TripCartsAndListings(pastTrips, passenger, "MyTripsPanel"));
+        add(tabbedPane, BorderLayout.CENTER);
+    }
 
-        JScrollPane scrollPane = new JScrollPane(contentPanel);
+    private JScrollPane createTripScrollPanel(List<Trip> trips, Passenger passenger) {
+        JPanel wrapperPanel = new JPanel();
+        wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
+        wrapperPanel.setBackground(new Color(239, 228, 210));
+
+        if (trips.isEmpty()) {
+            JLabel noTripsLabel = new JLabel("Trip bulunmamakta.");
+            noTripsLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+            noTripsLabel.setForeground(Color.DARK_GRAY);
+            noTripsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            noTripsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            wrapperPanel.add(noTripsLabel);
+        } else {
+            wrapperPanel.add(new CreateTripCartsAndListings(trips, passenger, "MyTripsPanel"));
+        }
+
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getViewport().setBackground(new Color(239, 228, 210));
         scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        add(scrollPane, BorderLayout.CENTER);
+        return scrollPane;
     }
 }

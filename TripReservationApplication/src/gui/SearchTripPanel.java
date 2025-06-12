@@ -226,7 +226,14 @@ public class SearchTripPanel extends JPanel {
             int selectedMonth = Integer.parseInt((String) monthCombo.getSelectedItem());
 
             dayCombo.removeAllItems();
-            int startDy = (selectedYear == currentYear && selectedMonth == currentMonth) ? currentDay : 1;
+            
+            int startDy;  
+            if (!(user instanceof Admin) && selectedYear == currentYear && selectedMonth == currentMonth) {
+                startDy = currentDay;
+            } else {
+                startDy = 1;
+            }
+
             int max = YearMonth.of(selectedYear, selectedMonth).lengthOfMonth();
 
             for (int d = startDy; d <= max; d++) {

@@ -34,8 +34,13 @@ public class SeatSelect_TripEditPanel extends JPanel {
         setBackground(new Color(239, 228, 210));      
 
         // Koltuk resimleri yüklenir
-        ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeat.jpg"));
-        ImageIcon bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeat.jpg"));
+        ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeatForPlane.jpg"));
+        ImageIcon bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeatForPlane.jpg"));
+        
+        if(trip instanceof BusTrip){ //Bus ve Plane koltuklarının pixelleri farklı oldugu icin farklı boyutlarsad ekliyorum
+            emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeat.jpg"));
+            bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeat.jpg"));
+        }
 
         //Koltukların gosterilecegi panel oluşturulur (Koltuk paneli)
         JPanel wrapperPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
@@ -249,7 +254,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         listPanel.setOpaque(false);
 
-        if (reservations != null && !reservations.isEmpty()) {
+        if (!reservations.isEmpty()) {
             for (Reservation res : reservations) {
                 JPanel resPanel = new JPanel(new BorderLayout());
                 resPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -281,8 +286,8 @@ public class SeatSelect_TripEditPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-   //Koltukları olusturan ve tıklanmasına izin veren metot
-   private JButton createSeatButton(Seat seat, ImageIcon emptyIcon, ImageIcon bookedIcon, Trip trip) {
+    //Koltukları olusturan ve tıklanmasına izin veren metot
+    private JButton createSeatButton(Seat seat, ImageIcon emptyIcon, ImageIcon bookedIcon, Trip trip) {
         JButton seatButton = new JButton();
         seatButton.setIcon(seat.getIsBooked() ? bookedIcon : emptyIcon);
         
@@ -298,14 +303,14 @@ public class SeatSelect_TripEditPanel extends JPanel {
         seatButton.setFocusPainted(false);
 
         if (user instanceof Passenger) {
+            
             // Koltuk zaten doluysa passenger için tıklanamaz olsun, Admin hicbir sekilde tıklayamasın
             if (seat.getIsBooked()) {
                 seatButton.setEnabled(false);
             } 
-            else {
+            else {                
                 seatButton.addActionListener(e -> {
-                    boolean newStatus = !seat.getIsBooked();
-                    seat.setIsBooked(newStatus);
+                    boolean newStatus = seatButton.getIcon().equals(emptyIcon);
                     seatButton.setIcon(newStatus ? bookedIcon : emptyIcon);
                     if (newStatus) selectedSeats.add(seat);
                     else selectedSeats.remove(seat);
@@ -317,7 +322,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
         return seatButton;
     }
 
-   private void styleButton(JButton button) {
+    private void styleButton(JButton button) {
         button.setFocusPainted(true);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);

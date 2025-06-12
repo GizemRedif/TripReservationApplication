@@ -1,88 +1,97 @@
-
 package gui.components;
 
 import gui.UserPanelManager;
 import gui.SeatSelect_TripEditPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import trip.model.Trip;
 import tripreservationapplication.MainFrame;
 import user.model.Admin;
 import user.model.User;
 
-//TripsPanel -> uygun Tripleri listelemek icin kullanır.
-
 public class CreateTripCartsAndListings extends JPanel {
-    
-    public CreateTripCartsAndListings(List<Trip> trips, User user, String callingPanel){
-                                                             //Hangi panel cagırıyor onu yazarız. TripsPanel ya da PastTrips
-        
+
+    public CreateTripCartsAndListings(List<Trip> trips, User user, String callingPanel) {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
-        
-        //-----------------------İçerik: Trip kartları----------------------------
+
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
         innerPanel.setBackground(new Color(239, 228, 210));
 
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         for (Trip trip : trips) {
             JPanel tripCard = new JPanel(new BorderLayout(10, 10));
             tripCard.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-            tripCard.setBackground(Color.WHITE);
             tripCard.setMaximumSize(new Dimension(500, 130));
 
-            // 🕒 Üst kısım: saat
+            boolean isPastTrip = trip.getDepartureDate().isBefore(LocalDateTime.now());
+            Color bgColor = isPastTrip ? new Color(210, 210, 210) : Color.WHITE;
+            Color textColor = isPastTrip ? Color.DARK_GRAY : Color.BLACK;
+            tripCard.setBackground(bgColor);
+
+            // Üst panel: Sol üstte saat, sağ üstte tarih
+            JPanel top = new JPanel(new BorderLayout());
+            top.setOpaque(false);
+
             JLabel timeLabel = new JLabel(trip.getDepartureDate().toLocalTime().format(timeFormatter));
             timeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-            JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            top.setOpaque(false);
-            top.add(timeLabel);
+            timeLabel.setForeground(textColor);
+            timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            top.add(timeLabel, BorderLayout.WEST);
+
+            JLabel dateLabel = new JLabel(trip.getDepartureDate().toLocalDate().format(dateFormatter));
+            dateLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            dateLabel.setForeground(textColor);
+            dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            top.add(dateLabel, BorderLayout.EAST);
+
             tripCard.add(top, BorderLayout.NORTH);
 
-            // ➡️ Ortadaki rota
-            JLabel routeLabel = new JLabel(trip.getDepartureStation() + " -----> " + trip.getArrivalStation(), SwingConstants.CENTER);
+
+            // Orta panel: Rota ve süre
+            String tripDurationText = "---- " + trip.getTripTime() + "  ---->";
+            String routeText = trip.getDepartureStation() + " " + tripDurationText + " " + trip.getArrivalStation();
+
+            JLabel routeLabel = new JLabel(routeText, SwingConstants.CENTER);
             routeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+            routeLabel.setForeground(textColor);
             tripCard.add(routeLabel, BorderLayout.CENTER);
 
-            // 💰 Alt kısım: fiyat
+            // Alt panel: Fiyat + buton
             JPanel bottom = new JPanel(new BorderLayout());
             bottom.setOpaque(false);
-            JLabel priceLabel = new JLabel("Price: " + trip.getFare() + "₺");
+
+            JLabel priceLabel = new JLabel(trip.getFare() + "₺");
             priceLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            priceLabel.setForeground(textColor);
             bottom.add(priceLabel, BorderLayout.WEST);
-            
-            
-            if("TripsPanel".equals(callingPanel)){
-                 //Alt kısım:  Buton (User kontrolu yapılır ve buton yazısı belirlenir.)
-            String buttonText = "Select Seat";
-            if(user instanceof Admin){buttonText = "EDIT";}
-            JButton selectSeatButton = new JButton(buttonText);
-            styleSelectOrEditButton(selectSeatButton);
-            bottom.add(selectSeatButton, BorderLayout.EAST);
-            selectSeatButton.addActionListener(e ->{
-                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-                upm.addPanel("selectOrEdit", new SeatSelect_TripEditPanel(trip, user));  // paneli CardLayout’a ekle
-                upm.showPanelByKey("selectOrEdit");                            // geçiş yap
-            });
-                
+
+            // Buton (sadece TripsPanel'de gösterilir)
+            if ("TripsPanel".equals(callingPanel)) {
+                String buttonText = (user instanceof Admin) ? "EDIT" : "Select Seat";
+                JButton selectSeatButton = new JButton(buttonText);
+                styleSelectOrEditButton(selectSeatButton);
+
+                if (isPastTrip) {
+                    selectSeatButton.setEnabled(false);
+                    selectSeatButton.setToolTipText("Bu sefer geçmişte kaldı.");
+                } else {
+                    selectSeatButton.addActionListener(e -> {
+                        UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+                        upm.addPanel("selectOrEdit", new SeatSelect_TripEditPanel(trip, user));
+                        upm.showPanelByKey("selectOrEdit");
+                    });
+                }
+
+                bottom.add(selectSeatButton, BorderLayout.EAST);
             }
-           
-            
+
             tripCard.add(bottom, BorderLayout.SOUTH);
 
             innerPanel.add(tripCard);
@@ -96,12 +105,9 @@ public class CreateTripCartsAndListings extends JPanel {
         scrollPane.setBackground(new Color(239, 228, 210));
 
         add(scrollPane, BorderLayout.CENTER);
-        
-        
     }
-    
-    
-        private void styleSelectOrEditButton(JButton button) {
+
+    private void styleSelectOrEditButton(JButton button) {
         button.setFocusPainted(false);
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);

@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,19 +18,17 @@ import javax.swing.JTextField;
 import trip.model.BusTrip;
 import trip.model.FlightTrip;
 import trip.model.Trip;
-import vehicle.model.Bus;
-import vehicle.model.Plane;
+import trip.service.TripService;
 import vehicle.model.Vehicle;
 import vehicle.service.VehicleService;
 
 public class TripAddPanel extends JPanel {
     
     VehicleService vehicleService = new VehicleService();
+    TripService tripService = new TripService();
     private JComboBox<String> vehicleIdentifierCombo; //TripType'a gore Vehicle ıdentifierlarını listelemek icin kullanılacak
-
     
     public TripAddPanel(){
-        
         setLayout(new GridBagLayout());
         setBackground(new Color(245, 245, 245));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -48,12 +48,12 @@ public class TripAddPanel extends JPanel {
         gbc.gridx = 0; gbc.gridy = 1;
         add(new JLabel("Vehicle Identifier:"), gbc);
         vehicleIdentifierCombo = new JComboBox<>();
-        updateVehicleCombo((String) typeCombo.getSelectedItem()); //updateVehicleCombo metodu ile başlangıçta default listeyi yükler (Bus)
+        updateVehicleIdentifierCombo((String) typeCombo.getSelectedItem()); //updateVehicleIdentifierCombo metodu ile başlangıçta default listeyi yükler (Bus)
 
-        // typeCombo seçim değiştiğinde listener ekle
+        // Trip Type seçimi değiştiğinde vehicle identifier listesini guncelle
         typeCombo.addActionListener(e -> {
-            String selectedType = (String) typeCombo.getSelectedItem();
-            updateVehicleCombo(selectedType);
+            String selectedType = (String)typeCombo.getSelectedItem();
+            updateVehicleIdentifierCombo(selectedType);
         });
         gbc.gridx = 1;
         add(vehicleIdentifierCombo, gbc);
@@ -121,33 +121,44 @@ public class TripAddPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Please fill in the blanks.", "Missing Information",JOptionPane.WARNING_MESSAGE);
             } 
             else {
+                //TextLabellerde alınan gun ve saat bilgileri, uygun ture donusturulmek icin kaydediliyor
+                int year = Integer.parseInt(yearField.getText());
+                int month = Integer.parseInt(monthField.getText());
+                int day = Integer.parseInt(dayField.getText());
+                int hour = Integer.parseInt(hourField.getText());
+                int minute = Integer.parseInt(minuteField.getText());
+                
+                int tripHour = Integer.parseInt(durationHourField.getText());
+                int tripMinute = Integer.parseInt(durationMinuteField.getText());
+                
                 Class< ? extends Trip > TripType;
-                
-                TripDTO tripDTO = new TripDTO();
-                
                 if(((String)typeCombo.getSelectedItem()).equals("Bus")){TripType = BusTrip.class;}
                 else{TripType = FlightTrip.class;}
                 
+                TripDTO tripDTO = new TripDTO();
                 tripDTO.setTripType(TripType);
                 tripDTO.setVehicle(vehicleService.getVehicleByIdentifier((String)(vehicleIdentifierCombo.getSelectedItem())));
                 tripDTO.setDepartureStation(departureField.getText());
                 tripDTO.setArrivalStation(arrivalField.getText());
-//                tripDTO.setDepartureDate();
-//                tripDTO.setTripTime();
-//                tripDTO.setFare();
+                tripDTO.setDepartureDate(LocalDateTime.of(year, month, day, hour, minute));
+                tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
+                tripDTO.setFare(Double.parseDouble(fareField.getText()));
+                tripService.createTrip(tripDTO);
                         
                 JOptionPane.showMessageDialog(this, "Trip created successfully!","Successful",JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
-        
-         private void updateVehicleCombo(String selectedType) {
+    //-------------------------------------------End of constructor method-----------------------------
+
+    private void updateVehicleIdentifierCombo(String selectedType) {
         vehicleIdentifierCombo.removeAllItems(); // Eski item'ları temizle
 
         List<Vehicle> vehicleList;
         if (selectedType.equals("Bus")) {
             vehicleList = vehicleService.getAllBuses();
-        } else {
+        } 
+        else {
             vehicleList = vehicleService.getAllPlanes();
         }
 
