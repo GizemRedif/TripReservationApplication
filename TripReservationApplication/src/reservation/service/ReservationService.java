@@ -33,6 +33,7 @@ public class ReservationService {
     public void deleteReservation(Reservation reservation){ // The reservation is removed from all the places it is stored.
         reservationRepository.deleteReservation(reservation);
         reservation.getTrip().deleteReservation(reservation);
+        reservation.getSeat().setIsBooked(false);
     }
     
     // Returns the reservation list based on the specified criteria

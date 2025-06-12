@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.ArrayList;
 import seat.BusSeat;
 
+// A class that represents bus-type vehicles.
 public class Bus extends Vehicle {
-    private String plate;
-    private final List<Seat> seatList = createDefaultSeats();
+    private String plate; // Stores the license plate information of the bus.
+    private final List<Seat> seatList = createDefaultSeats(); // Holds the seat list of the bus. Creates 45 seats by default.
+
+
     public Bus(int capacity, String plate) {
         super(capacity);
         this.plate=plate;
@@ -19,18 +22,19 @@ public class Bus extends Vehicle {
         this.plate=other.plate;
     }
     
+    // Creates 45 seats in a default 2+1 seating layout.
     private static List<Seat> createDefaultSeats() {
         List<Seat> list = new ArrayList<>();
-        // 45 koltuklu 2+1 oturma düzeni
+        
         for (int i = 1; i <= 45; i++) {
-            list.add(new BusSeat(i+"",i%3 == 0));
+            list.add(new BusSeat(i+"",i%3 == 0)); // Every 3rd seat is marked as a single seat.
         }
         return list;
     }
     
     @Override
-    public String getIdentifier() {
-        return plate;
+    public String getIdentifier() { // Returns the identifier specific to the bus (license plate).
+        return plate; 
     }
 
     public void setPlate(String plate) {
@@ -48,7 +52,7 @@ public class Bus extends Vehicle {
 //    }
     
     @Override
-    public Bus clone(){
+    public Bus clone(){ // Creates a clone of the bus object (Prototype Pattern).
         return new Bus(capacity , plate);
     }
     
