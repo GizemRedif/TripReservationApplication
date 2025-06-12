@@ -1,8 +1,9 @@
 package seat;
 
+// Enables the creation of cloneable objects by implementing the Cloneable interface.
 public abstract class Seat implements Cloneable {
-    private String seatNumber;
-    private boolean isBooked;
+    private String seatNumber; // Stores the seat number information.
+    private boolean isBooked; // Indicates whether the seat is booked or not.
     
     
     
@@ -16,22 +17,10 @@ public abstract class Seat implements Cloneable {
         this.seatNumber= other.seatNumber;
         this.isBooked= other.isBooked;
     }
-    
-//    @Override
-//    public boolean equals(Object obj){
-//        if(this==obj){return true;}
-//        if(obj==null || getClass() != obj.getClass()) {return false;}
-//        Seat other= (Seat) obj;
-//        return this.seatNumber== other.seatNumber && this.isBooked == other.isBooked;
-//    }
-    
+  
     @Override
     public abstract Seat clone();
-    
-//    @Override
-//    public int hashCode(){
-//        return Integer.hashCode(seatNumber);
-//    }
+
 
     public String getSeatNumber() {
         return seatNumber;

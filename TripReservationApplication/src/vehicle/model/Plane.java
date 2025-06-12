@@ -8,7 +8,7 @@ import seat.PlaneSeat;
 
 public class Plane extends Vehicle{
     private String tailNumber;
-    private List<Seat> seatList = createDefaultSeats();
+    private final List<Seat> seatList = createDefaultSeats();
     
     public Plane(int capacity, String tailNumber){
         super(capacity);

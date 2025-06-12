@@ -1,9 +1,7 @@
 package seat;
 
-
-
 public class BusSeat extends Seat {
-    private boolean isSingle;
+    private boolean isSingle; // Indicates whether the seat is a single seat.
     
     public BusSeat (String seatNumber, boolean isSingle){
         super(seatNumber);
@@ -16,7 +14,7 @@ public class BusSeat extends Seat {
     }
     
     @Override
-    public BusSeat clone() {
+    public BusSeat clone() { // Creates a copy of the BusSeat object.
         BusSeat cloned = new BusSeat(super.getSeatNumber(), isSingle);
         cloned.setIsBooked(super.getIsBooked());
         return cloned;

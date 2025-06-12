@@ -1,12 +1,12 @@
 package user.model;
 
 public abstract class User {
-    private String name;
-    private String surname;
-    private String eMail;
-    private String password;
-    private String phoneNumber;
-    private char gender;
+    private String name; // Stores the user's first name.
+    private String surname; // Stores the user's last name.
+    private String eMail; // Stores the user's email address.
+    private String password; // Stores the user's password.
+    private String phoneNumber; // Stores the user's phone number.
+    private char gender; // Stores the user's gender ('F' or 'M').
     
     public User(String name, String surname, String eMail, String password, String phoneNumber, char gender){
     this.name = name;
@@ -67,6 +67,7 @@ public abstract class User {
     
     //----------------Builder Class--------------
     
+    // An abstract Builder class used to construct a User object step by step.
     public static abstract class Builder{
         protected String name;
         protected String surname;
@@ -99,6 +100,6 @@ public abstract class User {
             this.gender=gender;
             return this;
         }
-        public abstract User build();
+        public abstract User build(); // The method required to construct the User object.
     }
 }

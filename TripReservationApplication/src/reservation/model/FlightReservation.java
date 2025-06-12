@@ -33,7 +33,7 @@ public class FlightReservation extends Reservation {
     
     public Trip getTrip() {
         if(flight !=null){
-            return new FlightTrip(flight);
+            return flight;
         }
         else{
             return null;

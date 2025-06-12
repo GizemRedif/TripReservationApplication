@@ -34,7 +34,7 @@ public class BusReservation extends Reservation {
     @Override
     public BusTrip getTrip(){
         if(busTrip !=null){
-            return new BusTrip(busTrip);
+            return busTrip;
         }
         else{
             return null;

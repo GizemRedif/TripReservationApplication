@@ -21,7 +21,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         Trip trip;
         if (tripDTO.getTripType()== BusTrip.class) {
            trip= new BusTrip.BusTripBuilder()
-                   .setBus((Bus)tripDTO.getVehicle())
+                   .setBus((Bus)tripDTO.getVehicle().clone())
                    .setArrivalStation(tripDTO.getArrivalStation())
                    .setDepartureStation(tripDTO.getDepartureStation())
                    .setDepartureDate(tripDTO.getDepartureDate())
@@ -32,7 +32,7 @@ private final TripRepository tripRepository = TripRepository.getInstance();
         }
         else {
             trip= new FlightTrip.FlightTripBuilder()
-                   .setPlane((Plane)tripDTO.getVehicle())
+                   .setPlane((Plane)tripDTO.getVehicle().clone())
                    .setArrivalStation(tripDTO.getArrivalStation())
                    .setDepartureStation(tripDTO.getDepartureStation())
                    .setDepartureDate(tripDTO.getDepartureDate())
