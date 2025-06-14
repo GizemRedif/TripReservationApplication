@@ -21,17 +21,21 @@ public class MyTripsPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-        // Tüm rezervasyonları al ve trip'leri ayır
+        // Tüm rezervasyonları al ve Trip türüne göre ayır
         List<Reservation> allReservations = reservationService.getReservationsByUser(passenger);
         List<Trip> busTrips = new ArrayList<>();
+        List<Reservation> busReservations = new ArrayList<>();
         List<Trip> flightTrips = new ArrayList<>();
+        List<Reservation> flightReservations = new ArrayList<>();
 
         for (Reservation res : allReservations) {
             Trip trip = res.getTrip();
             if (trip instanceof BusTrip) {
                 busTrips.add(trip);
+                busReservations.add(res);
             } else if (trip instanceof FlightTrip) {
                 flightTrips.add(trip);
+                flightReservations.add(res);
             }
         }
 
@@ -45,13 +49,13 @@ public class MyTripsPanel extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        tabbedPane.addTab("Bus", createTripScrollPanel(busTrips, passenger));
-        tabbedPane.addTab("Flight", createTripScrollPanel(flightTrips, passenger));
+        tabbedPane.addTab("Bus", createTripScrollPanel(busTrips, busReservations, passenger));
+        tabbedPane.addTab("Flight", createTripScrollPanel(flightTrips, flightReservations, passenger));
 
         add(tabbedPane, BorderLayout.CENTER);
     }
 
-    private JScrollPane createTripScrollPanel(List<Trip> trips, Passenger passenger) {
+    private JScrollPane createTripScrollPanel(List<Trip> trips, List<Reservation> reservations, Passenger passenger) {
         JPanel wrapperPanel = new JPanel();
         wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
         wrapperPanel.setBackground(new Color(239, 228, 210));
@@ -64,7 +68,7 @@ public class MyTripsPanel extends JPanel {
             noTripsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             wrapperPanel.add(noTripsLabel);
         } else {
-            wrapperPanel.add(new CreateTripCartsAndListings(trips, passenger, "MyTripsPanel"));
+            wrapperPanel.add(new CreateTripCartsAndListings(trips, reservations, passenger, "MyTripsPanel"));
         }
 
         JScrollPane scrollPane = new JScrollPane(wrapperPanel);

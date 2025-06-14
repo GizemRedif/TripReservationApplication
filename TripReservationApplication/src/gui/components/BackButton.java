@@ -46,15 +46,18 @@ public class BackButton extends JPanel{
         leftPanel.setOpaque(false);
         leftPanel.add(backButton);
         
-        
-        if("searching".equals(previousPanel)){
-            JButton filterButton = new JButton("🔍 Filter");
-            filterButton.addActionListener(e -> showFilterPopup());
-            JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            rightPanel.setOpaque(false);
-            rightPanel.add(filterButton);
-            topBar.add(rightPanel, BorderLayout.EAST);
-        }
+//        
+
+
+//Filtreleme olacaksa kullan.
+//        if("searching".equals(previousPanel)){
+//            JButton filterButton = new JButton("🔍 Filter");
+//            filterButton.addActionListener(e -> showFilterPopup());
+//            JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//            rightPanel.setOpaque(false);
+//            rightPanel.add(filterButton);
+//            topBar.add(rightPanel, BorderLayout.EAST);
+//        }
         
 
         

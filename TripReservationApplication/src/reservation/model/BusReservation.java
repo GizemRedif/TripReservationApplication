@@ -17,11 +17,13 @@ public class BusReservation extends Reservation {
         this.seat = seat;
     }
 
+    @Override
     public Seat getSeat() {
         return seat;
     }
 
     // Seat information is set. Only objects of type BusSeat are accepted.
+    @Override
     public void setSeat(Seat seat) {
         if(seat instanceof BusSeat busSeat){
             this.seat = busSeat;

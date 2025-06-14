@@ -17,11 +17,13 @@ public class FlightReservation extends Reservation {
         this.seat = seat;
     }
     
+    @Override
     public Seat getSeat() {
         return seat;
     }
 
     //Seat information is set. Only objects of type PlaneSeat are accepted.
+    @Override
     public void setSeat(Seat seat) {
         if(seat instanceof PlaneSeat PlaneSeat){
             this.seat = PlaneSeat;
@@ -31,6 +33,7 @@ public class FlightReservation extends Reservation {
         }
     }
     
+    @Override
     public Trip getTrip() {
         if(flight !=null){
             return flight;
@@ -40,6 +43,7 @@ public class FlightReservation extends Reservation {
         }
     }
     
+    @Override
     public void setTrip(Trip trip){
         if(trip == null){
             throw new IllegalArgumentException("Flight can not be null"); // Null trip is not accepted.
