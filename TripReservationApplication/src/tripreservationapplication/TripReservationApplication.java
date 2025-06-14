@@ -114,17 +114,14 @@ public class TripReservationApplication {
         //VEHİCLES---------------------------------------------------------------------------------
         // 🚌 Busses
         VehicleDTO bus1 = new VehicleDTO();
-        bus1.setCapacity(45);
         bus1.setVehicleIdentifier("34 AA 1313");
         bus1.setVehicleType(Bus.class);
 
         VehicleDTO bus2 = new VehicleDTO();
-        bus2.setCapacity(45);
         bus2.setVehicleIdentifier("35 BB 2525");
         bus2.setVehicleType(Bus.class);
 
         VehicleDTO bus3 = new VehicleDTO();
-        bus3.setCapacity(45);
         bus3.setVehicleIdentifier("06 CC 3636");
         bus3.setVehicleType(Bus.class);
         
@@ -136,17 +133,14 @@ public class TripReservationApplication {
 
         // ✈️ Planes
         VehicleDTO plane1 = new VehicleDTO();
-        plane1.setCapacity(150);
         plane1.setVehicleIdentifier("TK101");
         plane1.setVehicleType(Plane.class);
 
         VehicleDTO plane2 = new VehicleDTO();
-        plane2.setCapacity(150);
         plane2.setVehicleIdentifier("PC202");
         plane2.setVehicleType(Plane.class);
 
         VehicleDTO plane3 = new VehicleDTO();
-        plane3.setCapacity(150);
         plane3.setVehicleIdentifier("THY303");
         plane3.setVehicleType(Plane.class);
         

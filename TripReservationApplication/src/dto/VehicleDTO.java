@@ -4,16 +4,8 @@ import vehicle.model.Vehicle;
 
 // Data Transfer Object for Vehicle related data.
 public class VehicleDTO {
-    private int capacity;
     private String vehicleIdentifier;
     private Class<? extends Vehicle> vehicleType;
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 
     public String getVehicleIdentifier() {
         return vehicleIdentifier;
