@@ -7,7 +7,7 @@ import vehicle.model.Vehicle;
 
 
 public class BusTrip extends Trip{
-    private Bus bus;
+    private Bus bus; // Holds the bus object to be used in the trip.
 
     public BusTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
                         double fare,Bus bus) {
@@ -32,7 +32,7 @@ public class BusTrip extends Trip{
     }
     
     @Override
-    public Vehicle getVehicle(){
+    public Vehicle getVehicle(){ // Returns the vehicle (bus) to be used in the trip.
         if(bus !=null){
             return bus;
         }
@@ -61,8 +61,8 @@ public class BusTrip extends Trip{
         }
         
           @Override
-        public BusTrip build() {
-            return new BusTrip(this);
+        public BusTrip build() { // Builds and returns the BusTrip object.
+            return new BusTrip(this); 
         }
     }
 
