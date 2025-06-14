@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/SeatSelect_TripEditPanel.java</file>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/tripreservationapplication/TripReservationApplication.java</file>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/seat/PlaneSeat.java</file>
-            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/vehicle/model/Plane.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/vehicle/model/Vehicle.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/AccountPanel.java</file>
             <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/passengerPanels/PaymentPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/EditUserPanel.java</file>
+            <file>file:/C:/Users/test/Desktop/TripReservationApplication/TripReservationApplication/src/gui/adminPanels/SelectUserForEditPanel.java</file>
         </group>
     </open-files>
 </project-private>

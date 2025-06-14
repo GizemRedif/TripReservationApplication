@@ -113,7 +113,7 @@ public class AccountPanel extends JPanel {
         changeInfButton.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
             //EditUser paneli acılacak.
-            upm.addPanel("editUser", new EditUserPanel(user, () -> {
+            upm.addPanel("editUser", new EditUserPanel(user, "accountPanel", () -> {
                 this.updateLabels(user); // Bu panelin label'larını güncelle
                 upm.showPanelByKey("account"); // Sonra geri dön
             }));
@@ -142,7 +142,7 @@ public class AccountPanel extends JPanel {
         deleteAccountButton.setMaximumSize(new Dimension(200, 30));
         
         deleteAccountButton.addActionListener(e -> {
-            userService.deleteUser(user);
+            userService.deleteUser(user.getEmail());
             int result = JOptionPane.showOptionDialog(null,"User deleted successfully.","Account Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
             if (result == 0) { //Okey butonuna basılınca LoginRegisterPanel'e donulur.
                 MainFrame mainFrame = MainFrame.getInstance();
