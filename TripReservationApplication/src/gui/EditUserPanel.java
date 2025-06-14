@@ -1,19 +1,19 @@
 package gui;
 
 import user.model.User;
-
-import javax.swing.*;
-import java.awt.*;
 import user.Service.UserService;
 import dto.UserDTO;
 
-//AccountPanel -> Change Information butonu ile cagırılır.
+import javax.swing.*;
+import java.awt.*;
 
+// AccountPanel -> Change Information butonu ile çağırılır.
+// SelectUserForEditPanel -> admin kullanıcıyı seçip düzenlemek isterse çağırır.
 
 public class EditUserPanel extends JPanel {
-UserService userService;
-    //Runnable: içinde yapılacak bir şey tanımlanır, sonra bu iş çağrıldığında çalıştırılır.
-    public EditUserPanel(User user, Runnable onUpdateSuccess) {
+    private UserService userService;
+
+    public EditUserPanel(User user, String callingPanel, Runnable onUpdateSuccess) {
         userService = new UserService();
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
@@ -57,24 +57,18 @@ UserService userService;
 
         saveButton.addActionListener(ev -> {
             UserDTO newUserDTO = new UserDTO();
-            
-            
-                
-                
             try {
-                
                 newUserDTO.setEmail(user.getEmail());
                 newUserDTO.setName(nameField.getText().trim());
                 newUserDTO.setSurname(surnameField.getText().trim());
                 newUserDTO.setPassword(new String(passwordField.getPassword()).trim());
                 newUserDTO.setPhoneNumber(phoneField.getText().trim());
                 newUserDTO.setGender(genderCombo.getSelectedItem().toString().charAt(0));
-                
 
                 boolean updated = userService.updateUser(newUserDTO);
                 if (updated) {
                     JOptionPane.showMessageDialog(this, "User info updated.");
-                    if (onUpdateSuccess != null) onUpdateSuccess.run(); // geri bildirim olarak kullanılabilir
+                    if (onUpdateSuccess != null) onUpdateSuccess.run();
                 }
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -82,6 +76,27 @@ UserService userService;
                 JOptionPane.showMessageDialog(this, "Unexpected error:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        // Eğer çağıran panel SelectUserForEditPanel ise silme butonu ekle
+        if ("selectUserForEditPanel".equals(callingPanel)) {
+            JButton deleteButton = new JButton("Delete Account");
+            styleButton(deleteButton);
+            gbc.gridy = ++y;
+            add(deleteButton, gbc);
+
+            deleteButton.addActionListener(ev -> {
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this account?", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    boolean deleted = userService.deleteUser(user.getEmail());
+                    if (deleted) {
+                        JOptionPane.showMessageDialog(this, "User deleted successfully.");
+                        if (onUpdateSuccess != null) onUpdateSuccess.run();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Failed to delete user.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
     }
 
     private String getGenderString(char genderChar) {
@@ -98,12 +113,10 @@ UserService userService;
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial", Font.BOLD, 14));
     }
-   
 
-    //GridBagConstraints nesnesinin x ve y koordinatlarını (gridx, gridy) ayarlayıp geri döner
     private GridBagConstraints gbcAt(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;
         gbc.gridy = y;
         return gbc;
-    }    
+    }
 }

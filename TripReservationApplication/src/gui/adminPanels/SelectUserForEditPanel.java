@@ -51,7 +51,7 @@ public class SelectUserForEditPanel extends JPanel {
                 }
                 else{
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-                    upm.addPanel("editUser", new EditUserPanel(searchingUser, () -> {
+                    upm.addPanel("editUser", new EditUserPanel(searchingUser, "selectUserForEditPanel", () -> {
                         //Edit tamamlandıktan sonra AdminPanel'e donulur.
                         upm.showPanelByKey("admin");
                     }));
