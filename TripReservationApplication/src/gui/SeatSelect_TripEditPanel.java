@@ -99,26 +99,61 @@ public class SeatSelect_TripEditPanel extends JPanel {
                 }
             }
         }
-        else { //FlightTrip ise
-            seatPanel = new JPanel(new GridLayout(7, 25, 10, 10)); // 4 satır, 15 sütun
+        else { // FlightTrip ise
+            int rows = 7; // A-F + boşluk
+            int cols = 25; // 25 sıra
+            seatPanel = new JPanel(new GridLayout(rows, cols, 10, 10));
             seatPanel.setOpaque(false);
-            for (int row = 0; row < 7; row++) {
-                for (int col = 0; col < 25; col++) {
-                    if (row == 3) { //Koltuk olmayan satır
+
+            // Satır harfleri (4. sıra boşluk olacak)
+            char[] seatRowChars = {'A', 'B', 'C', '-', 'D', 'E', 'F'};
+
+            for (char rowChar : seatRowChars) {
+                for (int col = 1; col <= cols; col++) {
+                    if (rowChar == '-') {
                         JPanel empty = new JPanel();
                         empty.setOpaque(false);
                         seatPanel.add(empty);
-                    } 
-                    else {
-                        if (seatIndex < seatList.size()) {
-                            Seat seat = seatList.get(seatIndex++);
+                    } else {
+                        String seatNumber = col + "" + rowChar;
+
+                        // seatList'ten doğru seat'i bul
+                        Seat seat = null;
+                        for (Seat s : seatList) {
+                            if (s.getSeatNumber().equals(seatNumber)) {
+                                seat = s;
+                                break;
+                            }
+                        }
+
+                        if (seat != null) {
                             JButton seatButton = createSeatButton(seat, emptyIcon, bookedIcon, trip);
-                            seatPanel.add(seatButton);
+
+                            JPanel seatWithLabel = new JPanel();
+                            seatWithLabel.setLayout(new BoxLayout(seatWithLabel, BoxLayout.Y_AXIS));
+                            seatWithLabel.setOpaque(false);
+                            seatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                            JLabel label = new JLabel(seat.getSeatNumber());
+                            label.setFont(new Font("Segoe UI", Font.PLAIN, 10));
+                            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                            seatWithLabel.add(seatButton);
+                            seatWithLabel.add(label);
+
+                            seatPanel.add(seatWithLabel);
+                        } else {
+                            JPanel empty = new JPanel();
+                            empty.setOpaque(false);
+                            seatPanel.add(empty);
                         }
                     }
                 }
             }
         }
+
+  
+
         wrapperPanel.add(seatPanel);
         
         // BackButton ve koltuk panelini birlikte tutacak üst panel
@@ -135,20 +170,34 @@ public class SeatSelect_TripEditPanel extends JPanel {
 
         // Passenger'e özel butonlar
         if (user instanceof Passenger){
+            // Eğer otobüs yolculuğuysa, bilgi etiketi göster
+            if (trip instanceof BusTrip) {
+                JLabel extraChargeLabel = new JLabel("Single seats +50 TL");
+                extraChargeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                extraChargeLabel.setForeground(new Color(150, 0, 0));
+                buttonPanel.add(extraChargeLabel);
+            }
+            else {
+                JLabel extraChargeLabel = new JLabel("Business Class (twice the fare): 1,2,3,4 and 5th row seats");
+                extraChargeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                extraChargeLabel.setForeground(new Color(150, 0, 0));
+                buttonPanel.add(extraChargeLabel);
+            }
+
             JButton payButton = new JButton("Make Payment");
             styleButton(payButton);
             payButton.addActionListener(e -> {
-                if (selectedSeats.isEmpty()) { //Kullanıcı koltuk secmeden odeme yap butonuna tıklarsa hata alır.
+                if (selectedSeats.isEmpty()) {
                     JOptionPane.showMessageDialog(this,"Please select a seat.","No Seat Selected",JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                //Odeme yapılması icin PaymentPanel acılır.
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.addPanel("paymentPanel", new PaymentPanel(selectedSeats, trip, (Passenger) user));
                 upm.showPanelByKey("paymentPanel");
             });
             buttonPanel.add(payButton);
         }
+
         
         // Admin'e özel butonlar
         if (user instanceof Admin) {

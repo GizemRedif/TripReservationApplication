@@ -428,39 +428,39 @@ public class TripReservationApplication {
         //Flight rezervasyon
         
         ReservationDTO reservationDTO6 = new ReservationDTO();
-        reservationDTO6.setPassenger(passengerTuna);
-        reservationDTO6.setFare(flightTripDTO1.getFare());
+        reservationDTO6.setPassenger(passengerElif);
+        reservationDTO6.setFare(flightTripDTO3.getFare());
         reservationDTO6.setReservationType(FlightReservation.class);
-        reservationDTO6.setTrip(flightTrip1);
-        reservationDTO6.setSeat(flightTrip1.getVehicle().getSeatList().get(6));
+        reservationDTO6.setTrip(flightTrip3);
+        reservationDTO6.setSeat(flightTrip3.getVehicle().getSeatList().get(6));
         
         ReservationDTO reservationDTO7 = new ReservationDTO();
-        reservationDTO7.setPassenger(passengerTuna);
-        reservationDTO7.setFare(flightTripDTO1.getFare());
+        reservationDTO7.setPassenger(passengerElif);
+        reservationDTO7.setFare(flightTripDTO3.getFare());
         reservationDTO7.setReservationType(FlightReservation.class);
-        reservationDTO7.setTrip(flightTrip1);
-        reservationDTO7.setSeat(flightTrip1.getVehicle().getSeatList().get(7));
+        reservationDTO7.setTrip(flightTrip3);
+        reservationDTO7.setSeat(flightTrip3.getVehicle().getSeatList().get(7));
         
         ReservationDTO reservationDTO8 = new ReservationDTO();
-        reservationDTO8.setPassenger(passengerTuna);
-        reservationDTO8.setFare(flightTripDTO1.getFare());
+        reservationDTO8.setPassenger(passengerElif);
+        reservationDTO8.setFare(flightTripDTO3.getFare());
         reservationDTO8.setReservationType(FlightReservation.class);
-        reservationDTO8.setTrip(flightTrip1);
-        reservationDTO8.setSeat(flightTrip1.getVehicle().getSeatList().get(8));
+        reservationDTO8.setTrip(flightTrip3);
+        reservationDTO8.setSeat(flightTrip3.getVehicle().getSeatList().get(8));
         
         ReservationDTO reservationDTO9 = new ReservationDTO();
-        reservationDTO9.setPassenger(passengerTuna);
-        reservationDTO9.setFare(flightTripDTO1.getFare());
+        reservationDTO9.setPassenger(passengerElif);
+        reservationDTO9.setFare(flightTripDTO3.getFare());
         reservationDTO9.setReservationType(FlightReservation.class);
-        reservationDTO9.setTrip(flightTrip1);
-        reservationDTO9.setSeat(flightTrip1.getVehicle().getSeatList().get(9));
+        reservationDTO9.setTrip(flightTrip3);
+        reservationDTO9.setSeat(flightTrip3.getVehicle().getSeatList().get(9));
         
         ReservationDTO reservationDTO10 = new ReservationDTO();
-        reservationDTO10.setPassenger(passengerTuna);
-        reservationDTO10.setFare(flightTripDTO1.getFare());
+        reservationDTO10.setPassenger(passengerElif);
+        reservationDTO10.setFare(flightTripDTO3.getFare());
         reservationDTO10.setReservationType(FlightReservation.class);
-        reservationDTO10.setTrip(flightTrip1);
-        reservationDTO10.setSeat(flightTrip1.getVehicle().getSeatList().get(10));
+        reservationDTO10.setTrip(flightTrip3);
+        reservationDTO10.setSeat(flightTrip3.getVehicle().getSeatList().get(10));
         
         reservationService.createReservation(passengerTuna, reservationDTO1);
         reservationService.createReservation(passengerTuna, reservationDTO2);
