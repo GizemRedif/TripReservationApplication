@@ -11,13 +11,11 @@ public class Plane extends Vehicle{
     private String tailNumber; // Stores the tail number of the airplane.
     private final List<Seat> seatList = createDefaultSeats(); // Holds the seat list of the airplane. By default, 150 seats are created.
     
-    public Plane(int capacity, String tailNumber){
-        super(capacity);
+    public Plane(String tailNumber){
         this.tailNumber=tailNumber;
     }
     
     public Plane(Plane other){
-       super(other.getCapacity());
        this.tailNumber=other.tailNumber;
     }
     
@@ -69,7 +67,7 @@ public class Plane extends Vehicle{
     
     @Override
     public Plane clone(){ // Creates a clone of the airplane object (Prototype Pattern).
-        return new Plane(capacity , tailNumber);
+        return new Plane(tailNumber);
     }
     
 }

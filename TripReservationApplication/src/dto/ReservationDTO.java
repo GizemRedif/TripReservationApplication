@@ -1,12 +1,11 @@
 package dto;
 
 import reservation.model.Reservation;
-import trip.model.BusTrip;
-import trip.model.FlightTrip;
 import user.model.Passenger;
 import seat.Seat;
 import trip.model.Trip;
 
+// Data Transfer Object for Reservation related data.
 public class ReservationDTO {
 
     private Passenger passenger;

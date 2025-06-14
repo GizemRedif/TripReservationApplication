@@ -2,6 +2,7 @@ package dto;
 
 import vehicle.model.Vehicle;
 
+// Data Transfer Object for Vehicle related data.
 public class VehicleDTO {
     private int capacity;
     private String vehicleIdentifier;

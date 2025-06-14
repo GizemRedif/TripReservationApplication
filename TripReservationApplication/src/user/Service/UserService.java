@@ -51,8 +51,8 @@ public class UserService {
             return true;
         }
         
-        public boolean deleteUser(User user){ // Deletes the specified user from the repository.
-            return userRepository.deleteUser(user);
+        public boolean deleteUser(String userEmail){ // Deletes the specified user from the repository.
+            return userRepository.deleteUser(userEmail);
         }
         
         // Attempts to log in with the given email and password.
@@ -75,10 +75,7 @@ public class UserService {
         
         // Updates the user information
         public boolean updateUser(UserDTO newUser){
-//            if(newUser== null || newUser.getEmail()== null){
-//                throw new IllegalArgumentException("Updated user or email cannot be null.");
-//            }
-             
+
             User existingUser =userRepository.getUserByEmail(newUser.getEmail()); // Finds the existing user by email address
             
             checkUserInfo(newUser); // Validates the new user information.

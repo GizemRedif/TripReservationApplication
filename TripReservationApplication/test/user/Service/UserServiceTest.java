@@ -105,7 +105,7 @@ public class UserServiceTest {
 
         User passenger = userService.getUserByEmail(passengerDTO.getEmail());
         
-        boolean result = userService.deleteUser(passenger);
+        boolean result = userService.deleteUser(passenger.getEmail());
         assertTrue(result);
     }
 

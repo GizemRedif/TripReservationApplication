@@ -15,10 +15,10 @@ public class VehicleService {
 
         Vehicle vehicle;
         if(vehicleDTO.getVehicleType() == Bus.class){ // If the vehicle type is Bus, a Bus object is created.
-            vehicle= new Bus(vehicleDTO.getCapacity(), vehicleDTO.getVehicleIdentifier());
+            vehicle= new Bus(vehicleDTO.getVehicleIdentifier());
         }
         else{ // If the vehicle type is Plane, a Plane object is created.
-            vehicle= new Plane(vehicleDTO.getCapacity(),vehicleDTO.getVehicleIdentifier());
+            vehicle= new Plane(vehicleDTO.getVehicleIdentifier());
         }
         
         vehicleRepository.addVehicle(vehicle);

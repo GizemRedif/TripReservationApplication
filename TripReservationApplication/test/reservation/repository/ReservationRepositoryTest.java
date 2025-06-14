@@ -45,7 +45,7 @@ public class ReservationRepositoryTest {
         BusSeat seat= new BusSeat("10",false);
         LocalDateTime departureDate= LocalDateTime.of(2025,6,25,10,30);
         LocalTime tripTime = LocalTime.of(6,30);
-        Bus bus= new Bus(45,"34 ABC 123");
+        Bus bus= new Bus("34 ABC 123");
         BusTrip trip = new BusTrip("İzmir", "İstanbul", departureDate, tripTime, fare, bus);
         Reservation busReservation = new BusReservation(user,fare,seat,trip);
 
@@ -58,26 +58,7 @@ public class ReservationRepositoryTest {
         assertEquals("The added reservation should be the expected reservation.", busReservation, userReservations.get(0));
 
     }
-    
-//    @Test
-//    public void testAddReservationFail(){ //User not exist.(kullanıcı için boş bir rezervasyon listesi vermedik.)
-//        ReservationRepository repository = ReservationRepository.getInstance();
-//        
-//        Passenger user = new Passenger("Mert", "Berrak", "mert@gmail.com", "mert123", "05456669988", 'M', "kart1");
-//        double fare= 300;
-//        BusSeat seat= new BusSeat("10",false);
-//        LocalDateTime departureDate= LocalDateTime.of(2025,6,25,10,30);
-//        LocalTime tripTime = LocalTime.of(6,30);
-//        Bus bus= new Bus(40,"34 ABC 123");
-//        List<Passenger> passengers = new ArrayList<>();
-//        BusTrip trip = new BusTrip("İzmir", "İstanbul", departureDate, tripTime, fare, bus);
-//        Reservation busReservation = new BusReservation(user,fare,seat,trip);
-//        
-//        boolean result = repository.addReservation( busReservation);
-//        assertFalse(result);
-//        
-//        
-//    }
+
     @Test
     public void testDeleteReservation() {
        ReservationRepository repository = ReservationRepository.getInstance();
@@ -87,7 +68,7 @@ public class ReservationRepositoryTest {
         BusSeat seat= new BusSeat("10",false);
         LocalDateTime departureDate= LocalDateTime.of(2025,6,25,10,30);
         LocalTime tripTime = LocalTime.of(6,30);
-        Bus bus= new Bus(45,"34 ABC 123");
+        Bus bus= new Bus("34 ABC 123");
         BusTrip trip = new BusTrip("İzmir", "İstanbul", departureDate, tripTime, fare, bus);
         Reservation busReservation = new BusReservation(user,fare,seat,trip);
 

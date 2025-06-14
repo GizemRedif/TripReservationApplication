@@ -2,6 +2,7 @@ package dto;
 
 import user.model.User;
 
+// Data Transfer Object for User related data.
 public class UserDTO {
     private String name;
     private String surname;

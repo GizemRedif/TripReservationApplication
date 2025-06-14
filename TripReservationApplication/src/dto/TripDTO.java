@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import trip.model.Trip;
 import vehicle.model.Vehicle;
 
+// Data Transfer Object for Trip related data.
 public class TripDTO {
     private String departureStation;
     private String arrivalStation;

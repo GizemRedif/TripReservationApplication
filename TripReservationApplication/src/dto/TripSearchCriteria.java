@@ -3,6 +3,7 @@ package dto;
 import java.time.LocalDateTime;
 import trip.model.Trip;
 
+// The TripSearchCriteria class allows users to search for trips based on specific criteria.
 public class TripSearchCriteria {
     private double minFare = 0.00;
     private double maxFare = Double.MAX_VALUE;

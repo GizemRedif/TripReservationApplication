@@ -3,19 +3,19 @@ package dto;
 import trip.model.Trip;
 import user.model.User;
 
-
+// A class that holds criteria used in reservation search operations.
 public class ReservationSearchCriteria {
-    public static final int ALL_RESERVATIONS=0;
-    public static final int PAST_RESERVATIONS=1;
-    public static final int FUTURE_RESERVATIONS=2;
+    public static final int ALL_RESERVATIONS=0; // Constant to fetch all reservations.
+    public static final int PAST_RESERVATIONS=1; // Constant to fetch past reservations.
+    public static final int FUTURE_RESERVATIONS=2; // Constant to fetch future reservations.
     
     private User user; 
     private String departureStation;
     private String arrivalStation;
     private Class<? extends Trip> tripType;
-    private int timeFilter=ALL_RESERVATIONS;
-    private double minFare=0.0;
-    private double maxFare= Double.MAX_VALUE;
+    private int timeFilter=ALL_RESERVATIONS; // Time filter. By default, all reservations are listed.
+    private double minFare=0.0; // Minimum fare filter.
+    private double maxFare= Double.MAX_VALUE; // Maximum fare filter.
 
     public User getUser() {
         return user;
