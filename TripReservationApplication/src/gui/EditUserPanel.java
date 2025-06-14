@@ -3,6 +3,8 @@ package gui;
 import user.model.User;
 import user.Service.UserService;
 import dto.UserDTO;
+import static gui.components.StyleButtons.createStyledBlueButton;
+import static gui.components.StyleButtons.createStyledBrownButton;
 import javax.swing.*;
 import java.awt.*;
 
@@ -33,8 +35,8 @@ public class EditUserPanel extends JPanel {
         JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Male", "Female", "Other"});
         genderCombo.setSelectedItem(getGenderString(user.getGender()));
 
-        JButton saveButton = new JButton("Save");
-        styleButton(saveButton);
+        //Button (created with the static method in the StyleButtons class)
+        JButton saveButton = createStyledBlueButton("Save");
 
         int y = 0;
         add(new JLabel("First Name:"), gbcAt(gbc, 0, y));
@@ -80,8 +82,8 @@ public class EditUserPanel extends JPanel {
 
         // Eğer çağıran panel SelectUserForEditPanel ise silme butonu eklenir ve admin passenger'i silebilir
         if ("selectUserForEditPanel".equals(callingPanel)) {
-            JButton deleteButton = new JButton("Delete Account");
-            styleDeleteBtn(deleteButton);
+            //Button (created with the static method in the StyleButtons class)
+            JButton deleteButton = createStyledBrownButton("Delete Account");
             gbc.gridy = ++y;  //Save butonu üzerine eklenmemesi için boşluk bırakılır
             add(deleteButton, gbc);
 
@@ -111,23 +113,7 @@ public class EditUserPanel extends JPanel {
             default -> "Other";
         };
     }
-
-    //Save butonu kullanır.
-    private void styleButton(JButton button) {
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-    }
     
-    //Delete butonu için kullanılır
-    private void styleDeleteBtn(JButton deleteButton){
-            deleteButton.setFocusPainted(true);
-            deleteButton.setBackground(new Color(149, 76, 46));
-            deleteButton.setForeground(Color.WHITE);
-            deleteButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            deleteButton.setMaximumSize(new Dimension(200, 30));
-    }
-
     //Kod fazlalığını azaltmak için kullanılır.
     private GridBagConstraints gbcAt(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;

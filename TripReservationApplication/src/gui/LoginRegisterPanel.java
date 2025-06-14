@@ -1,6 +1,7 @@
 package gui;
 
 import gui.components.CreateAUser;
+import static gui.components.StyleButtons.createStyledBlueButton;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
@@ -52,8 +53,8 @@ public class LoginRegisterPanel extends JPanel {
         JLabel passwordLabel = new JLabel("Password:");
         JPasswordField passwordField = new JPasswordField();
 
-        JButton loginButton = new JButton("Login");
-        styleButton(loginButton);
+        //Button (created with the static method in the StyleButtons class)
+        JButton loginButton = createStyledBlueButton("Login");
         
         loginButton.addActionListener(e -> {
             User user = userService.login(emailField.getText().trim(), new String(passwordField.getPassword()));           
@@ -79,12 +80,5 @@ public class LoginRegisterPanel extends JPanel {
     private JPanel createRegisterPanel() {
         //User olusturma paneli cagırılır ve tappedPane icerisinde gosterilir,
         return new CreateAUser(userService, tabbedPane,true, "Passenger");
-    }
-
-    private void styleButton(JButton button) {
-        button.setFocusPainted(true);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 }

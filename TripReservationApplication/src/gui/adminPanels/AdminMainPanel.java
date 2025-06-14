@@ -7,6 +7,7 @@ import user.model.Admin;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
+import static gui.components.StyleButtons.createStyledBlueButton;
 
 //Admin giris yaptıgında ilk gosterilen panel
 public class AdminMainPanel extends JPanel {
@@ -31,13 +32,13 @@ public class AdminMainPanel extends JPanel {
         rightPanel.setBackground(new Color(239, 228, 210));
         rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Butonlar
-        JButton editTripBtn = createStyledButton("Edit Trip/Reservation");
-        JButton addTripBtn = createStyledButton("Trip Add");
-        JButton addVehicleBtn = createStyledButton("Vehicle Add");
-        JButton addUserBtn = createStyledButton("User Add");
-        JButton editUserBtn = createStyledButton("Edit User");
-        JButton accountBtn = createStyledButton("My Account");
+        // Buttons (created with the static method in the StyleButton class)
+        JButton editTripBtn = createStyledBlueButton("Edit Trip/Reservation");
+        JButton addTripBtn = createStyledBlueButton("Trip Add");
+        JButton addVehicleBtn = createStyledBlueButton("Vehicle Add");
+        JButton addUserBtn = createStyledBlueButton("User Add");
+        JButton editUserBtn = createStyledBlueButton("Edit User");
+        JButton accountBtn = createStyledBlueButton("My Account");
 
         // ActionListener'lar
         editTripBtn.addActionListener(e -> {
@@ -89,16 +90,4 @@ public class AdminMainPanel extends JPanel {
         add(rightPanel);
     }
 //-------------------------------------------End of constructor method-----------------------------
-
-    
-    
-    // Ortak buton tasarımı
-    private JButton createStyledButton(String text) {
-        JButton button = new JButton(text);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(true);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        return button;
-    }
 }

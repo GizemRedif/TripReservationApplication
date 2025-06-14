@@ -15,6 +15,7 @@ import vehicle.model.Bus;
 import vehicle.model.Plane;
 import vehicle.model.Vehicle;
 import vehicle.service.VehicleService;
+import static gui.components.StyleButtons.createStyledBlueButton;
 
 
 public class VehicleAddPanel extends JPanel {
@@ -45,11 +46,11 @@ public class VehicleAddPanel extends JPanel {
         gbc.gridx = 1;
         add(vehicleIdentifier, gbc);
 
-        // Save Button
+        // Save Button (created with the static method in the StyleButtons class)
         gbc.gridx = 0; gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        JButton saveButton = new JButton("Kaydet");
+        JButton saveButton = createStyledBlueButton("Save");
         add(saveButton, gbc);
 
         // Kaydet butonuna tıklama 

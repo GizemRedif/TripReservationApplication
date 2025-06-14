@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
 import user.model.Admin;
+import static gui.components.StyleButtons.createStyledBlueButton;
 
 //User olusturulan yerlerde cagırılır. (Passenger ve Admin)
 //LoginRegisterPanel -> Register alanı (Passenger olusturulur)
@@ -16,7 +17,7 @@ public class CreateAUser extends JPanel {
     private final UserService userService;
     private final JTabbedPane tabbedPane;
     
-    public CreateAUser(UserService userService, JTabbedPane tabbedPane, boolean isTappedChange, String userType) {
+    public CreateAUser(UserService userService, JTabbedPane tabbedPane, boolean isTabbedChange, String userType) {
         this.userService = userService;
         this.tabbedPane = tabbedPane;
 
@@ -46,8 +47,8 @@ public class CreateAUser extends JPanel {
         JLabel genderLabel = new JLabel("Gender:");
         JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Male", "Female", "Other"});
 
-        JButton registerButton = new JButton("Register");
-        styleButton(registerButton);
+        //Button (created with the static method in the StyleButtons class)
+        JButton registerButton = createStyledBlueButton("Register");
         registerButton.addActionListener(e -> {
             String selectedGender = (String) genderCombo.getSelectedItem();
             
@@ -66,7 +67,7 @@ public class CreateAUser extends JPanel {
                 userService.createUser(newUser);
 
                 JOptionPane.showMessageDialog(this, "User created successfully.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-                if(isTappedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
+                if(isTabbedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
             } 
             catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -95,10 +96,4 @@ public class CreateAUser extends JPanel {
         add(formPanel, BorderLayout.CENTER);
     }
 //-------------------------------------------End of constructor method-----------------------------
-    
-    private void styleButton(JButton button) {
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-    }
 }

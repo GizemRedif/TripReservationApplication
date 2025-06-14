@@ -21,6 +21,7 @@ import trip.model.Trip;
 import trip.service.TripService;
 import vehicle.model.Vehicle;
 import vehicle.service.VehicleService;
+import static gui.components.StyleButtons.createStyledBlueButton;
 
 public class TripAddPanel extends JPanel {
     
@@ -111,7 +112,9 @@ public class TripAddPanel extends JPanel {
         gbc.gridx = 0; gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        JButton saveButton = new JButton("Kaydet");
+        
+        //Button (created with the static method in the StyleButtons class)
+        JButton saveButton = createStyledBlueButton("Save");
         add(saveButton, gbc);
         
         saveButton.addActionListener(e -> {
@@ -151,6 +154,7 @@ public class TripAddPanel extends JPanel {
     }
     //-------------------------------------------End of constructor method-----------------------------
 
+    //Vehicle türüne göre listelenen identifierlar guncellenir.
     private void updateVehicleIdentifierCombo(String selectedType) {
         vehicleIdentifierCombo.removeAllItems(); // Eski item'ları temizle
 

@@ -3,6 +3,7 @@ package gui.passengerPanels;
 import dto.ReservationDTO;
 import gui.UserPanelManager;
 import gui.components.BackButton;
+import static gui.components.StyleButtons.createStyledBlueButton;
 import trip.model.Trip;
 import seat.Seat;
 import seat.BusSeat;
@@ -85,10 +86,8 @@ public class PaymentPanel extends JPanel {
         centerPanel.add(totalFareLabel);
         centerPanel.add(Box.createVerticalStrut(30));
         
-        JButton payButton = new JButton("Payment");
-        payButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        payButton.setBackground(new Color(19, 29, 79));
-        payButton.setForeground(Color.WHITE);
+        //Button (created with the static method in the StyleButtons class)
+        JButton payButton = createStyledBlueButton("Payment");
 
         //payButton'a tıklanınca ödeme işlemi yapılır.
         payButton.addActionListener(e -> {

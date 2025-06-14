@@ -1,5 +1,7 @@
 package gui;
 
+import static gui.components.StyleButtons.createStyledBlueButton;
+import static gui.components.StyleButtons.createStyledBrownButton;
 import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
@@ -93,8 +95,8 @@ public class AccountPanel extends JPanel {
 
         
         //About US Panel---------------------------------------------------------------------------------------
-        JButton aboutButton = new JButton("About Us");
-        styleButton(aboutButton);
+        //Button (created with the static method in the StyleButtons class)
+        JButton aboutButton = createStyledBlueButton("About Us");
         aboutButton.addActionListener(e -> {
             ImageIcon us = new ImageIcon(getClass().getResource("/gui/pictures/us.jpg"));
             Image scaledImage = us.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH); // Resim boyutlandırılır
@@ -106,8 +108,8 @@ public class AccountPanel extends JPanel {
 
         
         //Change Information Panel---------------------------------------------------------------------------------------
-        JButton changeInfButton = new JButton("Change Information");
-        styleButton(changeInfButton);
+        //Button (created with the static method in the StyleButtons class)
+        JButton changeInfButton = createStyledBlueButton("Change Information");
         infoPanel.add(changeInfButton);
         //Change Inf butonuna basılınca bir pop-up cıkacak ve kullanıcı istedigini guncelleyecek.
         changeInfButton.addActionListener(e -> {
@@ -122,8 +124,8 @@ public class AccountPanel extends JPanel {
 
         
         // Logout Button Panel---------------------------------------------------------------------------------------
-        JButton logoutButton = new JButton("Logout");
-        styleButton(logoutButton);
+        //Button (created with the static method in the StyleButtons class)    
+        JButton logoutButton = createStyledBlueButton("Logout");
         logoutButton.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
             mainFrame.setContentPane(new LoginRegisterPanel());  //Cıkıs yapınca LoginRegisterPanel'e donulur.
@@ -134,12 +136,8 @@ public class AccountPanel extends JPanel {
         infoPanel.add(logoutButton);
 
         // Delete Account Button Panel---------------------------------------------------------------------------------------
-        JButton deleteAccountButton = new JButton("Delete Account");
-        deleteAccountButton.setFocusPainted(true);
-        deleteAccountButton.setBackground(new Color(149, 76, 46));
-        deleteAccountButton.setForeground(Color.WHITE);
-        deleteAccountButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        deleteAccountButton.setMaximumSize(new Dimension(200, 30));
+        //Button (created with the static method in the StyleButtons class)    
+        JButton deleteAccountButton = createStyledBrownButton("Delete Account");
         
         deleteAccountButton.addActionListener(e -> {
             userService.deleteUser(user.getEmail());
@@ -158,24 +156,7 @@ public class AccountPanel extends JPanel {
         contentPanel.add(infoPanel);
     }
 //-------------------------------------------End of constructor method-----------------------------
-
-    
-    private void styleButton(JButton button) {
-        button.setFocusPainted(true);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        button.setMaximumSize(new Dimension(200, 30));
-    }
-    
-    private void styleDeleteBtn(JButton deleteButton){
-            deleteButton.setFocusPainted(true);
-            deleteButton.setBackground(new Color(149, 76, 46));
-            deleteButton.setForeground(Color.WHITE);
-            deleteButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            deleteButton.setMaximumSize(new Dimension(200, 30));
-    }
-    
+       
     //Account kısmında gorunen bilgiler guncellenir.
     public void updateLabels(User updatedUser) {
         nameLabel.setText("Hello " + updatedUser.getName() + " " + updatedUser.getSurname() + "!");

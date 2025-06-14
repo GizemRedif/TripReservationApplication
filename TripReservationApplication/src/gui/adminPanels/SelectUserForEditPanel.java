@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import tripreservationapplication.MainFrame;
 import user.Service.UserService;
+import static gui.components.StyleButtons.createStyledBlueButton;
 
 //Adminin duzenlemek istedigi User'ın e-mailini aratması icin kullandıgı panel
 public class SelectUserForEditPanel extends JPanel {
@@ -32,11 +33,9 @@ public class SelectUserForEditPanel extends JPanel {
         emailField.setMaximumSize(new Dimension(300, 30));
         emailField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton searchButton = new JButton("Search");
+        //Button (created with the static method in the StyleButton class)
+        JButton searchButton = createStyledBlueButton("Search");
         searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        searchButton.setBackground(new Color(19, 29, 79));
-        searchButton.setForeground(Color.WHITE);
-        searchButton.setFont(new Font("Arial", Font.BOLD, 14));
 
         searchButton.addActionListener(e -> {
             String email = emailField.getText().trim();

@@ -3,6 +3,8 @@ package gui;
 import gui.passengerPanels.PaymentPanel;
 import dto.TripDTO;
 import gui.components.BackButton;
+import static gui.components.StyleButtons.createStyledBlueButton;
+import static gui.components.StyleButtons.createStyledBrownButton;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -190,8 +192,8 @@ public class SeatSelect_TripEditPanel extends JPanel {
             }
             
             //Payment Button
-            JButton payButton = new JButton("Make Payment");
-            styleButton(payButton);
+            //Button (created with the static method in the StyleButtons class)
+            JButton payButton = createStyledBlueButton("Make Payment");
             payButton.addActionListener(e -> {
                 //Eğer seçili koltuk yoksa PaymentPanel'e gidilmez.
                 if (selectedSeats.isEmpty()) {
@@ -207,18 +209,18 @@ public class SeatSelect_TripEditPanel extends JPanel {
         
         // Admin'e özel butonlar
         if (user instanceof Admin) {
+            //Buttons (created with the static method in the StyleButtons class)
+            
             //Rezervasyon bilgisini görüntüleyip rezervasyonları silebileceği popup için buton.
-            JButton viewReservationBtn = new JButton("View Reservation Information");
+            JButton viewReservationBtn = createStyledBlueButton("View Reservation Information");
             viewReservationBtn.addActionListener(e -> showReservationsPopup(trip));
-            styleButton(viewReservationBtn);
             
             //Trip'i düzenleyebileceği popup için buton
-            JButton editTripBtn = new JButton("Edit Trip");
+            JButton editTripBtn = createStyledBlueButton("Edit Trip");
             editTripBtn.addActionListener(e -> showTripEditPopup(trip));
-            styleButton(editTripBtn);
             
             //Trip'i silmesi için buton
-            JButton deleteTripBtn = new JButton("Delete Trip");
+            JButton deleteTripBtn = createStyledBlueButton("Delete Trip");
             deleteTripBtn.addActionListener(e -> {
                 tripService.cancelTrip(trip);
                 int result = JOptionPane.showOptionDialog(null,"Trip deleted successfully.","Trip Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
@@ -228,7 +230,6 @@ public class SeatSelect_TripEditPanel extends JPanel {
                     upm.showPanelByKey("searching"); // SearchTripPanel’e dön
                 }
             });
-            styleButton(deleteTripBtn);
             
             buttonPanel.add(viewReservationBtn);
             buttonPanel.add(editTripBtn);
@@ -354,9 +355,8 @@ public class SeatSelect_TripEditPanel extends JPanel {
                 String passengerInfo = res.getPassenger().getName() + " " + res.getPassenger().getSurname()+ " " + '(' + res.getPassenger().getEmail() + ')';
                 JLabel infoLabel = new JLabel(passengerInfo);
                 
-                //Rezervasyonun iptal edilebilmesi için buton
-                JButton cancelBtn = new JButton("Cancel");
-                styleButton(cancelBtn);
+                //Rezervasyonun iptal edilebilmesi için buton (created with the static method in the StyleButtons class)
+                JButton cancelBtn = createStyledBrownButton("Cancel");
                 cancelBtn.addActionListener(e -> {
                     res.getTrip().deleteReservation(res);
                     int result = JOptionPane.showOptionDialog(dialog,"Reservation canceled successfully.","Canceled",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"},"Okey");
@@ -420,13 +420,5 @@ public class SeatSelect_TripEditPanel extends JPanel {
         else { seatButton.setEnabled(false); }
        
         return seatButton;
-    }
-
-    private void styleButton(JButton button) {
-        button.setFocusPainted(true);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        button.setMaximumSize(new Dimension(200, 30));
     }
 }

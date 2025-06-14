@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import reservation.service.ReservationService;
+import static gui.components.StyleButtons.createStyledBlueButton;
+import static gui.components.StyleButtons.createStyledBrownButton;
 
 //TripsPanel --> mevcut tripleri lstelemek için kullanılır.
 //MyTriipsPanel --> Kullanıcının rezervasyonlarını listelemek için kullanılır.
@@ -126,8 +128,8 @@ public class CreateTripCartsAndListings extends JPanel {
         //Passenger'ın koltuk seçmesi için buton eklenir.
         if ("TripsPanel".equals(callingPanel)) {
             String buttonText = (user instanceof Admin) ? "EDIT" : "Select Seat";
-            JButton tripCartsButton = new JButton(buttonText);
-            styleSelectOrEditButton(tripCartsButton);
+            //Button (created with the static method in the StyleButtons class)
+            JButton tripCartsButton = createStyledBlueButton(buttonText);
 
             //Admin, geçmiş tripleri görüntüler ama düzenleyemez.
             if (isPastTrip) {
@@ -147,8 +149,8 @@ public class CreateTripCartsAndListings extends JPanel {
         //Eğer çağıran sınıf MyTripsPanel ise:
         //Rezervasyonun iptal edilebilmesi için buton eklenir.
         if ("MyTripsPanel".equals(callingPanel) && !isPastTrip && res != null && user instanceof Passenger) {
-            JButton cancelButton = new JButton("Cancel");
-            styleCancelButton(cancelButton);
+            //Button (created with the static method in the StyleButtons class)
+            JButton cancelButton = createStyledBrownButton("Cancel");
 
             cancelButton.addActionListener(e -> {
                 reservationService.deleteReservation(res);
@@ -167,25 +169,5 @@ public class CreateTripCartsAndListings extends JPanel {
 
         parent.add(tripCard);
         parent.add(Box.createVerticalStrut(10));
-    }
-
-    //Seat seçme ya da trip düzenleme butonunun görüntüsü için
-    private void styleSelectOrEditButton(JButton button) {
-        button.setFocusPainted(false);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        button.setOpaque(true);
-        button.setBorderPainted(false);
-    }
-
-    //Cancel butonunun görüntüsü için
-    private void styleCancelButton(JButton button) {
-        button.setFocusPainted(false);
-        button.setBackground(new Color(180, 0, 0));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        button.setOpaque(true);
-        button.setBorderPainted(false);
     }
 }

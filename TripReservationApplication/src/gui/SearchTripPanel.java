@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import dto.TripSearchCriteria;
+import static gui.components.StyleButtons.createStyledBlueButton;
 import trip.model.Trip;
 import java.util.List;
 import trip.service.TripService;
@@ -78,8 +79,8 @@ public class SearchTripPanel extends JPanel {
         dateFormatLabel.setForeground(Color.GRAY);
         
         // Arama butonu---------------------------------------------------------------------------------
-        JButton searchButton = new JButton("Search");
-        styleButton(searchButton);        
+        //Button (created with the static method in the StyleButtons class)
+        JButton searchButton = createStyledBlueButton("Search");
         searchButton.addActionListener(e -> {
             
             TripSearchCriteria tripCriteria = new TripSearchCriteria();
@@ -156,13 +157,6 @@ public class SearchTripPanel extends JPanel {
 
         outerPanel.add(panel, BorderLayout.CENTER);
         return outerPanel;
-    }
-
-    private void styleButton(JButton button) {
-        button.setFocusPainted(true);
-        button.setBackground(new Color(19, 29, 79));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
     
     //GridBagConstraints ayarlarını tekrar tekrar yazmaktan kurtarır.
