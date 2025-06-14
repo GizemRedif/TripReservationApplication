@@ -3,7 +3,6 @@ package user.Service;
 import dto.TripDTO;
 import dto.UserDTO;
 import trip.model.Trip;
-import user.model.User;
 import trip.service.TripService;
 
 public class AdminService {
@@ -14,8 +13,8 @@ public class AdminService {
         return userService.createUser(userDTO); 
     }
 
-    public boolean deleteUser(User user) {
-        return userService.deleteUser(user);
+    public boolean deleteUser(String userEmail) {
+        return userService.deleteUser(userEmail);
     }
 
 //    public boolean addTrip(TripDTO tripDTO) {

@@ -7,7 +7,7 @@ import vehicle.model.Vehicle;
 import vehicle.model.Plane;
 
 public class FlightTrip extends Trip{
-    private Plane plane;
+    private Plane plane; // Holds the plane object to be used in the trip.
     
     public FlightTrip(String departureStation, String arrivalStation, LocalDateTime departureDate, LocalTime tripTime,
                         double fare, Plane plane){
@@ -28,7 +28,7 @@ public class FlightTrip extends Trip{
         this.plane = builder.plane;
     }
     
-    public Vehicle getVehicle(){
+    public Vehicle getVehicle(){ // Returns the vehicle (plane) to be used in the trip.
         if(plane !=null){
             return plane;
         }
@@ -57,7 +57,7 @@ public class FlightTrip extends Trip{
         }
 
         @Override
-        public FlightTrip build() {
+        public FlightTrip build() { // Builds and returns the FlightTrip object.
             return new FlightTrip(this);
         }
 

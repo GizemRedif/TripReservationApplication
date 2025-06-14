@@ -102,7 +102,7 @@ public class MainFrame extends JFrame {
 //        tripService.createTrip(trip);
         
         TripService tripService = new TripService();
-         Bus bus = new Bus(40,"dd");
+         Bus bus = new Bus("dd");
         TripDTO dto = new TripDTO();
         dto.setVehicle(bus);
         dto.setDepartureStation("Adana");
@@ -133,7 +133,7 @@ public class MainFrame extends JFrame {
         
         
         TripService tripService = new TripService();
-        Bus bus = new Bus(40,"dd");
+        Bus bus = new Bus("dd");
         Trip trip1 = new BusTrip.BusTripBuilder()
                 .setBus(bus)
                 .setDepartureStation("Adana")

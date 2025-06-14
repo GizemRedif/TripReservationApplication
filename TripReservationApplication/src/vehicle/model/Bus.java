@@ -12,13 +12,11 @@ public class Bus extends Vehicle {
     private final List<Seat> seatList = createDefaultSeats(); // Holds the seat list of the bus. Creates 45 seats by default.
 
 
-    public Bus(int capacity, String plate) {
-        super(capacity);
+    public Bus(String plate) {
         this.plate=plate;
     }
     
     public Bus(Bus other){
-        super(other.getCapacity());
         this.plate=other.plate;
     }
     
@@ -53,7 +51,7 @@ public class Bus extends Vehicle {
     
     @Override
     public Bus clone(){ // Creates a clone of the bus object (Prototype Pattern).
-        return new Bus(capacity , plate);
+        return new Bus( plate);
     }
     
     @Override

@@ -38,13 +38,9 @@ public class UserRepository {
         return true;
     }
     
-    // Removes the specified user from the system by their email address.
-    public boolean deleteUser(User user){
-        String userMail = user.getEmail();
-        if(userMail == null){
-            return false; // If the email is null, the deletion fails.
-        }
-        usersWithEmail.remove(user.getEmail());
+    // Removes the user with the specified email address.
+    public boolean deleteUser(String userEmail){  
+        usersWithEmail.remove(userEmail);
         
         return true; // The user is removed.
     }
