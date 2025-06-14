@@ -18,12 +18,12 @@ public abstract class Trip {
      
     
     public Trip(String departureStation, String arrivalStation,LocalDateTime departureDate,LocalTime tripTime, double fare){
-        this.departureStation=departureStation;
-        this.arrivalStation=arrivalStation;
-        this.departureDate=departureDate;
-        this.tripTime=tripTime;
-        this.fare=fare;
-        this.reservations=new ArrayList<>();
+        this.departureStation=departureStation; // Stores the departure station informatio
+        this.arrivalStation=arrivalStation; // Stores the arrival station information. 
+        this.departureDate=departureDate; // Stores the departure date and time.
+        this.tripTime=tripTime; // Stores the trip time.
+        this.fare=fare; // Stores the fare of the trip.
+        this.reservations=new ArrayList<>(); // Stores the list of reservations for this trip.
     }
 
     public String getDepartureStation() {
@@ -84,10 +84,12 @@ public abstract class Trip {
         }
     }
     
-    public void addReservation(Reservation reservation){
+    // Adds a new reservation to the trip's list.
+    public void addReservation(Reservation reservation){ 
         reservations.add(reservation);
     }
     
+    // Removes the specified reservation from the trip's list.
     public void deleteReservation(Reservation reservation){
         reservations.remove(reservation);
     }
@@ -96,10 +98,11 @@ public abstract class Trip {
      
     //--------------------------Builder Class------------------
     
+    // An abstract Builder class used to construct Trip objects step by step.
     public static abstract class Builder{
         protected String departureStation;
         protected String arrivalStation;
-        protected LocalDateTime departureDate; /* tipi doğru mu emin değilim*/
+        protected LocalDateTime departureDate;
         protected LocalTime tripTime;
         protected double fare;
                 
@@ -124,7 +127,7 @@ public abstract class Trip {
             return this;
         }
         
-        public abstract Trip build();
+        public abstract Trip build(); // Builds and returns a Trip object.
         
     }
 }
