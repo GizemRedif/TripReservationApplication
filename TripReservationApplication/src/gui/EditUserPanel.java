@@ -3,7 +3,6 @@ package gui;
 import user.model.User;
 import user.Service.UserService;
 import dto.UserDTO;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,6 +21,7 @@ public class EditUserPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        //Kullanıcı bilgilerinin yer aldığı alanlar
         JTextField nameField = new JTextField(user.getName(), 20);
         JTextField surnameField = new JTextField(user.getSurname(), 20);
         JTextField emailField = new JTextField(user.getEmail(), 20);
@@ -58,6 +58,7 @@ public class EditUserPanel extends JPanel {
         saveButton.addActionListener(ev -> {
             UserDTO newUserDTO = new UserDTO();
             try {
+                //Kullanıcı bilgileri güncellenir
                 newUserDTO.setEmail(user.getEmail());
                 newUserDTO.setName(nameField.getText().trim());
                 newUserDTO.setSurname(surnameField.getText().trim());
@@ -77,27 +78,30 @@ public class EditUserPanel extends JPanel {
             }
         });
 
-        // Eğer çağıran panel SelectUserForEditPanel ise silme butonu ekle
+        // Eğer çağıran panel SelectUserForEditPanel ise silme butonu eklenir ve admin passenger'i silebilir
         if ("selectUserForEditPanel".equals(callingPanel)) {
             JButton deleteButton = new JButton("Delete Account");
-            styleButton(deleteButton);
-            gbc.gridy = ++y;
+            styleDeleteBtn(deleteButton);
+            gbc.gridy = ++y;  //Save butonu üzerine eklenmemesi için boşluk bırakılır
             add(deleteButton, gbc);
 
             deleteButton.addActionListener(ev -> {
+                //Silmek istediğinden emin olunduktan sonra silme işlemi yapılır.
                 int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this account?", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     boolean deleted = userService.deleteUser(user.getEmail());
                     if (deleted) {
                         JOptionPane.showMessageDialog(this, "User deleted successfully.");
                         if (onUpdateSuccess != null) onUpdateSuccess.run();
-                    } else {
+                    } 
+                    else {
                         JOptionPane.showMessageDialog(this, "Failed to delete user.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
         }
     }
+//-------------------------------------------End of constructor method-----------------------------
 
     private String getGenderString(char genderChar) {
         return switch (Character.toUpperCase(genderChar)) {
@@ -108,12 +112,23 @@ public class EditUserPanel extends JPanel {
         };
     }
 
+    //Save butonu kullanır.
     private void styleButton(JButton button) {
         button.setBackground(new Color(19, 29, 79));
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial", Font.BOLD, 14));
     }
+    
+    //Delete butonu için kullanılır
+    private void styleDeleteBtn(JButton deleteButton){
+            deleteButton.setFocusPainted(true);
+            deleteButton.setBackground(new Color(149, 76, 46));
+            deleteButton.setForeground(Color.WHITE);
+            deleteButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            deleteButton.setMaximumSize(new Dimension(200, 30));
+    }
 
+    //Kod fazlalığını azaltmak için kullanılır.
     private GridBagConstraints gbcAt(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;
         gbc.gridy = y;

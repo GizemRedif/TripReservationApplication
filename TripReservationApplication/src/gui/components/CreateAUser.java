@@ -2,7 +2,6 @@ package gui.components;
 
 import dto.UserDTO;
 import user.model.Passenger;
-
 import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
@@ -24,11 +23,11 @@ public class CreateAUser extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-
         JPanel formPanel = new JPanel(new GridLayout(7, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         formPanel.setBackground(new Color(239, 228, 210));
 
+        //User bilgilerinin girileceği labellar:
         JLabel firstNameLabel = new JLabel("First Name:");
         JTextField firstNameField = new JTextField();
 
@@ -49,10 +48,10 @@ public class CreateAUser extends JPanel {
 
         JButton registerButton = new JButton("Register");
         styleButton(registerButton);
-
         registerButton.addActionListener(e -> {
             String selectedGender = (String) genderCombo.getSelectedItem();
             
+            //Kaydet butonuna basıldığında UserDTO ile yeni kullanıcı oluşturulur.
             UserDTO newUser = new UserDTO();
             newUser.setName(firstNameField.getText().trim());
             newUser.setSurname(lastNameField.getText().trim());
@@ -60,23 +59,19 @@ public class CreateAUser extends JPanel {
             newUser.setPassword(new String(passwordField.getPassword()));
             newUser.setPhoneNumber(phoneField.getText().trim());
             newUser.setGender(selectedGender.charAt(0));
-            if(userType.equalsIgnoreCase("admin")){
-                newUser.setUserType(Admin.class);
-            }
-            else{
-                newUser.setUserType(Passenger.class);
-            }
+            if(userType.equalsIgnoreCase("admin")){newUser.setUserType(Admin.class);}
+            else{newUser.setUserType(Passenger.class);}
             
-                
             try {
                 userService.createUser(newUser);
 
                 JOptionPane.showMessageDialog(this, "User created successfully.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-               if(isTappedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
-                      
-            } catch (IllegalArgumentException ex) {
+                if(isTappedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
+            } 
+            catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex) {
+            } 
+            catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Unexpected error occurred:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -100,7 +95,6 @@ public class CreateAUser extends JPanel {
         add(formPanel, BorderLayout.CENTER);
     }
 //-------------------------------------------End of constructor method-----------------------------
-
     
     private void styleButton(JButton button) {
         button.setBackground(new Color(19, 29, 79));

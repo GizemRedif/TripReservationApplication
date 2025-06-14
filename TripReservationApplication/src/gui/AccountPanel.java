@@ -168,6 +168,14 @@ public class AccountPanel extends JPanel {
         button.setMaximumSize(new Dimension(200, 30));
     }
     
+    private void styleDeleteBtn(JButton deleteButton){
+            deleteButton.setFocusPainted(true);
+            deleteButton.setBackground(new Color(149, 76, 46));
+            deleteButton.setForeground(Color.WHITE);
+            deleteButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            deleteButton.setMaximumSize(new Dimension(200, 30));
+    }
+    
     //Account kısmında gorunen bilgiler guncellenir.
     public void updateLabels(User updatedUser) {
         nameLabel.setText("Hello " + updatedUser.getName() + " " + updatedUser.getSurname() + "!");

@@ -16,15 +16,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import reservation.service.ReservationService;
 
+//TripsPanel --> mevcut tripleri lstelemek için kullanılır.
+//MyTriipsPanel --> Kullanıcının rezervasyonlarını listelemek için kullanılır.
+
 public class CreateTripCartsAndListings extends JPanel {
 
     private List<Reservation> reservations;
     private ReservationService reservationService = new ReservationService();
 
+    //TripsPanel kullanır.
     public CreateTripCartsAndListings(List<Trip> trips, User user, String callingPanel) {
         this(trips, null, user, callingPanel);
     }
 
+    //MyTripsPanel kullanır. Orjinal constructordan farkı rezervasyon listesidir çünkü kullanıcı, rezervasyonlarını görüntüler.
     public CreateTripCartsAndListings(List<Trip> trips, List<Reservation> reservations, User user, String callingPanel) {
         this.reservations = reservations;
 
@@ -44,7 +49,8 @@ public class CreateTripCartsAndListings extends JPanel {
                 Reservation res = (reservations != null && i < reservations.size()) ? reservations.get(i) : null;
                 addTripCard(innerPanel, trip, res, user, callingPanel, timeFormatter, dateFormatter);
             }
-        } else {
+        } 
+        else { //TripsPanel ise
             for (int i = 0; i < trips.size(); i++) {
                 Trip trip = trips.get(i);
                 Reservation res = (reservations != null && i < reservations.size()) ? reservations.get(i) : null;
@@ -60,12 +66,16 @@ public class CreateTripCartsAndListings extends JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
     }
+//-------------------------------------------End of constructor method-----------------------------
 
+
+    //Trip Kartlarını oluşturan metot
     private void addTripCard(JPanel parent, Trip trip, Reservation res, User user, String callingPanel, DateTimeFormatter timeFormatter, DateTimeFormatter dateFormatter) {
         JPanel tripCard = new JPanel(new BorderLayout(10, 10));
         tripCard.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         tripCard.setMaximumSize(new Dimension(500, 130));
 
+        //Geçmiş tripler farklı gösterilir. 
         boolean isPastTrip = trip.getDepartureDate().isBefore(LocalDateTime.now());
         Color bgColor = isPastTrip ? new Color(210, 210, 210) : Color.WHITE;
         Color textColor = isPastTrip ? Color.DARK_GRAY : Color.BLACK;
@@ -74,23 +84,28 @@ public class CreateTripCartsAndListings extends JPanel {
         JPanel top = new JPanel(new BorderLayout());
         top.setOpaque(false);
 
+        //Departure Time----------------------------------
         JLabel timeLabel = new JLabel(trip.getDepartureDate().toLocalTime().format(timeFormatter));
         timeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         timeLabel.setForeground(textColor);
         timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
         top.add(timeLabel, BorderLayout.WEST);
 
+        //Departure Date--------------------------------
         JLabel dateLabel = new JLabel(trip.getDepartureDate().toLocalDate().format(dateFormatter));
         dateLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         dateLabel.setForeground(textColor);
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         top.add(dateLabel, BorderLayout.EAST);
 
+        //Departure Date ve Departure Time, kartın üst kısmında olacak.
         tripCard.add(top, BorderLayout.NORTH);
 
+        //Trip Duration and Route----------------------------------
         String tripDurationText = "---- " + trip.getTripTime() + "  ---->";
         String routeText = trip.getDepartureStation() + " " + tripDurationText + " " + trip.getArrivalStation();
 
+        //Route bilgisi kartın merkezinde gösterilecek.
         JLabel routeLabel = new JLabel(routeText, SwingConstants.CENTER);
         routeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         routeLabel.setForeground(textColor);
@@ -99,39 +114,48 @@ public class CreateTripCartsAndListings extends JPanel {
         JPanel bottom = new JPanel(new BorderLayout());
         bottom.setOpaque(false);
 
+        //Fare----------------------------------------
         JLabel priceLabel = new JLabel(trip.getFare() + "₺");
         priceLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         priceLabel.setForeground(textColor);
         bottom.add(priceLabel, BorderLayout.WEST);
 
+        //Buton-------------------------------------------
+        //Eğer çağıran sınıf TripsPanel ise:
+        //Admin'in Trip'i düzenlemesi için buton eklenir
+        //Passenger'ın koltuk seçmesi için buton eklenir.
         if ("TripsPanel".equals(callingPanel)) {
             String buttonText = (user instanceof Admin) ? "EDIT" : "Select Seat";
-            JButton selectSeatButton = new JButton(buttonText);
-            styleSelectOrEditButton(selectSeatButton);
+            JButton tripCartsButton = new JButton(buttonText);
+            styleSelectOrEditButton(tripCartsButton);
 
+            //Admin, geçmiş tripleri görüntüler ama düzenleyemez.
             if (isPastTrip) {
-                selectSeatButton.setEnabled(false);
-                selectSeatButton.setToolTipText("Bu sefer geçmişte kaldı.");
-            } else {
-                selectSeatButton.addActionListener(e -> {
+                tripCartsButton.setEnabled(false);
+                tripCartsButton.setToolTipText("This trip is in the past.");
+            } 
+            else { //Koltuk seçme ve Trip düzenleme aynı panelden yapılacak. O yüzden user kontrolüne gerek yok.
+                tripCartsButton.addActionListener(e -> {
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                     upm.addPanel("selectOrEdit", new SeatSelect_TripEditPanel(trip, user));
                     upm.showPanelByKey("selectOrEdit");
                 });
             }
-
-            bottom.add(selectSeatButton, BorderLayout.EAST);
+            bottom.add(tripCartsButton, BorderLayout.EAST);
         }
 
+        //Eğer çağıran sınıf MyTripsPanel ise:
+        //Rezervasyonun iptal edilebilmesi için buton eklenir.
         if ("MyTripsPanel".equals(callingPanel) && !isPastTrip && res != null && user instanceof Passenger) {
-            JButton cancelButton = new JButton("İptal Et");
+            JButton cancelButton = new JButton("Cancel");
             styleCancelButton(cancelButton);
 
             cancelButton.addActionListener(e -> {
                 reservationService.deleteReservation(res);
                 reservations.remove(res);
-                JOptionPane.showMessageDialog(this, "Rezervasyon iptal edildi.", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Reservation cancelled.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
+                //Rezervasyon iptal edildikten sonra MyTripsPanel tekrar yüklenir. (Rezervasyon kartının kalkması için)
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.addPanel("myTrips", new MyTripsPanel((Passenger) user));
                 upm.showPanelByKey("myTrips");
@@ -139,13 +163,13 @@ public class CreateTripCartsAndListings extends JPanel {
 
             bottom.add(cancelButton, BorderLayout.CENTER);
         }
-
         tripCard.add(bottom, BorderLayout.SOUTH);
 
         parent.add(tripCard);
         parent.add(Box.createVerticalStrut(10));
     }
 
+    //Seat seçme ya da trip düzenleme butonunun görüntüsü için
     private void styleSelectOrEditButton(JButton button) {
         button.setFocusPainted(false);
         button.setBackground(new Color(19, 29, 79));
@@ -155,6 +179,7 @@ public class CreateTripCartsAndListings extends JPanel {
         button.setBorderPainted(false);
     }
 
+    //Cancel butonunun görüntüsü için
     private void styleCancelButton(JButton button) {
         button.setFocusPainted(false);
         button.setBackground(new Color(180, 0, 0));

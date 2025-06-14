@@ -74,7 +74,6 @@ public class VehicleAddPanel extends JPanel {
                 VehicleDTO vehicleDTO = new VehicleDTO();
                 vehicleDTO.setVehicleType(vehicleType);
                 vehicleDTO.setVehicleIdentifier(vehicleIdentifier.getText());
-                vehicleDTO.setCapacity(capacity);
                 vehicleService.createVehicle(vehicleDTO);
 
                 JOptionPane.showMessageDialog(this, "Vehicle created successfully!","Successful",JOptionPane.INFORMATION_MESSAGE);
