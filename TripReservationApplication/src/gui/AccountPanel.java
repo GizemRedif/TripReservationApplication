@@ -126,11 +126,16 @@ public class AccountPanel extends JPanel {
         // Logout Button Panel---------------------------------------------------------------------------------------
         //Button (created with the static method in the StyleButtons class)    
         JButton logoutButton = createStyledBlueButton("Logout");
-        logoutButton.addActionListener(e -> {
-            MainFrame mainFrame = MainFrame.getInstance();
-            mainFrame.setContentPane(new LoginRegisterPanel());  //Cıkıs yapınca LoginRegisterPanel'e donulur.
-            mainFrame.revalidate();
-            mainFrame.repaint();
+        logoutButton.addActionListener(e -> {           
+            int result = JOptionPane.showOptionDialog(null,"Do you want to log out?","Log Out",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Yes"}, "Yes");
+            if (result == 0) { //Yes butonuna basılınca LoginRegisterPanel'e donulur.
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //MenüBar'ı gizlemek için kullanılacak
+                upm.setMenuBarVisible(false); //Menü gizlendi
+                MainFrame mainFrame = MainFrame.getInstance();
+                mainFrame.setContentPane(new LoginRegisterPanel());  //Cıkıs yapınca LoginRegisterPanel'e donulur.
+                mainFrame.revalidate();
+                mainFrame.repaint();
+            }
         });
         infoPanel.add(Box.createVerticalStrut(20));
         infoPanel.add(logoutButton);
@@ -140,9 +145,11 @@ public class AccountPanel extends JPanel {
         JButton deleteAccountButton = createStyledBrownButton("Delete Account");
         
         deleteAccountButton.addActionListener(e -> {
-            userService.deleteUser(user.getEmail());
-            int result = JOptionPane.showOptionDialog(null,"User deleted successfully.","Account Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
-            if (result == 0) { //Okey butonuna basılınca LoginRegisterPanel'e donulur.
+            int result = JOptionPane.showOptionDialog(null,"Do you want to delete this account?","Account Delete",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Yes"}, "Yes");
+            if (result == 0) { //Okey butonuna basılınca kullanıcı silinir LoginRegisterPanel'e donulur.
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //MenüBar'ı gizlemek için kullanılacak
+                upm.setMenuBarVisible(false); //Menü gizlendi
+                userService.deleteUser(user.getEmail());
                 MainFrame mainFrame = MainFrame.getInstance();
                 mainFrame.setContentPane(new LoginRegisterPanel());
                 mainFrame.revalidate();

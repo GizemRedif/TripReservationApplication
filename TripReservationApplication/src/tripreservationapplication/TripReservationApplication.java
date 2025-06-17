@@ -28,42 +28,22 @@ public class TripReservationApplication {
         ReservationService reservationService = new ReservationService();
         VehicleService vehicleService = new VehicleService();
         
-        
-        //SİİİİİİİLLLLLLLL
-        UserDTO admin2 = new UserDTO();
-        admin2.setName("Cemil");
-        admin2.setSurname("Olabilir");
-        admin2.setEmail("2@gmail.com");
-        admin2.setPhoneNumber("05535240469");
-        admin2.setPassword("2");
-        admin2.setGender('M');
-        admin2.setUserType(Admin.class);
-        userService.createUser(admin2);
-        
-        UserDTO passenger11 = new UserDTO();
-        passenger11.setName("Deniz");
-        passenger11.setSurname("Celik");
-        passenger11.setEmail("1@gmail.com");
-        passenger11.setPhoneNumber("05004445566");
-        passenger11.setPassword("1");
-        passenger11.setGender('M');
-        passenger11.setUserType(Passenger.class);
-        userService.createUser(passenger11);
-
-        
+         SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
+        });
         
         
         //USERS---------------------------------------------------------------------------------------
         //Admin
         UserDTO admin = new UserDTO();
-        admin.setName("Cemil");
-        admin.setSurname("Olabilir");
+        admin.setName("Admin");
+        admin.setSurname("Admin");
         admin.setEmail("admin@gmail.com");
         admin.setPhoneNumber("05535240469");
         admin.setPassword("admin123");
         admin.setGender('M');
         admin.setUserType(Admin.class);
-        
         userService.createUser(admin);
 
 
@@ -405,20 +385,6 @@ public class TripReservationApplication {
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         //Flight rezervasyon
         
         ReservationDTO reservationDTO6 = new ReservationDTO();
@@ -466,14 +432,6 @@ public class TripReservationApplication {
         reservationService.createReservation(passengerElif, reservationDTO8);
         reservationService.createReservation(passengerElif, reservationDTO9);
         reservationService.createReservation(passengerElif, reservationDTO10);
-        
-
-
-        
-        SwingUtilities.invokeLater(() -> {
-            MainFrame frame = new MainFrame();
-            frame.setVisible(true);
-        });
     }
     
 }

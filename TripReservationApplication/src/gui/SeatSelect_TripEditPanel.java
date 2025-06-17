@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import reservation.model.Reservation;
+import reservation.service.ReservationService;
 import seat.Seat;
 import trip.model.BusTrip;
 import trip.model.Trip;
@@ -28,6 +29,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
     private User user;
     private List<Seat> selectedSeats = new ArrayList<>();
     TripService tripService = new TripService();
+    ReservationService reservationService = new ReservationService();
 
     public SeatSelect_TripEditPanel(Trip trip, User user) {
         this.user = user;
@@ -314,12 +316,22 @@ public class SeatSelect_TripEditPanel extends JPanel {
 
                 //Trip bilgileri guncellenir.
                 TripDTO tripDTO = new TripDTO();
+                //Arrival ve Departurre station değişmediği için eski bilgiden çekilir.
+                tripDTO.setDepartureStation(trip.getDepartureStation());
+                tripDTO.setArrivalStation(trip.getArrivalStation());
                 tripDTO.setDepartureDate(newDeparture);
                 tripDTO.setFare(Double.parseDouble(fareField.getText()));
                 tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
                 tripService.updateTrip(trip, tripDTO);
-
+                
                 dialog.dispose();
+                
+                int result1 = JOptionPane.showOptionDialog(null,"Trip edited successfully.","Trip Edited",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
+                if (result1 == 0) { // Okey butonuna tıklanınca:
+                    UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
+                    upm.setMenuBarVisible(true); 
+                    upm.showPanelByKey("searching"); // SearchTripPanel’e dön
+                }                
             } 
             catch (Exception ex) {
                 JOptionPane.showMessageDialog(dialog, "Invalid Entry: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
@@ -358,7 +370,9 @@ public class SeatSelect_TripEditPanel extends JPanel {
                 //Rezervasyonun iptal edilebilmesi için buton (created with the static method in the StyleButtons class)
                 JButton cancelBtn = createStyledBrownButton("Cancel");
                 cancelBtn.addActionListener(e -> {
-                    res.getTrip().deleteReservation(res);
+                    reservationService.deleteReservation(res);
+                    reservations.remove(res);
+                
                     int result = JOptionPane.showOptionDialog(dialog,"Reservation canceled successfully.","Canceled",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"},"Okey");
                     if (result == 0) { //Okey butonuna basılınca
                         dialog.dispose(); // Reservation popup'u kapat

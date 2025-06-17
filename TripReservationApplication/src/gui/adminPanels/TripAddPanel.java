@@ -25,6 +25,12 @@ import static gui.components.StyleButtons.createStyledBlueButton;
 
 public class TripAddPanel extends JPanel {
     
+    String[] cities = {"Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+    "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+    "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+    "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"};
+
+    
     VehicleService vehicleService = new VehicleService();
     TripService tripService = new TripService();
     private JComboBox<String> vehicleIdentifierCombo; //TripType'a gore Vehicle ıdentifierlarını listelemek icin kullanılacak
@@ -58,24 +64,24 @@ public class TripAddPanel extends JPanel {
         });
         gbc.gridx = 1;
         add(vehicleIdentifierCombo, gbc);
-
+        
         // Departure Station
         gbc.gridx = 0; gbc.gridy = 2;
         add(new JLabel("Departure Station:"), gbc);
-        JTextField departureField = new JTextField(15);
+        JComboBox<String> fromCombo = new JComboBox<>(cities); 
         gbc.gridx = 1;
-        add(departureField, gbc);
+        add(fromCombo, gbc);
 
         // Arrival Station
         gbc.gridx = 0; gbc.gridy = 3;
         add(new JLabel("Arrival Station:"), gbc);
-        JTextField arrivalField = new JTextField(15);
+        JComboBox<String> toCombo = new JComboBox<>(cities);
         gbc.gridx = 1;
-        add(arrivalField, gbc);
+        add(toCombo, gbc);
 
         // Departure Date
         gbc.gridx = 0; gbc.gridy = 4;
-        add(new JLabel("Departure Date (Yıl - Ay - Gün - Saat - Dakika):"), gbc);
+        add(new JLabel("Departure Date (Year - Month - Day - Hour - Minute):"), gbc);
         JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         JTextField yearField = new JTextField(4);
         JTextField monthField = new JTextField(2);
@@ -92,7 +98,7 @@ public class TripAddPanel extends JPanel {
 
         // Trip Duration
         gbc.gridx = 0; gbc.gridy = 5;
-        add(new JLabel("Trip Duration (Saat - Dakika):"), gbc);
+        add(new JLabel("Trip Duration (Hour - Minute):"), gbc);
         JPanel durationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         JTextField durationHourField = new JTextField(2);
         JTextField durationMinuteField = new JTextField(2);
@@ -118,37 +124,45 @@ public class TripAddPanel extends JPanel {
         add(saveButton, gbc);
         
         saveButton.addActionListener(e -> {
-            if (departureField.getText().isEmpty() || arrivalField.getText().isEmpty() || yearField.getText().isEmpty() || monthField.getText().isEmpty() || durationMinuteField.getText().isEmpty() ||
+            if (yearField.getText().isEmpty() || monthField.getText().isEmpty() || durationMinuteField.getText().isEmpty() ||
                 dayField.getText().isEmpty() || hourField.getText().isEmpty() || minuteField.getText().isEmpty() || durationHourField.getText().isEmpty() || fareField.getText().isEmpty()
                 ){
                 JOptionPane.showMessageDialog(this, "Please fill in the blanks.", "Missing Information",JOptionPane.WARNING_MESSAGE);
             } 
             else {
-                //TextLabellerde alınan gun ve saat bilgileri, uygun ture donusturulmek icin kaydediliyor
-                int year = Integer.parseInt(yearField.getText());
-                int month = Integer.parseInt(monthField.getText());
-                int day = Integer.parseInt(dayField.getText());
-                int hour = Integer.parseInt(hourField.getText());
-                int minute = Integer.parseInt(minuteField.getText());
-                
-                int tripHour = Integer.parseInt(durationHourField.getText());
-                int tripMinute = Integer.parseInt(durationMinuteField.getText());
-                
-                Class< ? extends Trip > TripType;
-                if(((String)typeCombo.getSelectedItem()).equals("Bus")){TripType = BusTrip.class;}
-                else{TripType = FlightTrip.class;}
-                
-                TripDTO tripDTO = new TripDTO();
-                tripDTO.setTripType(TripType);
-                tripDTO.setVehicle(vehicleService.getVehicleByIdentifier((String)(vehicleIdentifierCombo.getSelectedItem())));
-                tripDTO.setDepartureStation(departureField.getText());
-                tripDTO.setArrivalStation(arrivalField.getText());
-                tripDTO.setDepartureDate(LocalDateTime.of(year, month, day, hour, minute));
-                tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
-                tripDTO.setFare(Double.parseDouble(fareField.getText()));
-                tripService.createTrip(tripDTO);
-                        
-                JOptionPane.showMessageDialog(this, "Trip created successfully!","Successful",JOptionPane.INFORMATION_MESSAGE);
+                try{
+                    //TextLabellerde alınan gun ve saat bilgileri, uygun ture donusturulmek icin kaydediliyor
+                    int year = Integer.parseInt(yearField.getText());
+                    int month = Integer.parseInt(monthField.getText());
+                    int day = Integer.parseInt(dayField.getText());
+                    int hour = Integer.parseInt(hourField.getText());
+                    int minute = Integer.parseInt(minuteField.getText());
+
+                    int tripHour = Integer.parseInt(durationHourField.getText());
+                    int tripMinute = Integer.parseInt(durationMinuteField.getText());
+
+                    Class< ? extends Trip > TripType;
+                    if(((String)typeCombo.getSelectedItem()).equals("Bus")){TripType = BusTrip.class;}
+                    else{TripType = FlightTrip.class;}
+
+                    TripDTO tripDTO = new TripDTO();
+                    tripDTO.setTripType(TripType);
+                    tripDTO.setVehicle(vehicleService.getVehicleByIdentifier((String)(vehicleIdentifierCombo.getSelectedItem())));
+                    tripDTO.setDepartureStation((String)fromCombo.getSelectedItem());
+                    tripDTO.setArrivalStation((String)toCombo.getSelectedItem());
+                    tripDTO.setDepartureDate(LocalDateTime.of(year, month, day, hour, minute));
+                    tripDTO.setTripTime(LocalTime.of(tripHour, tripMinute));
+                    tripDTO.setFare(Double.parseDouble(fareField.getText()));
+                    tripService.createTrip(tripDTO);
+
+                    JOptionPane.showMessageDialog(this, "Trip created successfully!","Successful",JOptionPane.INFORMATION_MESSAGE);
+                }
+                catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+                } 
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Unexpected error occurred:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
