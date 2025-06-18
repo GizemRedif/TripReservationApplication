@@ -17,7 +17,7 @@ import user.model.User;
 
 public class SearchTripPanel extends JPanel {
     
-    TripService tripService = new TripService(); //Tripleri filtrelemek icin kullanılacak. Kriterler search butona tıklanınca olusturulacak.
+    TripService tripService = new TripService(); //It will be used to filter the trips. The criteria will be created when the search button is clicked.
     
     String[] cities = {"Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
     "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
@@ -26,7 +26,7 @@ public class SearchTripPanel extends JPanel {
 
     
     public SearchTripPanel(User user) {
-        setLayout(new GridBagLayout()); // Panel ortalanıyor
+        setLayout(new GridBagLayout()); //The panel is centered
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setPreferredSize(new Dimension(500, 300)); 
@@ -45,7 +45,7 @@ public class SearchTripPanel extends JPanel {
         JPanel panel = new JPanel(new GridBagLayout()); 
         panel.setPreferredSize(new Dimension(400, 220));
 
-        if("Bus".equals(vehicle)){  //Bus ve Flight arka planı farklı olması icin 
+        if("Bus".equals(vehicle)){  //Bus and Flight backgrounds are different
             panel.setBackground(new Color(239, 228, 210));
             outerPanel.setBackground(new Color(239, 228, 210));
         }
@@ -55,43 +55,43 @@ public class SearchTripPanel extends JPanel {
         }
         
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 5, 10); // Bileşenin etrafındaki boşluk (üst, sol, alt, sağ)
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Yatay olarak genişlesin ama dikeyde sabit kalsın
+        gbc.insets = new Insets(10, 10, 5, 10); //Space around the component (top, left, bottom, right)
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Expand horizontally but remain stable vertically
       
-        // Kalkış yeri
+        // Departure place
         JLabel fromLabel = new JLabel("From:");
         JComboBox<String> fromCombo = new JComboBox<>(cities); 
         
-        // Varış yeri
+        // Arrival place
         JLabel toLabel = new JLabel("To:");
         JComboBox<String> toCombo = new JComboBox<>(cities);
 
-        // Tarih
+        // Date
         JLabel dateLabel = new JLabel("Date:");
         JComboBox<String> yearCombo = new JComboBox<>();
         JComboBox<String> monthCombo = new JComboBox<>();
         JComboBox<String> dayCombo = new JComboBox<>();
         setupDateComboBoxes(yearCombo, monthCombo, dayCombo, user);
 
-        // Tarih formatı yazısı
+        // Date format text
         JLabel dateFormatLabel = new JLabel("Format: YYYY-MM-DD");
         dateFormatLabel.setFont(new Font("Segoe UI", Font.ITALIC, 11));
         dateFormatLabel.setForeground(Color.GRAY);
         
-        // Arama butonu---------------------------------------------------------------------------------
+        // Search button---------------------------------------------------------------------------------
         //Button (created with the static method in the StyleButtons class)
         JButton searchButton = createStyledBlueButton("Search");
         searchButton.addActionListener(e -> {
             
             TripSearchCriteria tripCriteria = new TripSearchCriteria();
 
-            //Kullanıcının combo ile sectigi tarih LocalDateTime turune donusturuluyor
+            //The date selected by the user with the combo is converted to LocalDateTime type
             int year = Integer.parseInt((String) yearCombo.getSelectedItem());
             int month = Integer.parseInt((String) monthCombo.getSelectedItem());
             int day = Integer.parseInt((String) dayCombo.getSelectedItem());
             LocalDateTime departureTime = LocalDate.of(year, month, day).atStartOfDay();
     
-            //TripSearchCriteria nesnesine, kullanıcının girdigi degerler tanıyor. 
+            //The TripSearchCriteria object is recognized by the values ​​entered by the user.
             tripCriteria.setDepartureStation((String)fromCombo.getSelectedItem());
             tripCriteria.setArrivalStation((String) toCombo.getSelectedItem());
             if (vehicle.equals("Bus")) {
@@ -103,39 +103,39 @@ public class SearchTripPanel extends JPanel {
             tripCriteria.setDepartureDate(departureTime);
             
             
-            //Uygun tripler listeye alınır ve listelenirken hata kontrolu yapılır.
+            //Suitable trips are listed and error checking is done while listing.
             List<Trip> tripsToList = new ArrayList<>();
             try {
                 tripsToList = tripService.filterTrips(tripCriteria);
             } 
             catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Invalid Search Criteria", JOptionPane.ERROR_MESSAGE);
-                return; // hata varsa devam etme
+                return; // If there is an error, do not continue.
             } 
             catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "An unexpected error occurred:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            //Listelenen trip bos mu kontrolu yapılır.
+            //It is checked whether the requested trip is empty.
             if (tripsToList.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No trips were found that match your criteria. Please try another search.", "No results", JOptionPane.INFORMATION_MESSAGE);
             } 
             else{
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
-                upm.addPanel("trips", new TripsPanel(tripsToList, user));  // paneli CardLayout’a ekle
-                upm.showPanelByKey("trips");                            // geçiş yap
-                upm.setMenuBarVisible(false); //Menü gizlendi
+                upm.addPanel("trips", new TripsPanel(tripsToList, user));  // add panel to CardLayout
+                upm.showPanelByKey("trips");                            // switch
+                upm.setMenuBarVisible(false); //Menu is hidden
 
             }
         });
-//---------Arama Butonu sonu-------------------------------------------------------------------------------------------------------------  
+//----------End of Search Button------------------------------------------------------------------------------------------------------------  
         
         int row = 0;
         Insets defaultInsets = new Insets(10, 10, 5, 10);
         Insets buttonInsets = new Insets(15, 10, 10, 10);
 
-        //Altta olusturulan addToPanel metoduyla elemanlar panele ekleniyor.
+        //Elements are added to the panel with the addToPanel method created below.
         addToPanel(panel, gbc, fromLabel, 0, row, 1, defaultInsets);
         addToPanel(panel, gbc, fromCombo, 1, row, 1, defaultInsets);
 
@@ -159,7 +159,7 @@ public class SearchTripPanel extends JPanel {
         return outerPanel;
     }
     
-    //GridBagConstraints ayarlarını tekrar tekrar yazmaktan kurtarır.
+    //Saves you from having to retype the GridBagConstraints settings.
     private void addToPanel(JPanel panel, GridBagConstraints gbc, Component comp, int x, int y, int width, Insets insets) {
         gbc.gridx = x;
         gbc.gridy = y;
@@ -168,7 +168,7 @@ public class SearchTripPanel extends JPanel {
         panel.add(comp, gbc);
     }
 
-    //Date olarak bugunden onceki tarihlerin listelenmesi engellenir ayrıca her yıla ve aya ozel var olan gunler listelenir.
+    //Listing of dates before today as Date is prevented and also the days that exist for each year and month are listed.
     private void setupDateComboBoxes(JComboBox<String> yearCombo, JComboBox<String> monthCombo, JComboBox<String> dayCombo, User user) {
         
         LocalDate today = LocalDate.now();
@@ -177,8 +177,8 @@ public class SearchTripPanel extends JPanel {
         int currentDay = today.getDayOfMonth();
         int maxDay = YearMonth.of(currentYear, currentMonth).lengthOfMonth();
 
-        //Admin ve Passengera gore secilebilecek tarihler ayarlanır. 
-        //Admin eski tripleri de goruntuleyebilecekken ;passenger sadece bugun ve sonrasını goruntuleyebilir.
+        // Dates that can be selected by Admin and Passengers are set.
+        //While admin can view old trips, passenger can only view today and the next one.
 
         int startYear = (user instanceof Admin) ? 2023 : currentYear;
         for (int y = startYear; y <= 2030; y++) {
@@ -196,7 +196,7 @@ public class SearchTripPanel extends JPanel {
         }
 
 
-        // YIL dinleyicisi
+        //YEAR listener
         yearCombo.addActionListener(e -> {
             int selectedYear = Integer.parseInt((String) yearCombo.getSelectedItem());
             monthCombo.removeAllItems();
@@ -212,7 +212,7 @@ public class SearchTripPanel extends JPanel {
             }
         });
 
-        // AY dinleyicisi
+        // MONTH listener
         monthCombo.addActionListener(e -> {
             if (monthCombo.getItemCount() == 0) return;
 

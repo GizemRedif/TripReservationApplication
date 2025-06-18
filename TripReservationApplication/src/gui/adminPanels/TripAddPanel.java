@@ -33,7 +33,7 @@ public class TripAddPanel extends JPanel {
     
     VehicleService vehicleService = new VehicleService();
     TripService tripService = new TripService();
-    private JComboBox<String> vehicleIdentifierCombo; //TripType'a gore Vehicle ıdentifierlarını listelemek icin kullanılacak
+    private JComboBox<String> vehicleIdentifierCombo; //Will be used to list Vehicle identifiers by TripType
     
     public TripAddPanel(){
         setLayout(new GridBagLayout());
@@ -55,9 +55,9 @@ public class TripAddPanel extends JPanel {
         gbc.gridx = 0; gbc.gridy = 1;
         add(new JLabel("Vehicle Identifier:"), gbc);
         vehicleIdentifierCombo = new JComboBox<>();
-        updateVehicleIdentifierCombo((String) typeCombo.getSelectedItem()); //updateVehicleIdentifierCombo metodu ile başlangıçta default listeyi yükler (Bus)
+        updateVehicleIdentifierCombo((String) typeCombo.getSelectedItem()); //Loads the default list at startup with the updateVehicleIdentifierCombo method (Bus)
 
-        // Trip Type seçimi değiştiğinde vehicle identifier listesini guncelle
+        //Update vehicle identifier list when Trip Type selection changes
         typeCombo.addActionListener(e -> {
             String selectedType = (String)typeCombo.getSelectedItem();
             updateVehicleIdentifierCombo(selectedType);
@@ -131,7 +131,7 @@ public class TripAddPanel extends JPanel {
             } 
             else {
                 try{
-                    //TextLabellerde alınan gun ve saat bilgileri, uygun ture donusturulmek icin kaydediliyor
+                    //The day and time information received in Text Labels is recorded to be converted to the appropriate type.
                     int year = Integer.parseInt(yearField.getText());
                     int month = Integer.parseInt(monthField.getText());
                     int day = Integer.parseInt(dayField.getText());
@@ -168,9 +168,9 @@ public class TripAddPanel extends JPanel {
     }
     //-------------------------------------------End of constructor method-----------------------------
 
-    //Vehicle türüne göre listelenen identifierlar guncellenir.
+    //Identifiers listed are updated according to vehicle type.
     private void updateVehicleIdentifierCombo(String selectedType) {
-        vehicleIdentifierCombo.removeAllItems(); // Eski item'ları temizle
+        vehicleIdentifierCombo.removeAllItems(); // Clear old items
 
         List<Vehicle> vehicleList;
         if (selectedType.equals("Bus")) {

@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 
-//Stili olan butonları oluşturmak için kullanılacak sınıf.
+//The class to use to create styled buttons.
 
 public class StyleButtons {
     
-    //Mavi renkli buton oluşturmak için bu metot kullanılır.
+    //This method is used to create a blue button.
     public static JButton createStyledBlueButton(String buttonText) {
         JButton button = new JButton(buttonText);
         
@@ -20,7 +20,7 @@ public class StyleButtons {
         return button;
     }
     
-    //Kahverengi renkli buton oluşturmak için bu metot kullanılır. 
+    //This method is used to create a brown button.
     public static JButton createStyledBrownButton(String buttonText) {
         JButton button = new JButton(buttonText);
         

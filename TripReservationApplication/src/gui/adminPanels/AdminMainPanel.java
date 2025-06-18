@@ -9,16 +9,16 @@ import java.awt.*;
 import tripreservationapplication.MainFrame;
 import static gui.components.StyleButtons.createStyledBlueButton;
 
-//Admin giris yaptıgında ilk gosterilen panel
+//The first panel shown when the admin logs in
 public class AdminMainPanel extends JPanel {
 
     JLabel welcomeLabel; 
     
     public AdminMainPanel(Admin admin) {
-        setLayout(new GridLayout(1, 2));  // Sol ve sağ eşit genişlikte
-        setBackground(new Color(239, 228, 210)); // Panel arkaplanı
+        setLayout(new GridLayout(1, 2));  // Left and right are equal width
+        setBackground(new Color(239, 228, 210)); // Panel background
 
-        // Sol Panel – "Welcome" yazısı
+        // Left Panel – "Welcome" 
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(new Color(239, 228, 210));
         leftPanel.setLayout(new GridBagLayout());
@@ -27,8 +27,8 @@ public class AdminMainPanel extends JPanel {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
         leftPanel.add(welcomeLabel);
 
-        // Sağ Panel – Butonlar
-        JPanel rightPanel = new JPanel(new GridLayout(6, 1, 10, 10)); //6 tane buton 
+        // Right Panel – Butons
+        JPanel rightPanel = new JPanel(new GridLayout(6, 1, 10, 10)); //6 buttons 
         rightPanel.setBackground(new Color(239, 228, 210));
         rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -40,7 +40,7 @@ public class AdminMainPanel extends JPanel {
         JButton editUserBtn = createStyledBlueButton("Edit User");
         JButton accountBtn = createStyledBlueButton("My Account");
 
-        // ActionListener'lar
+        // ActionListeners
         editTripBtn.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
             upm.addPanel("searching", new SearchTripPanel(admin));
@@ -77,7 +77,8 @@ public class AdminMainPanel extends JPanel {
             upm.showPanelByKey("account");
         });
 
-        // Butonları sağ panele ekle
+        //Add buttons to right panel
+
         rightPanel.add(editTripBtn);
         rightPanel.add(addTripBtn);
         rightPanel.add(addVehicleBtn);
@@ -85,7 +86,7 @@ public class AdminMainPanel extends JPanel {
         rightPanel.add(editUserBtn);
         rightPanel.add(accountBtn);
 
-        // Panelleri ekle
+        // Add Panels
         add(leftPanel);
         add(rightPanel);
     }

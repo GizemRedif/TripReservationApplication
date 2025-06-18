@@ -18,20 +18,20 @@ import reservation.service.ReservationService;
 import static gui.components.StyleButtons.createStyledBlueButton;
 import static gui.components.StyleButtons.createStyledBrownButton;
 
-//TripsPanel --> mevcut tripleri lstelemek için kullanılır.
-//MyTriipsPanel --> Kullanıcının rezervasyonlarını listelemek için kullanılır.
+//TripsPanel --> Used to list current trips.
+//MyTriipsPanel --> Used to list the user's reservations.
 
 public class CreateTripCartsAndListings extends JPanel {
 
     private List<Reservation> reservations;
     private ReservationService reservationService = new ReservationService();
 
-    //TripsPanel kullanır.
+    //It uses TripsPanel.
     public CreateTripCartsAndListings(List<Trip> trips, User user, String callingPanel) {
         this(trips, null, user, callingPanel);
     }
 
-    //MyTripsPanel kullanır. Orjinal constructordan farkı rezervasyon listesidir çünkü kullanıcı, rezervasyonlarını görüntüler.
+    //It uses MyTripsPanel. The difference from the original constructor is the reservation list because the user views their reservations.
     public CreateTripCartsAndListings(List<Trip> trips, List<Reservation> reservations, User user, String callingPanel) {
         this.reservations = reservations;
 
@@ -52,7 +52,7 @@ public class CreateTripCartsAndListings extends JPanel {
                 addTripCard(innerPanel, trip, res, user, callingPanel, timeFormatter, dateFormatter);
             }
         } 
-        else { //TripsPanel ise
+        else { //if TripsPanel 
             for (int i = 0; i < trips.size(); i++) {
                 Trip trip = trips.get(i);
                 Reservation res = (reservations != null && i < reservations.size()) ? reservations.get(i) : null;
@@ -71,13 +71,13 @@ public class CreateTripCartsAndListings extends JPanel {
 //-------------------------------------------End of constructor method-----------------------------
 
 
-    //Trip Kartlarını oluşturan metot
+    //The method that creates Trip Cards
     private void addTripCard(JPanel parent, Trip trip, Reservation res, User user, String callingPanel, DateTimeFormatter timeFormatter, DateTimeFormatter dateFormatter) {
         JPanel tripCard = new JPanel(new BorderLayout(10, 10));
         tripCard.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         tripCard.setMaximumSize(new Dimension(500, 130));
 
-        //Geçmiş tripler farklı gösterilir. 
+        //Past trips are shown differently.
         boolean isPastTrip = trip.getDepartureDate().isBefore(LocalDateTime.now());
         Color bgColor = isPastTrip ? new Color(210, 210, 210) : Color.WHITE;
         Color textColor = isPastTrip ? Color.DARK_GRAY : Color.BLACK;
@@ -100,14 +100,14 @@ public class CreateTripCartsAndListings extends JPanel {
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         top.add(dateLabel, BorderLayout.EAST);
 
-        //Departure Date ve Departure Time, kartın üst kısmında olacak.
+        //Departure Date and Departure Time will be at the top of the card.
         tripCard.add(top, BorderLayout.NORTH);
 
         //Trip Duration and Route----------------------------------
         String tripDurationText = "---- " + trip.getTripTime() + "  ---->";
         String routeText = trip.getDepartureStation() + " " + tripDurationText + " " + trip.getArrivalStation();
 
-        //Route bilgisi kartın merkezinde gösterilecek.
+        //Route information will be displayed in the center of the card.
         JLabel routeLabel = new JLabel(routeText, SwingConstants.CENTER);
         routeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         routeLabel.setForeground(textColor);
@@ -122,21 +122,21 @@ public class CreateTripCartsAndListings extends JPanel {
         priceLabel.setForeground(textColor);
         bottom.add(priceLabel, BorderLayout.WEST);
 
-        //Buton-------------------------------------------
-        //Eğer çağıran sınıf TripsPanel ise:
-        //Admin'in Trip'i düzenlemesi için buton eklenir
-        //Passenger'ın koltuk seçmesi için buton eklenir.
+        //Button-------------------------------------------
+        //If the calling class is TripsPanel:
+        //A button is added for the Admin to edit the Trip
+        //A button is added for the Passenger to select a seat.
         if ("TripsPanel".equals(callingPanel)) {
             String buttonText = (user instanceof Admin) ? "EDIT" : "Select Seat";
             //Button (created with the static method in the StyleButtons class)
             JButton tripCartsButton = createStyledBlueButton(buttonText);
 
-            //Admin, geçmiş tripleri görüntüler ama düzenleyemez.
+            //Admin can view past trips but cannot edit them.
             if (isPastTrip) {
                 tripCartsButton.setEnabled(false);
                 tripCartsButton.setToolTipText("This trip is in the past.");
             } 
-            else { //Koltuk seçme ve Trip düzenleme aynı panelden yapılacak. O yüzden user kontrolüne gerek yok.
+            else { //Seat selection and Trip editing will be done from the same panel. Therefore, there is no need for user control.
                 tripCartsButton.addActionListener(e -> {
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                     upm.addPanel("selectOrEdit", new SeatSelect_TripEditPanel(trip, user));
@@ -146,8 +146,8 @@ public class CreateTripCartsAndListings extends JPanel {
             bottom.add(tripCartsButton, BorderLayout.EAST);
         }
 
-        //Eğer çağıran sınıf MyTripsPanel ise:
-        //Rezervasyonun iptal edilebilmesi için buton eklenir.
+        //If the calling class is MyTripsPanel:
+        //A button is added to cancel the reservation.
         if ("MyTripsPanel".equals(callingPanel) && !isPastTrip && res != null && user instanceof Passenger) {
             //Button (created with the static method in the StyleButtons class)
             JButton cancelButton = createStyledBrownButton("Cancel");
@@ -157,7 +157,7 @@ public class CreateTripCartsAndListings extends JPanel {
                 reservations.remove(res);
                 JOptionPane.showMessageDialog(this, "Reservation cancelled.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
-                //Rezervasyon iptal edildikten sonra MyTripsPanel tekrar yüklenir. (Rezervasyon kartının kalkması için)
+                //After the reservation is cancelled, MyTripsPanel is reloaded. (For the reservation card to be removed)
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.addPanel("myTrips", new MyTripsPanel((Passenger) user));
                 upm.showPanelByKey("myTrips");

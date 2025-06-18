@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
         setSize(900 , 600);
         setLocationRelativeTo(null);
   
-        //Başlangıçta login paneli göster, menü bar yok
+        //Show login panel at startup, no menu bar
         setJMenuBar(null);
         setContentPane(new LoginRegisterPanel());
 
@@ -31,8 +31,8 @@ public class MainFrame extends JFrame {
         return instance;
     }
     
-    //Giriş başarılı olunca çağrılacak metod (LoginRegisterPanel'de Login metodu cagıracak). 
-    //Boylece giris yapan kullanıcıya gore paneller ve MenuBar duzenlenecek.
+    //The method to be called when the login is successful (it will call the Login method in LoginRegisterPanel).
+    //Thus, the panels and MenuBar will be arranged according to the logged in user.
     public void showUserPanelManager(User user) {
         UserPanelManager userPanel = new UserPanelManager(user); 
         setJMenuBar(userPanel.getMenuBar());

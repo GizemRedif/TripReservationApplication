@@ -8,9 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import tripreservationapplication.MainFrame;
 
-//Kullanan classlar: 
+//Using classes:
 //SeatSelect_TripEditPanel
-//PaymentPanel 
+//PaymentPanel
 
 public class BackButton extends JPanel{
     
@@ -19,14 +19,14 @@ public class BackButton extends JPanel{
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
         
-        //--------------Üst panel: Geri butonu---------------------
+        //-----------------Top panel: Back button------------------
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(new Color(19, 29, 79));
 
         JButton backButton = new JButton("← Back");
         backButton.addActionListener(e -> {
             UserPanelManager panelManager = (UserPanelManager) MainFrame.getInstance().getContentPane();
-            //Eğer SearchTripPanel'e geri dönülürse MenuBar görünür yapılır.
+            //If you return to the SearchTripPanel the MenuBar is made visible.
             if(previousPanel.equalsIgnoreCase("searching")){
                 panelManager.setMenuBarVisible(true);
             }

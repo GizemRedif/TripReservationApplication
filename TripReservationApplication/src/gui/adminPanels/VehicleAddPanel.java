@@ -53,14 +53,14 @@ public class VehicleAddPanel extends JPanel {
         JButton saveButton = createStyledBlueButton("Save");
         add(saveButton, gbc);
 
-        // Kaydet butonuna tıklama 
+        // Save Button Click
         saveButton.addActionListener(e -> {
             
-            //Vehicle Identifier bos mu kontrolu
+            //Checking if Vehicle Identifier is empty
             if (vehicleIdentifier.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this, "Please fill in the blanks.", "Missing Information",JOptionPane.WARNING_MESSAGE);
             } 
-            else { //Vehicle olusturulur
+            else { //Vehicle is created
                 Class< ? extends Vehicle> vehicleType;
                 int capacity;
                 

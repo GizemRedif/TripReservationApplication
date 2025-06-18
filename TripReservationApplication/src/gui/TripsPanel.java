@@ -9,17 +9,17 @@ import java.awt.*;
 import java.util.List;
 
 
-//Aranan kriterlere uygun goruntulenen triplerin oldugu panel
+//Panel with trips that match the search criteria
 public class TripsPanel extends JPanel {
 
     public TripsPanel(List<Trip> trips, User user) {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-        // Üstte geri butonu olacak.
+        //There will be a back button at the top.
         add(new BackButton("searching"), BorderLayout.NORTH);
 
-        // TripsPanel içinde İcerik ve Trip Kartları olusturulur.
+        // Content and Trip Cards are created in TripsPanel.
         CreateTripCartsAndListings listingsPanel = new CreateTripCartsAndListings(trips, user, "TripsPanel");
         add(listingsPanel, BorderLayout.CENTER);
     }

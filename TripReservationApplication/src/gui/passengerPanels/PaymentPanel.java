@@ -18,7 +18,7 @@ import reservation.service.ReservationService;
 import trip.model.BusTrip;
 import user.model.Passenger;
 
-//Kullanıcının, koltukları seçtikten sonra ödeme yapması için geldiği panel.
+//The panel where the user comes to make payment after selecting the seats.
 public class PaymentPanel extends JPanel {
     ReservationService reservationService = new ReservationService();
     
@@ -27,12 +27,12 @@ public class PaymentPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-        //Back butonuna tıklanırsa SeatSelect_TripEditPanel'e geri dönülür.
+        //If you click the Back button, you will return to the SeatSelect_TripEditPanel.
         add(new BackButton("selectOrEdit"), BorderLayout.NORTH);
 
         // Count the types of seats with extra charges
-        int singleBusSeatCount = 0; //Bus trip'te seçilen tekli koltuk sayısı
-        int businessSeatCount = 0; //Flight trip'te seçilen bussiness class koltuk sayısı
+        int singleBusSeatCount = 0; //Number of single seats selected on the bus trip
+        int businessSeatCount = 0; //Number of business class seats selected on the flight trip
         for (Seat seat : selectedSeats) {
             if (seat instanceof BusSeat && ((BusSeat) seat).isIsSingle()) {
                 singleBusSeatCount++;
@@ -42,8 +42,8 @@ public class PaymentPanel extends JPanel {
             }
         }
 
-        double baseFare = trip.getFare(); //Ekstra ücretli koltukların fiyatı eklenmeden önceki trip ücreti
-        double totalFare = 0; //Ödenecek toplam ücret (Eksrta ücretli koltuk fiyatları ve birden çok koltuk için değişecek)
+        double baseFare = trip.getFare(); //Trip price before the price of extra paid seats is added
+        double totalFare = 0; //Total price to be paid (Price of extra paid seats and will vary for multiple seats)
         for (Seat seat : selectedSeats) {
             if (seat instanceof BusSeat && ((BusSeat) seat).isIsSingle()) {
                 totalFare += baseFare + 50;
@@ -56,7 +56,7 @@ public class PaymentPanel extends JPanel {
             }
         }
 
-        //Bilgi paneli
+        //Information panel
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(new Color(239, 228, 210));
@@ -72,7 +72,7 @@ public class PaymentPanel extends JPanel {
         businessSeatLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         totalFareLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //Eğer ekstra ücretli koltuk seçildiyse belirtilir ve sayısı söylenir.
+        //If an extra paid seat is selected, it will be indicated and its number will be stated.
         centerPanel.add(seatCountLabel);
         centerPanel.add(Box.createVerticalStrut(10));
         if (singleBusSeatCount > 0) {
@@ -89,17 +89,17 @@ public class PaymentPanel extends JPanel {
         //Button (created with the static method in the StyleButtons class)
         JButton payButton = createStyledBlueButton("Payment");
 
-        //payButton'a tıklanınca ödeme işlemi yapılır.
+        //When the payButton is clicked, the payment is made.
         payButton.addActionListener(e -> {
             int result = JOptionPane.showOptionDialog(this,"Reservation created successfully!","Success",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"},"Okey");
 
-            //Açılan popup'ta okey butonuna basıldığında seçili koltuklar için sırayla rezervasyon yapılır
+            //When the okey button is pressed in the pop-up window, a reservation is made for the selected seats in order.
             if (result == 0) {
                 for (Seat seat : selectedSeats) {
                     ReservationDTO reservationDTO = new ReservationDTO();
                     reservationDTO.setPassenger(passenger);
 
-                    //Koltuk esktra ücretli ise son ücreti, rezervasyon bilgisine kaydedilir.
+                    //If the seat has an extra charge, the final fee is recorded in the reservation information.
                     double seatFare = baseFare;
                     if (seat instanceof BusSeat && ((BusSeat) seat).isIsSingle()) {
                         seatFare += 50;
@@ -113,7 +113,7 @@ public class PaymentPanel extends JPanel {
                     reservationDTO.setReservationType(trip instanceof BusTrip ? BusReservation.class : FlightReservation.class);
                     reservationService.createReservation(passenger, reservationDTO);
                 }
-                //Ödeme yapıldıktan sonra SearchTripPanel'e geri dönülür.
+                //After payment is made, you will be returned to SearchTripPanel.
                 UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                 upm.setMenuBarVisible(true);
                 upm.showPanelByKey("searching");

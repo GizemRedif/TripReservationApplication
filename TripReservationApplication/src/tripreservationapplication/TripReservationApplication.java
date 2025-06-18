@@ -32,8 +32,10 @@ public class TripReservationApplication {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
         });
-        
-        
+         
+         
+        //EXAMPLES
+         
         //USERS---------------------------------------------------------------------------------------
         //Admin
         UserDTO admin = new UserDTO();

@@ -11,7 +11,7 @@ import user.model.User;
 
 public class LoginRegisterPanel extends JPanel {
 
-    UserService userService = new UserService(); //Bu sınıftaki createUser ve login metotlarını kullanabilmek icin olusturuldu
+    UserService userService = new UserService(); //Created to be able to use the createUser and login methods in this class
     private final JTabbedPane tabbedPane; 
 
     public LoginRegisterPanel() {
@@ -19,17 +19,17 @@ public class LoginRegisterPanel extends JPanel {
         this.setBackground(new Color(37, 77, 112)); 
         
         JPanel containerPanel = new JPanel();
-        containerPanel.setLayout(new BorderLayout(0, 20)); // Başlık ile sekme arası boşluk
+        containerPanel.setLayout(new BorderLayout(0, 20)); // Space between title and tab
         containerPanel.setPreferredSize(new Dimension(420, 460));
         containerPanel.setBackground(Color.WHITE);
 
-        //Başlık paneli
+        //Title panel
         JLabel titleLabel = new JLabel("THİS TİCKET", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(19, 29, 79));  //Yazı rengi
+        titleLabel.setForeground(new Color(19, 29, 79));  //Text color
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        //Sekmeler altta olacak şekilde oluşturuluyor
+        //Tabs are created at the bottom
         tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
         tabbedPane.addTab("Login", createLoginPanel());
         tabbedPane.addTab("Register", createRegisterPanel());
@@ -62,7 +62,7 @@ public class LoginRegisterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Email or password is incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {  
-                //Giris yapan User'ın, Passanger mi Admin mi oldugu kontrolu yapılır ve ona gore panel acılır. 
+                //It is checked whether the logged in User is Passenger or Admin and the panel is opened accordingly.
                 MainFrame.getInstance().showUserPanelManager(user);
             }
         });
@@ -71,14 +71,14 @@ public class LoginRegisterPanel extends JPanel {
         panel.add(emailField);
         panel.add(passwordLabel);
         panel.add(passwordField);
-        panel.add(new JLabel()); // boşluk
+        panel.add(new JLabel()); // space
         panel.add(loginButton);
 
         return panel;
     }
 
     private JPanel createRegisterPanel() {
-        //User olusturma paneli cagırılır ve tappedPane icerisinde gosterilir,
+        //The user creation panel is called and displayed in the tappedPane,
         return new CreateAUser(userService, tabbedPane,true, "Passenger");
     }
 }

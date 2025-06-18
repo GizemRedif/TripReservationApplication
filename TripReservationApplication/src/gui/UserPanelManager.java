@@ -27,8 +27,8 @@ public class UserPanelManager extends JPanel {
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         
-        //Kullanıcı turune gore contentPanel'e eklenen paneller
-        //Kullanılan diger paneller contentPanel'e gerekli yerlerde eklenecek.
+        //Panels added to contentPanel based on user type
+        //Other panels used will be added to the contentPanel where necessary.
         switch (user) {
             case Admin admin -> {
                 contentPanel.add(new AdminMainPanel(admin), "admin");
@@ -44,7 +44,7 @@ public class UserPanelManager extends JPanel {
 
         add(contentPanel, BorderLayout.CENTER);
 
-        // Login isleminden sonra ilk gösterilecek panel
+        // The first panel to be displayed after login
         cardLayout.show(contentPanel, user instanceof Admin ? "admin" : "searching");
     }
 //-------------------------------------------End of constructor method-----------------------------
@@ -65,7 +65,7 @@ public class UserPanelManager extends JPanel {
         JMenuItem accountItem = null;
         JMenuItem pastTripsItem = null;
 
-        //Kullanıcı turune gore Menu'de gosterilecek itemler
+        //Items to be displayed in Menu according to user type
         if (currentUser instanceof Admin) {
             adminPanelItem = new JMenuItem("Admin Panel");
         } 
@@ -75,7 +75,7 @@ public class UserPanelManager extends JPanel {
             accountItem = new JMenuItem("My Account");
         }
 
-        //null olmayan itemler menu'ye ekleniyor.
+        //Non-null items are added to the menu.
         JMenuItem[] items = { searchTripItem, pastTripsItem, accountItem, adminPanelItem };
         for (JMenuItem item : items) {
             if (item != null) {
@@ -87,7 +87,7 @@ public class UserPanelManager extends JPanel {
         }
         menuBar.add(menu);
 
-        // ActionListener'lar
+        // ActionListeners
         if (searchTripItem != null)
             searchTripItem.addActionListener(e -> showPanelByKey("searching"));
         if (accountItem != null)
@@ -104,17 +104,17 @@ public class UserPanelManager extends JPanel {
         return menuBar;
     }
     
-    //MenuBar'ın gorunurlugu degistirilir. (Ornegin TripsPanel'de gorunmeyecek)
+    //The visibility of the MenuBar is changed. (For example, it will not be visible in TripsPanel)
     public void setMenuBarVisible(boolean visible) {
         menuBar.setVisible(visible);
     }
     
-    //Geri tusu hata cıkarmasın diye paneller baska sınıflardan eklenirken de buradaki contentPanel'e eklenir.
+    //To prevent the backspace button from causing an error, panels are added to the contentPanel here when adding them from other classes.
     public void addPanel(String key, JPanel panel) {
         contentPanel.add(panel, key);
     }
     
-    //Dışarıdan da panel geçişi olabilmesi için ekledik. 
+    //We added it so that the panel can be accessed from outside as well.
     public void showPanelByKey(String key) {
         cardLayout.show(contentPanel, key);
     }

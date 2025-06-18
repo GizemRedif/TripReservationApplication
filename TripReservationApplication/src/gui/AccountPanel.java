@@ -17,7 +17,7 @@ public class AccountPanel extends JPanel {
     private String password;
     private String phoneNumber;
 
-    //Kullanıcı bilgilerini guncellerse hesabım kısmında yeni bilgilerin gorunebilmesi icin kullanılacaklar
+    //If the user updates their information, they will be used to display new information in the My Account section.
     private JLabel nameLabel;
     private JLabel emailLabel;
     private JLabel passwordLabel;
@@ -26,7 +26,7 @@ public class AccountPanel extends JPanel {
     
     public AccountPanel(User user) {
         
-        //User'ın bilgileri alınır
+        //User information is obtained
         firstName = user.getName();
         lastName = user.getSurname();
         email = user.getEmail();
@@ -34,7 +34,7 @@ public class AccountPanel extends JPanel {
         gender = user.getGender();
         password = user.getPassword();
         
-        UserService userService = new UserService(); //Kullanıcı bilgilerini gunellemek icin kullanılacak
+        UserService userService = new UserService(); //Will be used to update user information
 
         setLayout(new BorderLayout());
 
@@ -99,7 +99,7 @@ public class AccountPanel extends JPanel {
         JButton aboutButton = createStyledBlueButton("About Us");
         aboutButton.addActionListener(e -> {
             ImageIcon us = new ImageIcon(getClass().getResource("/gui/pictures/us.jpg"));
-            Image scaledImage = us.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH); // Resim boyutlandırılır
+            Image scaledImage = us.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH); // The image is resized
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
             JOptionPane.showMessageDialog(this, "Our days passed here :)","About Us", JOptionPane.INFORMATION_MESSAGE, scaledIcon);
         });
@@ -111,13 +111,13 @@ public class AccountPanel extends JPanel {
         //Button (created with the static method in the StyleButtons class)
         JButton changeInfButton = createStyledBlueButton("Change Information");
         infoPanel.add(changeInfButton);
-        //Change Inf butonuna basılınca bir pop-up cıkacak ve kullanıcı istedigini guncelleyecek.
+        //When the Change Inf button is clicked, a pop-up will appear and the user will be able to update what they want.
         changeInfButton.addActionListener(e -> {
             UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
             //EditUser paneli acılacak.
             upm.addPanel("editUser", new EditUserPanel(user, "accountPanel", () -> {
-                this.updateLabels(user); // Bu panelin label'larını güncelle
-                upm.showPanelByKey("account"); // Sonra geri dön
+                this.updateLabels(user); //Update labels for this panel 
+                upm.showPanelByKey("account"); //Then come back
             }));
             upm.showPanelByKey("editUser");
         });
@@ -128,11 +128,11 @@ public class AccountPanel extends JPanel {
         JButton logoutButton = createStyledBlueButton("Logout");
         logoutButton.addActionListener(e -> {           
             int result = JOptionPane.showOptionDialog(null,"Do you want to log out?","Log Out",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Yes"}, "Yes");
-            if (result == 0) { //Yes butonuna basılınca LoginRegisterPanel'e donulur.
-                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //MenüBar'ı gizlemek için kullanılacak
-                upm.setMenuBarVisible(false); //Menü gizlendi
+            if (result == 0) { //When you click the Yes button, you will return to the LoginRegisterPanel.
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //To hide the MenuBar
+                upm.setMenuBarVisible(false); //Menu is hidden
                 MainFrame mainFrame = MainFrame.getInstance();
-                mainFrame.setContentPane(new LoginRegisterPanel());  //Cıkıs yapınca LoginRegisterPanel'e donulur.
+                mainFrame.setContentPane(new LoginRegisterPanel());  //When you log out, you will be returned to the LoginRegisterPanel.
                 mainFrame.revalidate();
                 mainFrame.repaint();
             }
@@ -146,9 +146,9 @@ public class AccountPanel extends JPanel {
         
         deleteAccountButton.addActionListener(e -> {
             int result = JOptionPane.showOptionDialog(null,"Do you want to delete this account?","Account Delete",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Yes"}, "Yes");
-            if (result == 0) { //Okey butonuna basılınca kullanıcı silinir LoginRegisterPanel'e donulur.
-                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //MenüBar'ı gizlemek için kullanılacak
-                upm.setMenuBarVisible(false); //Menü gizlendi
+            if (result == 0) { //When the Okey button is pressed, the user is deleted and the user returns to the LoginRegisterPanel.
+                UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane(); //To hide the MenuBar
+                upm.setMenuBarVisible(false); //Menu is hidden
                 userService.deleteUser(user.getEmail());
                 MainFrame mainFrame = MainFrame.getInstance();
                 mainFrame.setContentPane(new LoginRegisterPanel());
@@ -164,7 +164,7 @@ public class AccountPanel extends JPanel {
     }
 //-------------------------------------------End of constructor method-----------------------------
        
-    //Account kısmında gorunen bilgiler guncellenir.
+    //The information displayed in the Account section is updated.
     public void updateLabels(User updatedUser) {
         nameLabel.setText("Hello " + updatedUser.getName() + " " + updatedUser.getSurname() + "!");
         phoneNumberLabel.setText("Phone Number: " + updatedUser.getPhoneNumber());

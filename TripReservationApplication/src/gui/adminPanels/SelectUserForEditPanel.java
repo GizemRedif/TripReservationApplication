@@ -9,7 +9,7 @@ import tripreservationapplication.MainFrame;
 import user.Service.UserService;
 import static gui.components.StyleButtons.createStyledBlueButton;
 
-//Adminin duzenlemek istedigi User'ın e-mailini aratması icin kullandıgı panel
+//The panel that the Admin uses to search for the e-mail of the User he wants to edit.
 public class SelectUserForEditPanel extends JPanel {
 
     private JTextField emailField;
@@ -19,7 +19,7 @@ public class SelectUserForEditPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));
 
-        // Ortada email girme alanı ve buton
+        // Email entry field and button in the middle
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(239, 228, 210));
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -40,18 +40,18 @@ public class SelectUserForEditPanel extends JPanel {
         searchButton.addActionListener(e -> {
             String email = emailField.getText().trim();
             
-            //Mail alanı dolduruldu mu kontrolu yapılır.
+            // Checks whether the mail field is filled.
             if (!email.isEmpty()) {              
                 User searchingUser = userService.getUserByEmail(email);
                 
-                //Eger yazılan maile ait kullanıcı yoksa hata mesajı verir.
+                //If the user for the email written does not exist, it gives an error message.
                 if(searchingUser == null){
                     JOptionPane.showMessageDialog(this, "User not found.", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
                 else{
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                     upm.addPanel("editUser", new EditUserPanel(searchingUser, "selectUserForEditPanel", () -> {
-                        //Edit tamamlandıktan sonra AdminPanel'e donulur.
+                        //After editing is completed, return to AdminPanel.
                         upm.showPanelByKey("admin");
                     }));
                     upm.showPanelByKey("editUser");

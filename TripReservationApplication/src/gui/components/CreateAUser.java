@@ -8,9 +8,9 @@ import user.Service.UserService;
 import user.model.Admin;
 import static gui.components.StyleButtons.createStyledBlueButton;
 
-//User olusturulan yerlerde cagırılır. (Passenger ve Admin)
-//LoginRegisterPanel -> Register alanı (Passenger olusturulur)
-//AdminPanel -> UserAddPanel -> Admin Add ve Passenger Add alanı
+//It is called in places where users are created. (Passenger and Admin)
+//LoginRegisterPanel -> Register field (Passenger create)
+//AdminPanel -> UserAddPanel -> Admin Add and Passenger Add fields
 
 public class CreateAUser extends JPanel {
 
@@ -28,7 +28,7 @@ public class CreateAUser extends JPanel {
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         formPanel.setBackground(new Color(239, 228, 210));
 
-        //User bilgilerinin girileceği labellar:
+        //Labels for entering user information:
         JLabel firstNameLabel = new JLabel("First Name:");
         JTextField firstNameField = new JTextField();
 
@@ -52,7 +52,7 @@ public class CreateAUser extends JPanel {
         registerButton.addActionListener(e -> {
             String selectedGender = (String) genderCombo.getSelectedItem();
             
-            //Kaydet butonuna basıldığında UserDTO ile yeni kullanıcı oluşturulur.
+            //When the Save button is clicked, a new user is created with UserDTO.
             UserDTO newUser = new UserDTO();
             newUser.setName(firstNameField.getText().trim());
             newUser.setSurname(lastNameField.getText().trim());
@@ -67,7 +67,7 @@ public class CreateAUser extends JPanel {
                 userService.createUser(newUser);
 
                 JOptionPane.showMessageDialog(this, "User created successfully.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-                if(isTabbedChange == true){ tabbedPane.setSelectedIndex(0);} // Giriş paneline dön
+                if(isTabbedChange == true){ tabbedPane.setSelectedIndex(0);} //Return to login panel
             } 
             catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -77,7 +77,7 @@ public class CreateAUser extends JPanel {
             }
         });
 
-        // Bileşenleri ekle
+        // Add components
         formPanel.add(firstNameLabel);
         formPanel.add(firstNameField);
         formPanel.add(lastNameLabel);
@@ -90,7 +90,7 @@ public class CreateAUser extends JPanel {
         formPanel.add(phoneField);
         formPanel.add(genderLabel);
         formPanel.add(genderCombo);
-        formPanel.add(new JLabel()); // boşluk
+        formPanel.add(new JLabel()); // space
         formPanel.add(registerButton);
 
         add(formPanel, BorderLayout.CENTER);

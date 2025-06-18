@@ -22,7 +22,7 @@ import user.model.User;
 import user.model.Admin;
 import user.model.Passenger;
 
-//Passenger'ın mkoltuk seçebileceği, Admin'in tripi ve rezervasyonlarını güzenleyebileceği panel.
+//Panel where Passenger can choose a seat and Admin can edit trips and reservations.
 public class SeatSelect_TripEditPanel extends JPanel {
 
     private List<Seat> seatList;
@@ -33,55 +33,55 @@ public class SeatSelect_TripEditPanel extends JPanel {
 
     public SeatSelect_TripEditPanel(Trip trip, User user) {
         this.user = user;
-        this.seatList = trip.getVehicle().getSeatList();  //Secilen trip'e ait koltuklar listelenir.
+        this.seatList = trip.getVehicle().getSeatList();  //The seats for the selected trip are listed.
                 
         setLayout(new BorderLayout());
         setBackground(new Color(239, 228, 210));      
 
-        // Koltuk resimleri yüklenir
+        // Seat images are uploaded
         ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeatForPlane.jpg"));
         ImageIcon bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeatForPlane.jpg"));
         
-        //Bus ve Plane koltuklarının pixelleri farklı oldugu icin koltuk resimlerini farklı boyutlarda ekliyorum
+        //Since the pixels of Bus and Plane seats are different, I am adding seat images in different sizes.
         if(trip instanceof BusTrip){ 
             emptyIcon = new ImageIcon(getClass().getResource("/gui/pictures/emptySeat.jpg"));
             bookedIcon = new ImageIcon(getClass().getResource("/gui/pictures/bookedSeat.jpg"));
         }
 
-        //Koltukların gosterilecegi panel oluşturulur (Koltuk paneli)
+        //The panel where the seats will be displayed is created (Seat panel)
         JPanel wrapperPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
         wrapperPanel.setOpaque(false);
 
-        JPanel seatPanel; // koltuklar bu panele gore eklenecek. O nedenle bus ve flight icin ayrı olmalı
+        JPanel seatPanel; // Seats will be added according to this panel. Therefore, they should be separate for bus and flight.
 
-        //BusTrip ve FligtTrip koltuk düzeni farklı.
+        //The seating arrangement of BusTrip and FlightTrip is different.
         if (trip instanceof BusTrip) {
-            seatPanel = new JPanel(new GridLayout(4, 15, 10, 10)); //4 satır ve 15 sütun bulunmakta.
+            seatPanel = new JPanel(new GridLayout(4, 15, 10, 10)); //There are 4 rows and 15 columns.
             seatPanel.setOpaque(false);
 
             for (int row = 0; row < 4; row++) {
                 for (int col = 0; col < 15; col++) {
                     if (row == 1) { 
-                        //Bu satıra, koridor'u temsil edeceği için buton eklenmez.
+                        //No button is added to this line as it will represent the corridor.
                         JPanel empty = new JPanel();
                         empty.setOpaque(false);
                         seatPanel.add(empty);
                     } 
                     else {
                         int index;
-                        //row sırasına göre index değiştirilir.
+                        //Index is changed according to row order.
                         index = switch (row) {
                             case 0 -> col * 3;
                             case 2 -> col * 3 + 1;
                             default -> col * 3 + 2; //row == 3
                         };
                         
-                        //index numaralı koltuğa ait buton oluşturulur.
+                        //A button for the seat with index number is created.
                         if (index < seatList.size()) {
                             Seat seat = seatList.get(index);
                             JButton seatButton = createSeatButton(seat, emptyIcon, bookedIcon, trip);
 
-                            // Altına numara yazmak için küçük panel
+                            // Small panel for writing numbers underneath
                             JPanel seatWithLabel = new JPanel();
                             seatWithLabel.setLayout(new BoxLayout(seatWithLabel, BoxLayout.Y_AXIS));
                             seatWithLabel.setOpaque(false);
@@ -107,15 +107,15 @@ public class SeatSelect_TripEditPanel extends JPanel {
         }
         //if (Trip instanceof FlightTrip)
         else {
-            seatPanel = new JPanel(new GridLayout(7, 25, 10, 10)); //7 satır ve 25 sütun olacak.
+            seatPanel = new JPanel(new GridLayout(7, 25, 10, 10)); //There will be 7 rows and 25 columns.
             seatPanel.setOpaque(false);
 
-            // Satır harfleri (4. sıra boşluk olacak çünkü koridoru temsil edecek)
+            //Row letters (4th row will be empty because it will represent the corridor)
             char[] seatRowChars = {'A', 'B', 'C', '-', 'D', 'E', 'F'};
 
             for (char rowChar : seatRowChars) {
                 for (int col = 1; col <= 25; col++) {
-                    //Koridor'u temsil eden sıraya koltuk eklenmeyecek.
+                    //No seats will be added to the row representing the corridor.
                     if (rowChar == '-') { 
                         JPanel empty = new JPanel();
                         empty.setOpaque(false);
@@ -124,7 +124,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
                     else {
                         String seatNumber = col + "" + rowChar;
 
-                        // seatList'ten doğru seat'i bul
+                        //Find the right seat from seatList
                         Seat seat = null;
                         for (Seat s : seatList) {
                             if (s.getSeatNumber().equals(seatNumber)) {
@@ -133,7 +133,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
                             }
                         }
                         
-                        //Seat'i temsil eden buton ve seat adının yer aldığı label oluşturulur.
+                        //A button representing the seat and a label with the name of the seat are created.
                         if (seat != null) {
                             JButton seatButton = createSeatButton(seat, emptyIcon, bookedIcon, trip);
 
@@ -143,7 +143,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
                             seatWithLabel.setOpaque(false);
                             seatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                            //Seat adını gösteren label
+                            //Label showing seat name
                             JLabel seatName = new JLabel(seat.getSeatNumber());
                             seatName.setFont(new Font("Segoe UI", Font.PLAIN, 10));
                             seatName.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -165,21 +165,21 @@ public class SeatSelect_TripEditPanel extends JPanel {
         
         wrapperPanel.add(seatPanel);
         
-        // BackButton ve koltuk panelini birlikte tutacak üst panel
+        // Top panel to hold BackButton and seat panel together
         JPanel topWrapper = new JPanel(new BorderLayout());
         topWrapper.setOpaque(false);
-        topWrapper.add(new BackButton("trips"), BorderLayout.NORTH); //BackButton cagırılıyor.
+        topWrapper.add(new BackButton("trips"), BorderLayout.NORTH); //The BackButton is called.
         topWrapper.add(wrapperPanel, BorderLayout.CENTER);
-        add(topWrapper, BorderLayout.NORTH); //Artık sadece bu tek panel NORTH'a ekleniyor
+        add(topWrapper, BorderLayout.NORTH); //Now only this single panel is added to NORTH
 
 
-        // Altta kalan butonların paneli
+        //Panel of buttons at the bottom
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         buttonPanel.setOpaque(false);
 
-        // Passenger'e özel butonlar
+        //Passenger specific buttons
         if (user instanceof Passenger){
-            //Trip türüne göre bilgilendirmeler gösterilir.
+            //Information is displayed according to trip type.
             if (trip instanceof BusTrip) {
                 JLabel extraChargeLabel = new JLabel("Single seats +50 TL");
                 extraChargeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -197,7 +197,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
             //Button (created with the static method in the StyleButtons class)
             JButton payButton = createStyledBlueButton("Make Payment");
             payButton.addActionListener(e -> {
-                //Eğer seçili koltuk yoksa PaymentPanel'e gidilmez.
+                //If there is no seat selected, you will not be directed to the PaymentPanel.
                 if (selectedSeats.isEmpty()) {
                     JOptionPane.showMessageDialog(this,"Please select a seat.","No Seat Selected",JOptionPane.WARNING_MESSAGE);
                     return;
@@ -209,27 +209,27 @@ public class SeatSelect_TripEditPanel extends JPanel {
             buttonPanel.add(payButton);
         }
         
-        // Admin'e özel butonlar
+        //Admin specific buttons
         if (user instanceof Admin) {
-            //Buttons (created with the static method in the StyleButtons class)
+            //Buttons below created with the static method in the StyleButtons class
             
-            //Rezervasyon bilgisini görüntüleyip rezervasyonları silebileceği popup için buton.
+            //Button for the popup where reservation information can be viewed and reservations can be deleted.
             JButton viewReservationBtn = createStyledBlueButton("View Reservation Information");
             viewReservationBtn.addActionListener(e -> showReservationsPopup(trip));
             
-            //Trip'i düzenleyebileceği popup için buton
+            //Button for popup where you can edit the trip
             JButton editTripBtn = createStyledBlueButton("Edit Trip");
             editTripBtn.addActionListener(e -> showTripEditPopup(trip));
             
-            //Trip'i silmesi için buton
+            //Button to delete the trip
             JButton deleteTripBtn = createStyledBlueButton("Delete Trip");
             deleteTripBtn.addActionListener(e -> {
                 tripService.cancelTrip(trip);
                 int result = JOptionPane.showOptionDialog(null,"Trip deleted successfully.","Trip Deleted",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
-                if (result == 0) { // Okey butonuna tıklanınca:
+                if (result == 0) { // When the Okey button is clicked:
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                     upm.setMenuBarVisible(true); 
-                    upm.showPanelByKey("searching"); // SearchTripPanel’e dön
+                    upm.showPanelByKey("searching"); // Return to SearchTripPanel
                 }
             });
             
@@ -241,7 +241,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
     }
 //-------------------------------------------End of constructor method-----------------------------
 
-    //Adminin gecerli trip'i duzenlemesi icin popup
+    //Popup for admin to edit current trip
     private void showTripEditPopup(Trip trip) {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Edit Trip", true);
         dialog.setSize(500, 550);
@@ -253,7 +253,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Kalkış Tarihi - Yıl, Ay, Gün
+        // Departure Date - Year, Month, Day
         gbc.gridx = 0; gbc.gridy = 0;
         dialog.add(new JLabel("Departure Date:"), gbc);
         gbc.gridx = 1;
@@ -267,7 +267,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
         datePanel.add(new JLabel("Day:")); datePanel.add(dayField);
         dialog.add(datePanel, gbc);
 
-        // Kalkış Saati - Hour, Minute
+        // Departure Time - Hour, Minute
         gbc.gridx = 0; gbc.gridy++;
         dialog.add(new JLabel("Departure Time:"), gbc);
         gbc.gridx = 1;
@@ -278,14 +278,14 @@ public class SeatSelect_TripEditPanel extends JPanel {
         timePanel.add(new JLabel("Minute:")); timePanel.add(minuteField);
         dialog.add(timePanel, gbc);
 
-        // Ücret
+        // Fare
         gbc.gridx = 0; gbc.gridy++;
         dialog.add(new JLabel("Fare:"), gbc);
         gbc.gridx = 1;
         JTextField fareField = new JTextField(String.valueOf(trip.getFare()), 10);
         dialog.add(fareField, gbc);
 
-        // Yolculuk Süresi
+        //Travel Time
         gbc.gridx = 0; gbc.gridy++;
         dialog.add(new JLabel("Travel Time:"), gbc);
         gbc.gridx = 1;
@@ -296,14 +296,14 @@ public class SeatSelect_TripEditPanel extends JPanel {
         tripTimePanel.add(new JLabel("Minute:")); tripTimePanel.add(tripMinuteField);
         dialog.add(tripTimePanel, gbc);
 
-        // Kaydet butonu
+        //Save button
         gbc.gridx = 0; gbc.gridy++;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
             try {
-                //Fieldlerde olan bilgiler alınır ve LocalDateTime turune donusturulur.
+                //The information in the fields is taken and converted to LocalDateTime type.
                 int year = Integer.parseInt(yearField.getText());
                 int month = Integer.parseInt(monthField.getText());
                 int day = Integer.parseInt(dayField.getText());
@@ -314,9 +314,9 @@ public class SeatSelect_TripEditPanel extends JPanel {
                 int tripHour = Integer.parseInt(tripHourField.getText());
                 int tripMinute = Integer.parseInt(tripMinuteField.getText());
 
-                //Trip bilgileri guncellenir.
+                //Trip information is updated.
                 TripDTO tripDTO = new TripDTO();
-                //Arrival ve Departurre station değişmediği için eski bilgiden çekilir.
+                //Since the Arrival and Departure stations have not changed, they are pulled from the old information.
                 tripDTO.setDepartureStation(trip.getDepartureStation());
                 tripDTO.setArrivalStation(trip.getArrivalStation());
                 tripDTO.setDepartureDate(newDeparture);
@@ -327,10 +327,10 @@ public class SeatSelect_TripEditPanel extends JPanel {
                 dialog.dispose();
                 
                 int result1 = JOptionPane.showOptionDialog(null,"Trip edited successfully.","Trip Edited",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"}, "Okey");
-                if (result1 == 0) { // Okey butonuna tıklanınca:
+                if (result1 == 0) { // When the Okey button is clicked:
                     UserPanelManager upm = (UserPanelManager) MainFrame.getInstance().getContentPane();
                     upm.setMenuBarVisible(true); 
-                    upm.showPanelByKey("searching"); // SearchTripPanel’e dön
+                    upm.showPanelByKey("searching"); // Return to SearchTripPanel
                 }                
             } 
             catch (Exception ex) {
@@ -342,7 +342,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-    //Adminin rezervasyonları goruntuleyebilmesi ve iptal edebilmesi icin popup
+    //Popup for admin to view and cancel reservations
     private void showReservationsPopup(Trip trip) {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Rezervations", true);
         dialog.setSize(600, 400);
@@ -350,32 +350,32 @@ public class SeatSelect_TripEditPanel extends JPanel {
         dialog.setLayout(new BorderLayout());
         dialog.getContentPane().setBackground(new Color(239, 228, 210));
 
-        List<Reservation> reservations = trip.getReservations(); //Rezervasyonlar listede tutulur
+        List<Reservation> reservations = trip.getReservations(); //Reservations are kept on the list
 
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         listPanel.setOpaque(false);
 
-        //Eğer rezervasyon varsa listelenir, yoksa olmadığı bilgisi verilir.
+        //If there is a reservation, it is listed, if not, it is reported as not available.
         if (!reservations.isEmpty()) {
             for (Reservation res : reservations) {
                 JPanel resPanel = new JPanel(new BorderLayout());
                 resPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
                 resPanel.setOpaque(false);
                
-                //Rezervasyon bilgileri kullanıcı adı, soyadı ve e-maili ile gösterilir.
+                //Reservation information is displayed with the user name, surname and e-mail.
                 String passengerInfo = res.getPassenger().getName() + " " + res.getPassenger().getSurname()+ " " + '(' + res.getPassenger().getEmail() + ')';
                 JLabel infoLabel = new JLabel(passengerInfo);
                 
-                //Rezervasyonun iptal edilebilmesi için buton (created with the static method in the StyleButtons class)
+                //Button for canceling the reservation (created with the static method in the StyleButtons class)
                 JButton cancelBtn = createStyledBrownButton("Cancel");
                 cancelBtn.addActionListener(e -> {
                     reservationService.deleteReservation(res);
                     reservations.remove(res);
                 
                     int result = JOptionPane.showOptionDialog(dialog,"Reservation canceled successfully.","Canceled",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object[]{"Okey"},"Okey");
-                    if (result == 0) { //Okey butonuna basılınca
-                        dialog.dispose(); // Reservation popup'u kapat
+                    if (result == 0) { //When the Okey button is pressed
+                        dialog.dispose(); // Close reservation popup
                     }
                 });
 
@@ -390,7 +390,7 @@ public class SeatSelect_TripEditPanel extends JPanel {
             listPanel.add(noResLabel);
         }
 
-        //Rezervasyon listesi uzun olursa diye scroll olusturulur.
+        //A scroll is created in case the reservation list is long.
         JScrollPane scrollPane = new JScrollPane(listPanel);
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(new Color(239, 228, 210));
@@ -399,12 +399,12 @@ public class SeatSelect_TripEditPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-    //Koltukları olusturan ve tıklanmasına izin veren metot
+    //The method that creates the seats and allows them to be clicked
     private JButton createSeatButton(Seat seat, ImageIcon emptyIcon, ImageIcon bookedIcon, Trip trip) {
         JButton seatButton = new JButton();
         seatButton.setIcon(seat.getIsBooked() ? bookedIcon : emptyIcon);
         
-        //Bus ve Plane için gösterilen koltuk boyuları farklı. 
+        //The seat sizes shown for Bus and Plane are different.
         if(trip instanceof BusTrip){
             seatButton.setPreferredSize(new Dimension(40, 40));
         }
@@ -416,13 +416,13 @@ public class SeatSelect_TripEditPanel extends JPanel {
         seatButton.setBorderPainted(false);
         seatButton.setFocusPainted(false);
         
-        // Koltuk zaten doluysa passenger için tıklanamaz olsun, Admin hicbir sekilde tıklayamasın
+        //If the seat is already full, it should be unclickable for the passenger, and the Admin should not be able to click on it at all.
         if (user instanceof Passenger) {
             if (seat.getIsBooked()) {
                 seatButton.setEnabled(false);
             } 
             else {                
-                //Butona her tıklandığında koltuğun seçili olma durumu değişir ve o anki duruma uygun görsel gösterilir
+                //Each time the button is clicked, the seat's selected status changes and the image appropriate to that current status is displayed.
                 seatButton.addActionListener(e -> {
                     boolean newStatus = seatButton.getIcon().equals(emptyIcon);
                     seatButton.setIcon(newStatus ? bookedIcon : emptyIcon);

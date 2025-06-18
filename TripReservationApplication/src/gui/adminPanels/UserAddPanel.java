@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import user.Service.UserService;
 
-//Admin, user eklemek icin kullanacak. (Passenger ve Admin ekleyebilir)
+//Admin will use to add user. (Passenger and Admin can add)
 public class UserAddPanel extends JPanel {
 
     UserService userService = new UserService(); 
@@ -16,17 +16,17 @@ public class UserAddPanel extends JPanel {
         this.setBackground(new Color(37, 77, 112)); 
         
         JPanel containerPanel = new JPanel();
-        containerPanel.setLayout(new BorderLayout(0, 20)); // Başlık ile sekme arası boşluk
+        containerPanel.setLayout(new BorderLayout(0, 20)); // Space between title and tab
         containerPanel.setPreferredSize(new Dimension(420, 460));
         containerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1, true));
         containerPanel.setBackground(Color.WHITE);
 
-        // Sekmeler altta olacak şekilde oluşturuluyor
+        //Tabs are created at the bottom
         tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
         tabbedPane.addTab("Admin Add", createCreateUserPanel("Admin"));
         tabbedPane.addTab("Passenger Add", createCreateUserPanel("Passenger"));
 
-        // Panellere ekleme sırası
+        //Order of adding to panels
         containerPanel.add(tabbedPane, BorderLayout.CENTER);
 
         add(containerPanel);

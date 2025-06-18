@@ -8,8 +8,8 @@ import static gui.components.StyleButtons.createStyledBrownButton;
 import javax.swing.*;
 import java.awt.*;
 
-// AccountPanel -> Change Information butonu ile çağırılır.
-// SelectUserForEditPanel -> admin kullanıcıyı seçip düzenlemek isterse çağırır.
+// AccountPanel -> It is called with the Change Information button.
+// SelectUserForEditPanel ->Called by admin if he/she wants to select and edit the user.
 
 public class EditUserPanel extends JPanel {
     private UserService userService;
@@ -23,7 +23,7 @@ public class EditUserPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        //Kullanıcı bilgilerinin yer aldığı alanlar
+        //Fields containing user information
         JTextField nameField = new JTextField(user.getName(), 20);
         JTextField surnameField = new JTextField(user.getSurname(), 20);
         JTextField emailField = new JTextField(user.getEmail(), 20);
@@ -60,7 +60,7 @@ public class EditUserPanel extends JPanel {
         saveButton.addActionListener(ev -> {
             UserDTO newUserDTO = new UserDTO();
             try {
-                //Kullanıcı bilgileri güncellenir
+                //User information is updated
                 newUserDTO.setEmail(user.getEmail());
                 newUserDTO.setName(nameField.getText().trim());
                 newUserDTO.setSurname(surnameField.getText().trim());
@@ -80,15 +80,15 @@ public class EditUserPanel extends JPanel {
             }
         });
 
-        // Eğer çağıran panel SelectUserForEditPanel ise silme butonu eklenir ve admin passenger'i silebilir
+        // If the calling panel is SelectUserForEditPanel, a delete button is added and the admin can delete the passenger.
         if ("selectUserForEditPanel".equals(callingPanel)) {
             //Button (created with the static method in the StyleButtons class)
             JButton deleteButton = createStyledBrownButton("Delete Account");
-            gbc.gridy = ++y;  //Save butonu üzerine eklenmemesi için boşluk bırakılır
+            gbc.gridy = ++y;  //A space is left so that it is not added to the save button.
             add(deleteButton, gbc);
 
             deleteButton.addActionListener(ev -> {
-                //Silmek istediğinden emin olunduktan sonra silme işlemi yapılır.
+                //After you are sure that you want to delete it, the deletion process is done.
                 int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this account?", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     boolean deleted = userService.deleteUser(user.getEmail());
@@ -114,7 +114,7 @@ public class EditUserPanel extends JPanel {
         };
     }
     
-    //Kod fazlalığını azaltmak için kullanılır.
+    //Used to reduce code redundancy.
     private GridBagConstraints gbcAt(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;
         gbc.gridy = y;
