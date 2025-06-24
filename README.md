@@ -1,9 +1,9 @@
-#Trip Reservation Application
+# Trip Reservation Application
 
 This project is a reservation system developed in Java. Through the graphical user interface, users can make bus and flight reservations, as well as view and edit their existing bookings.
 The system supports both passenger and administrator roles. Administrators can add or remove trips, vehicles, and users, and manage existing data efficiently.
 
-#Features
+# Features
 
 -User registration and login system
 -Bus/flight search functionality
@@ -19,7 +19,7 @@ The system supports both passenger and administrator roles. Administrators can a
 - Design Patterns (Factory, Singleton, Builder, Prototype)
 
 
-#Project Structure
+# Project Structure
 
 ├── src/
 │   ├── main/
@@ -48,7 +48,7 @@ The system supports both passenger and administrator roles. Administrators can a
     |  ├── vehicle/
 
 
-#Architecture Overview
+# Architecture Overview
 
 The project follows a layered architecture with clear separation of concerns:
 
