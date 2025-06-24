@@ -1,3 +1,4 @@
+```bash
 # Trip Reservation Application
 
 This project is a reservation system developed in Java. Through the graphical user interface, users can make bus and flight reservations, as well as view and edit their existing bookings.
